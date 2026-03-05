@@ -1,0 +1,10 @@
+{
+  "name": "forgeseal-example-hono",
+  "version": "0.1.0",
+  "dependencies": {
+    "hono": "^4.7.6"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.4"
+  }
+}

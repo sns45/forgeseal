@@ -32,9 +32,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Dogfood: sign and attest the forgeseal binary itself
+      # Dogfood: full pipeline against reference project + sign the binary
       - name: Build forgeseal for dogfooding
         run: make build
+
+      - name: Run full pipeline on reference project
+        run: |
+          ./bin/forgeseal pipeline \
+            --dir ./examples/hono-app \
+            --output-dir ./forgeseal-output \
+            --sign \
+            --attest \
+            --vex-triage
 
       - name: Sign forgeseal binary
         run: |
@@ -44,7 +53,6 @@ jobs:
 
       - name: Attest forgeseal binary
         run: |
-          mkdir -p ./forgeseal-output
           ./bin/forgeseal attest \
             --subject ./bin/forgeseal \
             --sign \
@@ -56,7 +64,7 @@ jobs:
           name: forgeseal-supply-chain
           path: ./forgeseal-output/
 
-      # Attach SBOM and attestation to the GitHub release
+      # Attach all artifacts to the GitHub release
       - name: Attach artifacts to release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

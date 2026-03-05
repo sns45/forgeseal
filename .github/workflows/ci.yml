@@ -21,3 +21,19 @@ jobs:
 
       - name: Test
         run: make test
+
+      # End-to-end: run full pipeline against reference project
+      - name: E2E pipeline (examples/hono-app)
+        run: |
+          ./bin/forgeseal pipeline \
+            --dir ./examples/hono-app \
+            --output-dir ./e2e-output \
+            --sign=false \
+            --attest=false \
+            --vex-triage
+
+      - name: Verify E2E output
+        run: |
+          test -f ./e2e-output/sbom.cdx.json || (echo "SBOM not generated" && exit 1)
+          test -f ./e2e-output/vex.json || (echo "VEX not generated" && exit 1)
+          echo "E2E pipeline passed"
