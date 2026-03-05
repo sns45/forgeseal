@@ -32,18 +32,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Dogfood: run forgeseal's own pipeline on itself
+      # Dogfood: sign and attest the forgeseal binary itself
       - name: Build forgeseal for dogfooding
         run: make build
 
-      - name: Generate SBOM for forgeseal
+      - name: Sign forgeseal binary
         run: |
-          ./bin/forgeseal pipeline \
-            --dir . \
-            --output-dir ./forgeseal-output \
+          ./bin/forgeseal sign \
+            --artifact ./bin/forgeseal \
+            --bundle ./forgeseal-output/forgeseal.sigstore.json
+
+      - name: Attest forgeseal binary
+        run: |
+          mkdir -p ./forgeseal-output
+          ./bin/forgeseal attest \
+            --subject ./bin/forgeseal \
             --sign \
-            --attest \
-            --vex-triage
+            -o ./forgeseal-output/forgeseal.intoto.jsonl
 
       - name: Upload supply chain artifacts
         uses: actions/upload-artifact@v4
