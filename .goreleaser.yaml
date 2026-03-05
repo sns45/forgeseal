@@ -1,0 +1,42 @@
+version: 2
+
+builds:
+  - id: forgeseal
+    main: ./cmd/forgeseal
+    binary: forgeseal
+    ldflags:
+      - -s -w
+      - -X github.com/sn45/forgeseal/internal/cli.version={{.Version}}
+      - -X github.com/sn45/forgeseal/internal/cli.commit={{.Commit}}
+      - -X github.com/sn45/forgeseal/internal/cli.date={{.Date}}
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+
+archives:
+  - id: default
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'

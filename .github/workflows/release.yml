@@ -1,0 +1,62 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write  # Sigstore keyless signing
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Run tests
+        run: make test
+
+      # GoReleaser builds cross-platform binaries and creates the GitHub release
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          version: '~> v2'
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Dogfood: run forgeseal's own pipeline on itself
+      - name: Build forgeseal for dogfooding
+        run: make build
+
+      - name: Generate SBOM for forgeseal
+        run: |
+          ./bin/forgeseal pipeline \
+            --dir . \
+            --output-dir ./forgeseal-output \
+            --sign \
+            --attest \
+            --vex-triage
+
+      - name: Upload supply chain artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: forgeseal-supply-chain
+          path: ./forgeseal-output/
+
+      # Attach SBOM and attestation to the GitHub release
+      - name: Attach artifacts to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          for f in ./forgeseal-output/*; do
+            gh release upload "$tag" "$f" --clobber
+          done

@@ -1,0 +1,25 @@
+__metadata:
+  version: 8
+  cacheKey: 10c0
+
+"@babel/core@npm:^7.24.0":
+  version: 7.24.0
+  resolution: "@babel/core@npm:7.24.0"
+  checksum: sha512-fQfkg0Gjkza3nf0c7/w6Xf34BW4YvzNfACRLmmb7XRLa6XHdR+K9AlJlxneFfWYf6uhOzuzZVTjF/8KfndZAQ==
+  dependencies:
+    "@babel/helper-compilation-targets": "npm:^7.23.6"
+
+"@babel/helper-compilation-targets@npm:^7.23.6":
+  version: 7.23.6
+  resolution: "@babel/helper-compilation-targets@npm:7.23.6"
+  checksum: sha512-9JB548GZoQVmzrFgp8o7KxdgkTGm6xs9DW0o/Pim72UDjzr0HQtiioJHXg5u/sJGRvFORYDtph0YBthE6NQE==
+
+"lodash@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5cvA==
+
+"prettier@npm:^3.2.0":
+  version: 3.2.5
+  resolution: "prettier@npm:3.2.5"
+  checksum: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgLeUXJDg6ViHjUoZUvek7H62IAG2MBCbxA==

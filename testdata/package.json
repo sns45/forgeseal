@@ -1,0 +1,12 @@
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "description": "A test project for forgeseal",
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "@babel/core": "^7.24.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.0"
+  }
+}

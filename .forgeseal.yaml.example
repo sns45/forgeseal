@@ -1,0 +1,18 @@
+# forgeseal configuration
+# Copy this file to .forgeseal.yaml and customize as needed.
+
+sbom:
+  spec_version: "1.5"
+  format: json
+  include_dev: false
+
+sign:
+  fulcio_url: https://fulcio.sigstore.dev
+  rekor_url: https://rekor.sigstore.dev
+
+attest:
+  auto_sign: true
+
+vex:
+  format: openvex
+  osv_ecosystem: npm

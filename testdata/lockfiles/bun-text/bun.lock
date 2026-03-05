@@ -1,0 +1,21 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "test-project",
+      "dependencies": {
+        "lodash": "^4.17.21",
+        "@babel/core": "^7.24.0"
+      },
+      "devDependencies": {
+        "prettier": "^3.2.0"
+      }
+    }
+  },
+  "packages": {
+    "lodash": ["lodash@4.17.21", {}, "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5cvA=="],
+    "@babel/core": ["@babel/core@7.24.0", {"dependencies": {"@babel/helper-compilation-targets": "^7.23.6"}}, "sha512-fQfkg0Gjkza3nf0c7/w6Xf34BW4YvzNfACRLmmb7XRLa6XHdR+K9AlJlxneFfWYf6uhOzuzZVTjF/8KfndZAQ=="],
+    "@babel/helper-compilation-targets": ["@babel/helper-compilation-targets@7.23.6", {}, "sha512-9JB548GZoQVmzrFgp8o7KxdgkTGm6xs9DW0o/Pim72UDjzr0HQtiioJHXg5u/sJGRvFORYDtph0YBthE6NQE=="],
+    "prettier": ["prettier@3.2.5", {"dev": true}, "sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgLeUXJDg6ViHjUoZUvek7H62IAG2MBCbxA=="]
+  }
+}

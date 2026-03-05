@@ -1,0 +1,71 @@
+name: 'forgeseal'
+description: 'Supply chain security for JS/TS projects: SBOM, Sigstore signing, SLSA provenance, VEX'
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  command:
+    description: 'Command to run: sbom, sign, attest, vex, pipeline'
+    required: true
+    default: 'pipeline'
+  lockfile:
+    description: 'Explicit path to lockfile'
+    required: false
+  dir:
+    description: 'Project directory'
+    required: false
+    default: '.'
+  output-dir:
+    description: 'Output directory for artifacts'
+    required: false
+    default: './forgeseal-output'
+  include-dev:
+    description: 'Include devDependencies in SBOM'
+    required: false
+    default: 'false'
+  sign:
+    description: 'Sign artifacts with Sigstore'
+    required: false
+    default: 'true'
+  attest:
+    description: 'Generate SLSA provenance attestation'
+    required: false
+    default: 'true'
+  vex-triage:
+    description: 'Run VEX triage against OSV.dev'
+    required: false
+    default: 'false'
+  upload-assets:
+    description: 'Upload artifacts to GitHub Release'
+    required: false
+    default: 'false'
+  version:
+    description: 'forgeseal version to use'
+    required: false
+    default: 'latest'
+
+outputs:
+  sbom-path:
+    description: 'Path to generated SBOM'
+  bundle-path:
+    description: 'Path to Sigstore bundle'
+  attestation-path:
+    description: 'Path to SLSA attestation'
+  vex-path:
+    description: 'Path to VEX document'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.command }}
+    - '--dir'
+    - ${{ inputs.dir }}
+    - '--output-dir'
+    - ${{ inputs.output-dir }}
+  env:
+    FORGESEAL_INCLUDE_DEV: ${{ inputs.include-dev }}
+    FORGESEAL_SIGN: ${{ inputs.sign }}
+    FORGESEAL_ATTEST: ${{ inputs.attest }}
+    FORGESEAL_VEX_TRIAGE: ${{ inputs.vex-triage }}
