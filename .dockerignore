@@ -1,0 +1,8 @@
+bin/
+dist/
+examples/
+testdata/
+.github/
+.git/
+.DS_Store
+*.md
