@@ -33,15 +33,23 @@ Detection priority: `bun.lockb` > `bun.lock` > `pnpm-lock.yaml` > `yarn.lock` > 
 ## Installation
 
 ```bash
-# From source
+# Homebrew (macOS / Linux)
+brew install sns45/tap/forgeseal
+
+# Quick install (latest release)
+curl -sSL https://raw.githubusercontent.com/sns45/forgeseal/main/scripts/install.sh | sh
+
+# Go
 go install github.com/sn45/forgeseal/cmd/forgeseal@latest
 
-# Or build locally
-make build
-./bin/forgeseal version
+# Docker
+docker run --rm -v $(pwd):/src ghcr.io/sns45/forgeseal pipeline --dir /src
+
+# From source
+git clone https://github.com/sns45/forgeseal.git && cd forgeseal && make build
 ```
 
-Requires Go 1.23+.
+Requires Go 1.23+ for building from source.
 
 ## Quick Start
 

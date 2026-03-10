@@ -33,6 +33,19 @@ archives:
 checksum:
   name_template: 'checksums.txt'
 
+brews:
+  - name: forgeseal
+    repository:
+      owner: sns45
+      name: homebrew-tap
+    homepage: "https://github.com/sns45/forgeseal"
+    description: "Supply chain security for JavaScript and TypeScript projects"
+    license: "Apache-2.0"
+    install: |
+      bin.install "forgeseal"
+    test: |
+      system bin/"forgeseal", "version"
+
 changelog:
   sort: asc
   filters:
