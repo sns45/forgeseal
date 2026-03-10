@@ -38,6 +38,7 @@ brews:
     repository:
       owner: sns45
       name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     homepage: "https://github.com/sns45/forgeseal"
     description: "Supply chain security for JavaScript and TypeScript projects"
     license: "Apache-2.0"
