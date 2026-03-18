@@ -1,17 +1,16 @@
 name: 'forgeseal'
-description: 'Supply chain security for JS/TS projects: SBOM, Sigstore signing, SLSA provenance, VEX'
+description: 'Supply chain security for JS/TS: SBOM generation, Sigstore signing, SLSA provenance, VEX triage'
+author: 'sns45'
+
 branding:
   icon: 'shield'
   color: 'blue'
 
 inputs:
   command:
-    description: 'Command to run: sbom, sign, attest, vex, pipeline'
-    required: true
-    default: 'pipeline'
-  lockfile:
-    description: 'Explicit path to lockfile'
+    description: 'Command to run: pipeline, sbom, sign, attest, vex'
     required: false
+    default: 'pipeline'
   dir:
     description: 'Project directory'
     required: false
@@ -20,52 +19,165 @@ inputs:
     description: 'Output directory for artifacts'
     required: false
     default: './forgeseal-output'
+  lockfile:
+    description: 'Explicit path to lockfile (auto-detected if omitted)'
+    required: false
+  sign:
+    description: 'Sign artifacts with Sigstore keyless signing'
+    required: false
+    default: 'true'
+  attest:
+    description: 'Generate SLSA v1 provenance attestation'
+    required: false
+    default: 'true'
+  vex-triage:
+    description: 'Run VEX vulnerability triage against OSV.dev'
+    required: false
+    default: 'true'
+  fail-on:
+    description: 'Fail if vulnerabilities at or above this severity: critical, high, medium, low'
+    required: false
   include-dev:
     description: 'Include devDependencies in SBOM'
     required: false
     default: 'false'
-  sign:
-    description: 'Sign artifacts with Sigstore'
-    required: false
-    default: 'true'
-  attest:
-    description: 'Generate SLSA provenance attestation'
-    required: false
-    default: 'true'
-  vex-triage:
-    description: 'Run VEX triage against OSV.dev'
-    required: false
-    default: 'false'
   upload-assets:
-    description: 'Upload artifacts to GitHub Release'
+    description: 'Upload artifacts to the GitHub Release (requires release context)'
     required: false
     default: 'false'
   version:
-    description: 'forgeseal version to use'
+    description: 'forgeseal version to install (e.g. 0.1.0). Defaults to latest release.'
     required: false
     default: 'latest'
 
 outputs:
   sbom-path:
-    description: 'Path to generated SBOM'
+    description: 'Path to the generated CycloneDX SBOM'
+    value: ${{ steps.run.outputs.sbom-path }}
   bundle-path:
-    description: 'Path to Sigstore bundle'
+    description: 'Path to the Sigstore signature bundle'
+    value: ${{ steps.run.outputs.bundle-path }}
   attestation-path:
-    description: 'Path to SLSA attestation'
+    description: 'Path to the SLSA provenance attestation'
+    value: ${{ steps.run.outputs.attestation-path }}
   vex-path:
-    description: 'Path to VEX document'
+    description: 'Path to the VEX document'
+    value: ${{ steps.run.outputs.vex-path }}
+  vuln-count:
+    description: 'Number of vulnerabilities found by VEX triage'
+    value: ${{ steps.run.outputs.vuln-count }}
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.command }}
-    - '--dir'
-    - ${{ inputs.dir }}
-    - '--output-dir'
-    - ${{ inputs.output-dir }}
-  env:
-    FORGESEAL_INCLUDE_DEV: ${{ inputs.include-dev }}
-    FORGESEAL_SIGN: ${{ inputs.sign }}
-    FORGESEAL_ATTEST: ${{ inputs.attest }}
-    FORGESEAL_VEX_TRIAGE: ${{ inputs.vex-triage }}
+  using: 'composite'
+  steps:
+    - name: Install forgeseal
+      id: install
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        VERSION="${{ inputs.version }}"
+        REPO="sns45/forgeseal"
+
+        if [ "$VERSION" = "latest" ]; then
+          VERSION=$(gh api "repos/${REPO}/releases/latest" --jq '.tag_name' 2>/dev/null || true)
+          if [ -z "$VERSION" ]; then
+            VERSION=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name"' | cut -d'"' -f4)
+          fi
+        fi
+
+        # Strip leading v
+        VERSION="${VERSION#v}"
+        echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+        OS="linux"
+        ARCH="$(uname -m)"
+        case "$ARCH" in
+          x86_64)  ARCH="amd64" ;;
+          aarch64) ARCH="arm64" ;;
+        esac
+
+        TARBALL="forgeseal_${VERSION}_${OS}_${ARCH}.tar.gz"
+        URL="https://github.com/${REPO}/releases/download/v${VERSION}/${TARBALL}"
+
+        echo "Downloading forgeseal v${VERSION} (${OS}/${ARCH})..."
+        curl -fsSL "$URL" -o "/tmp/${TARBALL}"
+        tar -xzf "/tmp/${TARBALL}" -C /tmp
+        chmod +x /tmp/forgeseal
+        sudo mv /tmp/forgeseal /usr/local/bin/forgeseal
+
+        echo "Installed forgeseal v${VERSION}"
+        forgeseal version
+
+    - name: Run forgeseal
+      id: run
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        COMMAND="${{ inputs.command }}"
+        DIR="${{ inputs.dir }}"
+        OUTPUT_DIR="${{ inputs.output-dir }}"
+
+        # Build argument list
+        ARGS=("$COMMAND")
+
+        if [ "$COMMAND" = "pipeline" ]; then
+          ARGS+=("--dir" "$DIR" "--output-dir" "$OUTPUT_DIR")
+
+          if [ "${{ inputs.sign }}" = "false" ]; then
+            ARGS+=("--sign=false")
+          fi
+          if [ "${{ inputs.attest }}" = "false" ]; then
+            ARGS+=("--attest=false")
+          fi
+          if [ "${{ inputs.vex-triage }}" = "true" ]; then
+            ARGS+=("--vex-triage")
+          fi
+          if [ -n "${{ inputs.fail-on }}" ]; then
+            ARGS+=("--fail-on" "${{ inputs.fail-on }}")
+          fi
+          if [ "${{ inputs.include-dev }}" = "true" ]; then
+            ARGS+=("--include-dev")
+          fi
+          if [ -n "${{ inputs.lockfile }}" ]; then
+            ARGS+=("--lockfile" "${{ inputs.lockfile }}")
+          fi
+        fi
+
+        echo "Running: forgeseal ${ARGS[*]}"
+        forgeseal "${ARGS[@]}"
+
+        # Set outputs
+        if [ -f "${OUTPUT_DIR}/sbom.cdx.json" ]; then
+          echo "sbom-path=${OUTPUT_DIR}/sbom.cdx.json" >> "$GITHUB_OUTPUT"
+        fi
+        if [ -f "${OUTPUT_DIR}/sbom.cdx.json.sigstore.json" ]; then
+          echo "bundle-path=${OUTPUT_DIR}/sbom.cdx.json.sigstore.json" >> "$GITHUB_OUTPUT"
+        fi
+        if [ -f "${OUTPUT_DIR}/sbom.cdx.json.intoto.jsonl" ]; then
+          echo "attestation-path=${OUTPUT_DIR}/sbom.cdx.json.intoto.jsonl" >> "$GITHUB_OUTPUT"
+        fi
+        if [ -f "${OUTPUT_DIR}/vex.json" ]; then
+          echo "vex-path=${OUTPUT_DIR}/vex.json" >> "$GITHUB_OUTPUT"
+          # Extract vuln count from VEX document
+          VULN_COUNT=$(jq '.statements | length' "${OUTPUT_DIR}/vex.json" 2>/dev/null || echo "0")
+          echo "vuln-count=${VULN_COUNT}" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Upload artifacts to release
+      if: inputs.upload-assets == 'true' && github.event_name == 'release'
+      shell: bash
+      run: |
+        set -euo pipefail
+        OUTPUT_DIR="${{ inputs.output-dir }}"
+        TAG="${{ github.event.release.tag_name }}"
+
+        for file in "${OUTPUT_DIR}"/*; do
+          if [ -f "$file" ]; then
+            echo "Uploading $(basename "$file") to release ${TAG}..."
+            gh release upload "$TAG" "$file" --clobber
+          fi
+        done
+      env:
+        GH_TOKEN: ${{ github.token }}

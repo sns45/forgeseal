@@ -11,7 +11,7 @@ Built for EU Cyber Resilience Act (CRA) compliance. forgeseal's own releases are
 | **SBOM Generation** | CycloneDX v1.4/v1.5/v1.6 from any JS/TS lockfile (JSON and XML output) |
 | **Sigstore Signing** | Keyless signing via Fulcio + Rekor transparency log (OIDC identity) |
 | **SLSA Provenance** | In-toto attestations with SLSA v1 provenance predicate |
-| **VEX Management** | OpenVEX v0.2 document CRUD, automated triage via OSV.dev |
+| **VEX Management** | OpenVEX v0.2 document CRUD, automated triage via OSV.dev, CVSS severity classification |
 | **Verification** | Validate signatures, bundles, and attestation integrity |
 | **Pipeline** | Single command: SBOM, sign, attest, triage |
 
@@ -154,7 +154,7 @@ forgeseal vex triage --sbom sbom.cdx.json --format cyclonedx -o sbom-with-vex.js
 
 **Justifications** (for `not_affected`): `component_not_present`, `vulnerable_code_not_present`, `vulnerable_code_cannot_be_controlled_by_adversary`, `vulnerable_code_not_in_execute_path`, `inline_mitigations_already_exist`
 
-The `triage` subcommand queries the [OSV.dev](https://osv.dev) batch API, batching PURLs in groups of 1000, and generates `under_investigation` stubs for each discovered vulnerability.
+The `triage` subcommand queries the [OSV.dev](https://osv.dev) batch API, batching PURLs in groups of 1000, classifies each vulnerability by CVSS severity (critical, high, medium, low), and generates `under_investigation` stubs for each discovered vulnerability. Use `--fail-on <severity>` to fail the command when vulnerabilities at or above the threshold are found.
 
 ### `forgeseal verify`
 
@@ -190,8 +190,11 @@ forgeseal pipeline --dir . --vex-triage --identity-token $TOKEN
 | `--sign` | `true` | Sign artifacts with Sigstore |
 | `--attest` | `true` | Generate SLSA provenance |
 | `--vex-triage` | `false` | Run VEX triage against OSV.dev |
+| `--fail-on` | (none) | Fail if vulnerabilities at or above severity: `critical`, `high`, `medium`, `low` |
 | `--include-dev` | `false` | Include devDependencies |
 | `--identity-token` | (auto) | Explicit OIDC token |
+
+Setting `--fail-on` automatically enables VEX triage.
 
 **Pipeline steps:**
 1. Parse lockfile, generate CycloneDX SBOM (`sbom.cdx.json`)
@@ -199,7 +202,31 @@ forgeseal pipeline --dir . --vex-triage --identity-token $TOKEN
 3. Generate SLSA provenance attestation (`sbom.cdx.json.intoto.jsonl`), optionally sign it
 4. Query OSV.dev and generate VEX document (`vex.json`)
 
+**Vulnerability summary:** When VEX triage runs, forgeseal prints a severity breakdown to stderr:
+
+```
+  🔴 CRITICAL 2 CRITICAL   🟡 HIGH 5 HIGH   🟠 MEDIUM 12 MEDIUM   ⚪ LOW 3 LOW
+
+  CRITICAL:
+    lodash@4.17.20                 Prototype Pollution                          CVE-2021-23337
+    express@4.17.1                 Path Traversal                               CVE-2024-29041
+
+  Scanned 156 components, found 42 vulnerabilities
+```
+
+**CI gating:** Use `--fail-on` to block builds when vulnerabilities exceed a threshold:
+
+```bash
+# Fail if any critical or high vulnerabilities found
+forgeseal pipeline --dir . --fail-on high
+
+# Fail only on critical
+forgeseal pipeline --dir . --fail-on critical
+```
+
 ## GitHub Action
+
+Available on the [GitHub Marketplace](https://github.com/marketplace/actions/forgeseal).
 
 ```yaml
 name: Supply Chain Security
@@ -215,14 +242,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: sn45/forgeseal@v1
+      - uses: sns45/forgeseal@v1
+        id: forgeseal
         with:
-          command: pipeline
           dir: '.'
-          output-dir: './forgeseal-output'
-          sign: 'true'
-          attest: 'true'
-          vex-triage: 'true'
+          fail-on: high  # Fail CI if high or critical vulnerabilities found
 
       - uses: actions/upload-artifact@v4
         with:
@@ -230,7 +254,31 @@ jobs:
           path: ./forgeseal-output/
 ```
 
-The action runs in a Docker container and automatically obtains OIDC tokens from the GitHub Actions runtime.
+### Action Inputs
+
+| Input | Default | Description |
+|---|---|---|
+| `command` | `pipeline` | Command to run: `pipeline`, `sbom`, `sign`, `attest`, `vex` |
+| `dir` | `.` | Project directory |
+| `output-dir` | `./forgeseal-output` | Output directory for artifacts |
+| `sign` | `true` | Sign artifacts with Sigstore keyless signing |
+| `attest` | `true` | Generate SLSA v1 provenance attestation |
+| `vex-triage` | `true` | Run VEX vulnerability triage against OSV.dev |
+| `fail-on` | (none) | Fail if vulnerabilities at or above severity: `critical`, `high`, `medium`, `low` |
+| `include-dev` | `false` | Include devDependencies in SBOM |
+| `version` | `latest` | forgeseal version to install |
+
+### Action Outputs
+
+| Output | Description |
+|---|---|
+| `sbom-path` | Path to the generated CycloneDX SBOM |
+| `bundle-path` | Path to the Sigstore signature bundle |
+| `attestation-path` | Path to the SLSA provenance attestation |
+| `vex-path` | Path to the VEX document |
+| `vuln-count` | Number of vulnerabilities found by VEX triage |
+
+The action downloads a pre-built binary from GitHub Releases (no Docker build overhead). OIDC tokens are obtained automatically when the workflow has `permissions: id-token: write`.
 
 ## Configuration
 
@@ -279,7 +327,7 @@ internal/
 
 **Signing abstraction.** The `Signer` interface provides `SignBlob` (raw content) and `SignDSSE` (in-toto envelope). The current implementation generates ephemeral ECDSA P-256 signatures. Full Sigstore integration (Fulcio certificate issuance + Rekor log recording) can be added by depending on `sigstore-go` without changing the interface.
 
-**VEX triage.** PURLs extracted from the SBOM are batched in groups of 1000 and sent to the OSV.dev `/v1/querybatch` endpoint. Results are mapped to `under_investigation` VEX stubs for manual review.
+**VEX triage.** PURLs extracted from the SBOM are batched in groups of 1000 and sent to the OSV.dev `/v1/querybatch` endpoint. Each vulnerability is classified by CVSS v3 severity (critical 9.0+, high 7.0+, medium 4.0+, low 0.1+). Results are mapped to VEX stubs with severity metadata. The `--fail-on` flag enables CI gating by exiting non-zero when vulnerabilities meet or exceed the specified threshold.
 
 ## Output Artifacts
 
