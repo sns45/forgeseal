@@ -173,7 +173,7 @@ var vexTriageCmd = &cobra.Command{
 		outputPath, _ := cmd.Flags().GetString("output")
 		if outputPath != "" {
 			if format == "cyclonedx" {
-				bom, err := vex.EmbedVEXInSBOM(sbomPath, result.Document)
+				bom, err := vex.EmbedVEXInSBOM(sbomPath, result.Document, result.Vulnerabilities)
 				if err != nil {
 					return err
 				}

@@ -9,7 +9,8 @@ import (
 )
 
 // EmbedVEXInSBOM embeds VEX statements into a CycloneDX SBOM's vulnerabilities section.
-func EmbedVEXInSBOM(sbomPath string, doc *OpenVEXDocument) (*cdx.BOM, error) {
+// If vulnDetails is provided, severity ratings are included in the output.
+func EmbedVEXInSBOM(sbomPath string, doc *OpenVEXDocument, vulnDetails ...[]VulnDetail) (*cdx.BOM, error) {
 	data, err := os.ReadFile(sbomPath)
 	if err != nil {
 		return nil, fmt.Errorf("reading SBOM: %w", err)
@@ -18,6 +19,14 @@ func EmbedVEXInSBOM(sbomPath string, doc *OpenVEXDocument) (*cdx.BOM, error) {
 	var bom cdx.BOM
 	if err := json.Unmarshal(data, &bom); err != nil {
 		return nil, fmt.Errorf("parsing SBOM: %w", err)
+	}
+
+	// Build lookup from vuln ID to severity details
+	detailMap := make(map[string]VulnDetail)
+	if len(vulnDetails) > 0 {
+		for _, d := range vulnDetails[0] {
+			detailMap[d.ID] = d
+		}
 	}
 
 	vulns := make([]cdx.Vulnerability, 0, len(doc.Statements))
@@ -29,6 +38,18 @@ func EmbedVEXInSBOM(sbomPath string, doc *OpenVEXDocument) (*cdx.BOM, error) {
 				Justification: mapJustification(stmt.Justification),
 				Detail:        stmt.ImpactStatement,
 			},
+		}
+
+		// Add severity rating if available
+		if detail, ok := detailMap[stmt.Vulnerability.ID]; ok && detail.Severity != SeverityUnknown {
+			vuln.Ratings = &[]cdx.VulnerabilityRating{
+				{
+					Severity: mapSeverityToCDX(detail.Severity),
+				},
+			}
+			if detail.Summary != "" {
+				vuln.Description = detail.Summary
+			}
 		}
 
 		// Map affected components
@@ -63,6 +84,21 @@ func mapStatusToAnalysisState(status string) cdx.ImpactAnalysisState {
 		return cdx.IASInTriage
 	default:
 		return cdx.IASInTriage
+	}
+}
+
+func mapSeverityToCDX(sev SeverityLevel) cdx.Severity {
+	switch sev {
+	case SeverityCritical:
+		return cdx.SeverityCritical
+	case SeverityHigh:
+		return cdx.SeverityHigh
+	case SeverityMedium:
+		return cdx.SeverityMedium
+	case SeverityLow:
+		return cdx.SeverityLow
+	default:
+		return cdx.SeverityUnknown
 	}
 }
 

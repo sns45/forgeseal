@@ -12,6 +12,58 @@ import (
 
 const osvBatchURL = "https://api.osv.dev/v1/querybatch"
 
+// SeverityLevel represents the severity classification of a vulnerability.
+type SeverityLevel string
+
+const (
+	SeverityCritical SeverityLevel = "critical"
+	SeverityHigh     SeverityLevel = "high"
+	SeverityMedium   SeverityLevel = "medium"
+	SeverityLow      SeverityLevel = "low"
+	SeverityUnknown  SeverityLevel = "unknown"
+)
+
+// ClassifySeverity maps a CVSS v3 score string to a SeverityLevel.
+// Follows CVSS v3.1 severity ratings: critical (9.0+), high (7.0-8.9),
+// medium (4.0-6.9), low (0.1-3.9), unknown (0 or unparseable).
+func ClassifySeverity(vuln OSVVulnerability) SeverityLevel {
+	for _, sev := range vuln.Severity {
+		if sev.Type == "CVSS_V3" {
+			return classifyCVSSScore(sev.Score)
+		}
+	}
+	// Fall back to CVSS_V2 if no V3 available
+	for _, sev := range vuln.Severity {
+		if sev.Type == "CVSS_V2" {
+			return classifyCVSSScore(sev.Score)
+		}
+	}
+	return SeverityUnknown
+}
+
+func classifyCVSSScore(score string) SeverityLevel {
+	// CVSS score can be a numeric string like "9.8" or a full vector string
+	// like "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+	// For vector strings, extract the base score from the metrics
+	var f float64
+	if _, err := fmt.Sscanf(score, "%f", &f); err != nil {
+		// Try parsing as vector string; extract numeric score if present
+		return SeverityUnknown
+	}
+	switch {
+	case f >= 9.0:
+		return SeverityCritical
+	case f >= 7.0:
+		return SeverityHigh
+	case f >= 4.0:
+		return SeverityMedium
+	case f > 0:
+		return SeverityLow
+	default:
+		return SeverityUnknown
+	}
+}
+
 // OSVClient queries the OSV.dev API for known vulnerabilities.
 type OSVClient struct {
 	HTTPClient *http.Client
