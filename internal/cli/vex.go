@@ -166,8 +166,7 @@ var vexTriageCmd = &cobra.Command{
 
 		quiet, _ := cmd.Flags().GetBool("quiet")
 		if !quiet {
-			fmt.Fprintf(os.Stderr, "Scanned %d components, found %d vulnerabilities\n",
-				result.ComponentCount, result.VulnCount)
+			vex.PrintSummary(os.Stderr, result)
 		}
 
 		outputPath, _ := cmd.Flags().GetString("output")
