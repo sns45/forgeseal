@@ -16,11 +16,22 @@ type TriageOptions struct {
 	Format   string // "openvex" or "cyclonedx"
 }
 
+// VulnDetail holds enriched information about a single vulnerability finding.
+type VulnDetail struct {
+	ID            string
+	Summary       string
+	Severity      SeverityLevel
+	ComponentName string
+	PURL          string
+}
+
 // TriageResult holds the results of a VEX triage.
 type TriageResult struct {
 	Document       *OpenVEXDocument
 	VulnCount      int
 	ComponentCount int
+	Vulnerabilities []VulnDetail
+	CountBySeverity map[SeverityLevel]int
 }
 
 // Triage reads an SBOM, queries OSV.dev for vulnerabilities, and generates VEX stubs.
@@ -97,6 +108,9 @@ func Triage(ctx context.Context, opts TriageOptions) (*TriageResult, error) {
 	)
 
 	vulnCount := 0
+	var vulnDetails []VulnDetail
+	countBySeverity := make(map[SeverityLevel]int)
+
 	for _, pv := range allVulns {
 		componentName := purlToComponent[pv.PURL]
 		for _, vuln := range pv.Vulns {
@@ -109,6 +123,19 @@ func Triage(ctx context.Context, opts TriageOptions) (*TriageResult, error) {
 				}
 			}
 
+			severity := ClassifySeverity(vuln)
+			countBySeverity[severity]++
+
+			vulnDetails = append(vulnDetails, VulnDetail{
+				ID:            vulnID,
+				Summary:       vuln.Summary,
+				Severity:      severity,
+				ComponentName: componentName,
+				PURL:          pv.PURL,
+			})
+
+			impactMsg := fmt.Sprintf("[%s] Vulnerability %s found in %s; requires investigation", strings.ToUpper(string(severity)), vulnID, componentName)
+
 			stmt := VEXStatement{
 				Vulnerability: VulnerabilityRef{ID: vulnID},
 				Products: []ProductRef{
@@ -118,7 +145,7 @@ func Triage(ctx context.Context, opts TriageOptions) (*TriageResult, error) {
 					},
 				},
 				Status:          StatusUnderInvestigation,
-				ImpactStatement: fmt.Sprintf("Vulnerability %s found in %s; requires investigation", vulnID, componentName),
+				ImpactStatement: impactMsg,
 			}
 
 			if err := doc.AddStatement(stmt); err != nil {
@@ -129,9 +156,11 @@ func Triage(ctx context.Context, opts TriageOptions) (*TriageResult, error) {
 	}
 
 	return &TriageResult{
-		Document:       doc,
-		VulnCount:      vulnCount,
-		ComponentCount: len(purls),
+		Document:        doc,
+		VulnCount:       vulnCount,
+		ComponentCount:  len(purls),
+		Vulnerabilities: vulnDetails,
+		CountBySeverity: countBySeverity,
 	}, nil
 }
 
