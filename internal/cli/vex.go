@@ -39,6 +39,7 @@ func init() {
 	// Triage flags
 	vexTriageCmd.Flags().String("sbom", "", "path to SBOM")
 	vexTriageCmd.Flags().String("format", "openvex", "output format: openvex or cyclonedx")
+	vexTriageCmd.Flags().String("fail-on", "", "fail with exit code 2 if vulnerabilities at or above this severity: critical, high, medium, low")
 	_ = vexTriageCmd.MarkFlagRequired("sbom")
 }
 
@@ -167,6 +168,18 @@ var vexTriageCmd = &cobra.Command{
 		quiet, _ := cmd.Flags().GetBool("quiet")
 		if !quiet {
 			vex.PrintSummary(os.Stderr, result)
+		}
+
+		// Check --fail-on threshold
+		failOn, _ := cmd.Flags().GetString("fail-on")
+		if failOn != "" {
+			threshold, err := vex.ParseSeverityLevel(failOn)
+			if err != nil {
+				return err
+			}
+			if vex.ExceedsThreshold(result, threshold) {
+				return &vex.ThresholdError{Threshold: threshold, Counts: result.CountBySeverity}
+			}
 		}
 
 		outputPath, _ := cmd.Flags().GetString("output")

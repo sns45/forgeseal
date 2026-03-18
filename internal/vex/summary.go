@@ -89,3 +89,69 @@ func PrintSummary(w io.Writer, result *TriageResult) {
 func PrintSummaryToStderr(result *TriageResult) {
 	PrintSummary(os.Stderr, result)
 }
+
+// severityRank returns a numeric rank for ordering (lower = more severe).
+func severityRank(sev SeverityLevel) int {
+	switch sev {
+	case SeverityCritical:
+		return 0
+	case SeverityHigh:
+		return 1
+	case SeverityMedium:
+		return 2
+	case SeverityLow:
+		return 3
+	default:
+		return 4
+	}
+}
+
+// ParseSeverityLevel parses a string into a SeverityLevel.
+// Returns SeverityUnknown and an error for invalid input.
+func ParseSeverityLevel(s string) (SeverityLevel, error) {
+	switch strings.ToLower(s) {
+	case "critical":
+		return SeverityCritical, nil
+	case "high":
+		return SeverityHigh, nil
+	case "medium":
+		return SeverityMedium, nil
+	case "low":
+		return SeverityLow, nil
+	default:
+		return SeverityUnknown, fmt.Errorf("invalid severity level %q; valid values: critical, high, medium, low", s)
+	}
+}
+
+// ExceedsThreshold checks if any vulnerability in the result meets or exceeds
+// the given severity threshold. Returns true if the threshold is exceeded.
+func ExceedsThreshold(result *TriageResult, threshold SeverityLevel) bool {
+	thresholdRank := severityRank(threshold)
+	for _, sev := range severityOrder {
+		if severityRank(sev) <= thresholdRank {
+			if count, ok := result.CountBySeverity[sev]; ok && count > 0 {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// ThresholdError is returned when vulnerabilities exceed the --fail-on threshold.
+type ThresholdError struct {
+	Threshold SeverityLevel
+	Counts    map[SeverityLevel]int
+}
+
+func (e *ThresholdError) Error() string {
+	parts := make([]string, 0)
+	thresholdRank := severityRank(e.Threshold)
+	for _, sev := range severityOrder {
+		if severityRank(sev) <= thresholdRank {
+			if count, ok := e.Counts[sev]; ok && count > 0 {
+				parts = append(parts, fmt.Sprintf("%d %s", count, sev))
+			}
+		}
+	}
+	return fmt.Sprintf("vulnerability threshold exceeded (%s): %s", e.Threshold, strings.Join(parts, ", "))
+}

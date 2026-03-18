@@ -26,6 +26,7 @@ func init() {
 	pipelineCmd.Flags().Bool("sign", true, "sign the SBOM with Sigstore")
 	pipelineCmd.Flags().Bool("attest", true, "generate SLSA provenance attestation")
 	pipelineCmd.Flags().Bool("vex-triage", false, "run VEX triage against OSV.dev")
+	pipelineCmd.Flags().String("fail-on", "", "fail with exit code 2 if vulnerabilities at or above this severity: critical, high, medium, low")
 	pipelineCmd.Flags().Bool("include-dev", false, "include devDependencies")
 	pipelineCmd.Flags().String("identity-token", "", "explicit OIDC token for signing")
 }
@@ -45,6 +46,7 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 	doSign, _ := cmd.Flags().GetBool("sign")
 	doAttest, _ := cmd.Flags().GetBool("attest")
 	doVEXTriage, _ := cmd.Flags().GetBool("vex-triage")
+	failOn, _ := cmd.Flags().GetString("fail-on")
 	includeDev, _ := cmd.Flags().GetBool("include-dev")
 	identityToken, _ := cmd.Flags().GetString("identity-token")
 	quiet, _ := cmd.Flags().GetBool("quiet")
@@ -188,6 +190,11 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 		fmt.Fprintln(os.Stderr, "Step 3/4: Attestation skipped")
 	}
 
+	// Enable VEX triage automatically if --fail-on is set
+	if failOn != "" {
+		doVEXTriage = true
+	}
+
 	// Step 4: VEX triage
 	if doVEXTriage {
 		if !quiet {
@@ -210,6 +217,17 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 			if !quiet {
 				fmt.Fprintf(os.Stderr, "  VEX document written to %s\n", vexPath)
 				vex.PrintSummary(os.Stderr, triageResult)
+			}
+
+			// Check --fail-on threshold
+			if failOn != "" {
+				threshold, err := vex.ParseSeverityLevel(failOn)
+				if err != nil {
+					return err
+				}
+				if vex.ExceedsThreshold(triageResult, threshold) {
+					return &vex.ThresholdError{Threshold: threshold, Counts: triageResult.CountBySeverity}
+				}
 			}
 		}
 	} else if !quiet {
