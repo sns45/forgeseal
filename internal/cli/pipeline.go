@@ -208,8 +208,8 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 				return fmt.Errorf("writing VEX document: %w", err)
 			}
 			if !quiet {
-				fmt.Fprintf(os.Stderr, "  VEX document written to %s (%d vulnerabilities found)\n",
-					vexPath, triageResult.VulnCount)
+				fmt.Fprintf(os.Stderr, "  VEX document written to %s\n", vexPath)
+				vex.PrintSummary(os.Stderr, triageResult)
 			}
 		}
 	} else if !quiet {
