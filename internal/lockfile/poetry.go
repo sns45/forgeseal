@@ -10,26 +10,8 @@ import (
 // PoetryParser handles poetry.lock files (TOML format).
 type PoetryParser struct{}
 
-func (p *PoetryParser) Type() LockfileType      { return TypePoetry }
-func (p *PoetryParser) Filenames() []string      { return []string{"poetry.lock"} }
-
-type poetryLockfile struct {
-	Package []poetryPackage `toml:"package"`
-}
-
-type poetryPackage struct {
-	Name         string                       `toml:"name"`
-	Version      string                       `toml:"version"`
-	Description  string                       `toml:"description"`
-	Optional     bool                         `toml:"optional"`
-	Dependencies map[string]interface{}        `toml:"dependencies"`
-	Files        []poetryFile                  `toml:"files"`
-}
-
-type poetryFile struct {
-	File string `toml:"file"`
-	Hash string `toml:"hash"`
-}
+func (p *PoetryParser) Type() LockfileType { return TypePoetry }
+func (p *PoetryParser) Filenames() []string { return []string{"poetry.lock"} }
 
 func (p *PoetryParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {
 	data, err := io.ReadAll(r)
@@ -37,37 +19,61 @@ func (p *PoetryParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult,
 		return nil, err
 	}
 
-	var lock poetryLockfile
-	if err := toml.Unmarshal(data, &lock); err != nil {
+	// Use map-based decoding to tolerate unknown fields (extras, source, metadata, etc.)
+	var raw map[string]any
+	if err := toml.Unmarshal(data, &raw); err != nil {
 		return nil, err
+	}
+
+	packagesRaw, ok := raw["package"]
+	if !ok {
+		return &LockfileResult{Type: TypePoetry}, nil
+	}
+
+	packageList, ok := packagesRaw.([]any)
+	if !ok {
+		return &LockfileResult{Type: TypePoetry}, nil
 	}
 
 	result := &LockfileResult{Type: TypePoetry}
 
-	for _, pkg := range lock.Package {
-		name := normalizePythonName(pkg.Name)
-		if name == "" || pkg.Version == "" {
+	for _, entry := range packageList {
+		pkgMap, ok := entry.(map[string]any)
+		if !ok {
 			continue
 		}
 
-		p := Package{
+		nameRaw, _ := pkgMap["name"].(string)
+		version, _ := pkgMap["version"].(string)
+		name := normalizePythonName(nameRaw)
+		if name == "" || version == "" {
+			continue
+		}
+
+		pkg := Package{
 			Name:    name,
-			Version: pkg.Version,
+			Version: version,
 		}
 
 		// Extract first hash from files list
-		if len(pkg.Files) > 0 && pkg.Files[0].Hash != "" {
-			p.Integrity = pkg.Files[0].Hash
+		if files, ok := pkgMap["files"].([]any); ok && len(files) > 0 {
+			if f, ok := files[0].(map[string]any); ok {
+				if hash, ok := f["hash"].(string); ok {
+					pkg.Integrity = hash
+				}
+			}
 		}
 
 		// Extract dependency refs
-		for depName := range pkg.Dependencies {
-			p.Dependencies = append(p.Dependencies, DependencyRef{
-				Name: normalizePythonName(depName),
-			})
+		if deps, ok := pkgMap["dependencies"].(map[string]any); ok {
+			for depName := range deps {
+				pkg.Dependencies = append(pkg.Dependencies, DependencyRef{
+					Name: normalizePythonName(depName),
+				})
+			}
 		}
 
-		result.Packages = append(result.Packages, p)
+		result.Packages = append(result.Packages, pkg)
 	}
 
 	return result, nil

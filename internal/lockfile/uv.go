@@ -10,52 +10,8 @@ import (
 // UVParser handles uv.lock files (TOML format from Astral's uv).
 type UVParser struct{}
 
-func (p *UVParser) Type() LockfileType      { return TypeUV }
-func (p *UVParser) Filenames() []string      { return []string{"uv.lock"} }
-
-type uvLockfile struct {
-	Version        int         `toml:"version"`
-	RequiresPython string      `toml:"requires-python"`
-	Package        []uvPackage `toml:"package"`
-}
-
-type uvPackage struct {
-	Name            string              `toml:"name"`
-	Version         string              `toml:"version"`
-	Source          uvSource            `toml:"source"`
-	Dependencies    []uvDep             `toml:"dependencies"`
-	DevDependencies []uvDevDepGroup     `toml:"dev-dependencies"`
-	Wheels          []uvWheel           `toml:"wheels"`
-	Sdist           *uvSdist            `toml:"sdist"`
-}
-
-type uvSource struct {
-	Virtual  string `toml:"virtual"`
-	Editable string `toml:"editable"`
-	Registry string `toml:"registry"`
-}
-
-type uvDep struct {
-	Name      string `toml:"name"`
-	Specifier string `toml:"specifier"`
-}
-
-type uvDevDepGroup struct {
-	Name string  `toml:"name"`
-	// The dev-dependencies in uv.lock are structured as arrays of dep objects
-}
-
-type uvWheel struct {
-	URL  string `toml:"url"`
-	Hash string `toml:"hash"`
-	Size int64  `toml:"size"`
-}
-
-type uvSdist struct {
-	URL  string `toml:"url"`
-	Hash string `toml:"hash"`
-	Size int64  `toml:"size"`
-}
+func (p *UVParser) Type() LockfileType { return TypeUV }
+func (p *UVParser) Filenames() []string { return []string{"uv.lock"} }
 
 func (p *UVParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {
 	data, err := io.ReadAll(r)
@@ -63,54 +19,134 @@ func (p *UVParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, err
 		return nil, err
 	}
 
-	var lock uvLockfile
-	if err := toml.Unmarshal(data, &lock); err != nil {
+	// Use map-based decoding to tolerate unknown fields (manifest, resolution-markers, etc.)
+	var raw map[string]any
+	if err := toml.Unmarshal(data, &raw); err != nil {
 		return nil, err
+	}
+
+	packagesRaw, ok := raw["package"]
+	if !ok {
+		return &LockfileResult{Type: TypeUV}, nil
+	}
+
+	packageList, ok := packagesRaw.([]any)
+	if !ok {
+		return &LockfileResult{Type: TypeUV}, nil
 	}
 
 	result := &LockfileResult{Type: TypeUV}
 
-	// First pass: collect which packages are listed as dev-dependencies
+	// First pass: collect dev dependency names from virtual/editable packages
 	devPackages := make(map[string]bool)
-	for _, pkg := range lock.Package {
-		for _, devGroup := range pkg.DevDependencies {
-			devPackages[normalizePythonName(devGroup.Name)] = true
+	for _, entry := range packageList {
+		pkgMap, ok := entry.(map[string]any)
+		if !ok {
+			continue
+		}
+		// Only scan dev-dependencies from virtual/editable packages (the project itself)
+		if !isVirtualOrEditable(pkgMap) {
+			continue
+		}
+		if devDeps, ok := pkgMap["dev-dependencies"]; ok {
+			collectDevNames(devDeps, devPackages)
 		}
 	}
 
-	for _, pkg := range lock.Package {
+	// Second pass: extract packages
+	for _, entry := range packageList {
+		pkgMap, ok := entry.(map[string]any)
+		if !ok {
+			continue
+		}
+
 		// Skip virtual/editable source packages (the project itself)
-		if pkg.Source.Virtual != "" || pkg.Source.Editable != "" {
+		if isVirtualOrEditable(pkgMap) {
 			continue
 		}
 
-		name := normalizePythonName(pkg.Name)
-		if name == "" || pkg.Version == "" {
+		nameRaw, _ := pkgMap["name"].(string)
+		version, _ := pkgMap["version"].(string)
+		name := normalizePythonName(nameRaw)
+		if name == "" || version == "" {
 			continue
 		}
 
-		p := Package{
+		pkg := Package{
 			Name:    name,
-			Version: pkg.Version,
+			Version: version,
 			Dev:     devPackages[name],
 		}
 
 		// Extract hash from wheels or sdist
-		if len(pkg.Wheels) > 0 && pkg.Wheels[0].Hash != "" {
-			p.Integrity = pkg.Wheels[0].Hash
-		} else if pkg.Sdist != nil && pkg.Sdist.Hash != "" {
-			p.Integrity = pkg.Sdist.Hash
+		if wheels, ok := pkgMap["wheels"].([]any); ok && len(wheels) > 0 {
+			if w, ok := wheels[0].(map[string]any); ok {
+				if hash, ok := w["hash"].(string); ok {
+					pkg.Integrity = hash
+				}
+			}
+		} else if sdist, ok := pkgMap["sdist"].(map[string]any); ok {
+			if hash, ok := sdist["hash"].(string); ok {
+				pkg.Integrity = hash
+			}
 		}
 
 		// Extract dependency refs
-		for _, dep := range pkg.Dependencies {
-			p.Dependencies = append(p.Dependencies, DependencyRef{
-				Name: normalizePythonName(dep.Name),
-			})
+		if deps, ok := pkgMap["dependencies"].([]any); ok {
+			for _, d := range deps {
+				if depMap, ok := d.(map[string]any); ok {
+					if depName, ok := depMap["name"].(string); ok {
+						pkg.Dependencies = append(pkg.Dependencies, DependencyRef{
+							Name: normalizePythonName(depName),
+						})
+					}
+				}
+			}
 		}
 
-		result.Packages = append(result.Packages, p)
+		result.Packages = append(result.Packages, pkg)
 	}
 
 	return result, nil
+}
+
+func isVirtualOrEditable(pkgMap map[string]any) bool {
+	src, ok := pkgMap["source"].(map[string]any)
+	if !ok {
+		return false
+	}
+	if v, ok := src["virtual"].(string); ok && v != "" {
+		return true
+	}
+	if v, ok := src["editable"].(string); ok && v != "" {
+		return true
+	}
+	return false
+}
+
+func collectDevNames(devDeps any, devPackages map[string]bool) {
+	// dev-dependencies can be a map of group name -> array of dep objects
+	// or an array of dep objects depending on uv version
+	switch v := devDeps.(type) {
+	case map[string]any:
+		for _, group := range v {
+			if arr, ok := group.([]any); ok {
+				for _, item := range arr {
+					if dep, ok := item.(map[string]any); ok {
+						if name, ok := dep["name"].(string); ok {
+							devPackages[normalizePythonName(name)] = true
+						}
+					}
+				}
+			}
+		}
+	case []any:
+		for _, item := range v {
+			if dep, ok := item.(map[string]any); ok {
+				if name, ok := dep["name"].(string); ok {
+					devPackages[normalizePythonName(name)] = true
+				}
+			}
+		}
+	}
 }
