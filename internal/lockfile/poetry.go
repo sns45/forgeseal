@@ -3,6 +3,7 @@ package lockfile
 import (
 	"context"
 	"io"
+	"sort"
 
 	toml "github.com/pelletier/go-toml/v2"
 )
@@ -45,7 +46,7 @@ func (p *PoetryParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult,
 
 		nameRaw, _ := pkgMap["name"].(string)
 		version, _ := pkgMap["version"].(string)
-		name := normalizePythonName(nameRaw)
+		name := NormalizePythonName(nameRaw)
 		if name == "" || version == "" {
 			continue
 		}
@@ -64,11 +65,16 @@ func (p *PoetryParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult,
 			}
 		}
 
-		// Extract dependency refs
+		// Extract dependency refs (sorted for deterministic output)
 		if deps, ok := pkgMap["dependencies"].(map[string]any); ok {
+			depNames := make([]string, 0, len(deps))
 			for depName := range deps {
+				depNames = append(depNames, depName)
+			}
+			sort.Strings(depNames)
+			for _, depName := range depNames {
 				pkg.Dependencies = append(pkg.Dependencies, DependencyRef{
-					Name: normalizePythonName(depName),
+					Name: NormalizePythonName(depName),
 				})
 			}
 		}

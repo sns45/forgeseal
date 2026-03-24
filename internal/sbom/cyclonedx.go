@@ -55,15 +55,20 @@ func parseIntegrityHashes(integrity string) *[]cdx.Hash {
 			continue
 		}
 
-		if strings.HasPrefix(part, "sha512-") {
+		if strings.HasPrefix(part, "sha512-") || strings.HasPrefix(part, "sha512:") {
+			val := strings.TrimPrefix(strings.TrimPrefix(part, "sha512-"), "sha512:")
 			hashes = append(hashes, cdx.Hash{
 				Algorithm: cdx.HashAlgoSHA512,
-				Value:     strings.TrimPrefix(part, "sha512-"),
+				Value:     val,
+			})
+		} else if strings.HasPrefix(part, "sha384-") || strings.HasPrefix(part, "sha384:") {
+			val := strings.TrimPrefix(strings.TrimPrefix(part, "sha384-"), "sha384:")
+			hashes = append(hashes, cdx.Hash{
+				Algorithm: cdx.HashAlgoSHA384,
+				Value:     val,
 			})
 		} else if strings.HasPrefix(part, "sha256-") || strings.HasPrefix(part, "sha256:") {
-			val := part
-			val = strings.TrimPrefix(val, "sha256-")
-			val = strings.TrimPrefix(val, "sha256:")
+			val := strings.TrimPrefix(strings.TrimPrefix(part, "sha256-"), "sha256:")
 			hashes = append(hashes, cdx.Hash{
 				Algorithm: cdx.HashAlgoSHA256,
 				Value:     val,

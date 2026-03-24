@@ -125,9 +125,9 @@ func TestNormalizePythonName(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		got := normalizePythonName(tt.input)
+		got := NormalizePythonName(tt.input)
 		if got != tt.want {
-			t.Errorf("normalizePythonName(%q) = %q, want %q", tt.input, got, tt.want)
+			t.Errorf("NormalizePythonName(%q) = %q, want %q", tt.input, got, tt.want)
 		}
 	}
 }

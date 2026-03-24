@@ -1,9 +1,8 @@
 package sbom
 
 import (
-	"strings"
-
 	"github.com/package-url/packageurl-go"
+	"github.com/sn45/forgeseal/internal/lockfile"
 )
 
 // BuildPURL constructs a Package URL for the given ecosystem.
@@ -20,11 +19,10 @@ func BuildPURL(name, version, ecosystem string) string {
 func BuildNPMPURL(name, version string) string {
 	var namespace, pkgName string
 
-	if strings.HasPrefix(name, "@") {
-		parts := strings.SplitN(name, "/", 2)
-		if len(parts) == 2 {
-			namespace = strings.TrimPrefix(parts[0], "@")
-			pkgName = parts[1]
+	if len(name) > 0 && name[0] == '@' {
+		if idx := indexOf(name, '/'); idx > 0 {
+			namespace = name[1:idx]
+			pkgName = name[idx+1:]
 		} else {
 			pkgName = name
 		}
@@ -58,14 +56,17 @@ func BuildPyPIPURL(name, version string) string {
 	return purl.ToString()
 }
 
-// normalizePyPIName normalizes a Python package name per PEP 503:
-// lowercase, replace underscores/dots with hyphens, collapse consecutive hyphens.
+// normalizePyPIName delegates to the canonical PEP 503 implementation in the lockfile package.
 func normalizePyPIName(name string) string {
-	name = strings.ToLower(name)
-	name = strings.ReplaceAll(name, "_", "-")
-	name = strings.ReplaceAll(name, ".", "-")
-	for strings.Contains(name, "--") {
-		name = strings.ReplaceAll(name, "--", "-")
+	return lockfile.NormalizePythonName(name)
+}
+
+// indexOf returns the index of the first occurrence of ch in s, or -1.
+func indexOf(s string, ch byte) int {
+	for i := 0; i < len(s); i++ {
+		if s[i] == ch {
+			return i
+		}
 	}
-	return strings.TrimSpace(name)
+	return -1
 }

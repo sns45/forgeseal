@@ -62,7 +62,7 @@ func (p *PDMParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, er
 
 		nameRaw, _ := pkgMap["name"].(string)
 		version, _ := pkgMap["version"].(string)
-		name := normalizePythonName(nameRaw)
+		name := NormalizePythonName(nameRaw)
 		if name == "" || version == "" {
 			continue
 		}
@@ -95,7 +95,7 @@ func (p *PDMParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, er
 					depName := extractPDMDepName(depStr)
 					if depName != "" {
 						pkg.Dependencies = append(pkg.Dependencies, DependencyRef{
-							Name: normalizePythonName(depName),
+							Name: NormalizePythonName(depName),
 						})
 					}
 				}

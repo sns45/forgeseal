@@ -43,6 +43,8 @@ func (p *RequirementsTxtParser) Parse(ctx context.Context, r io.Reader) (*Lockfi
 		if line == "" || strings.HasPrefix(line, "#") {
 			continue
 		}
+		// Skip pip directives: -r (requirements), -c (constraints), -e (editable),
+		// and long-form options (--find-links, --index-url, --extra-index-url, etc.)
 		if strings.HasPrefix(line, "-r ") || strings.HasPrefix(line, "-c ") ||
 			strings.HasPrefix(line, "-e ") || strings.HasPrefix(line, "--") {
 			continue
@@ -90,7 +92,7 @@ func parseRequirementsLine(line string) *Package {
 		nameRaw = nameRaw[:bracketIdx]
 	}
 
-	name := normalizePythonName(nameRaw)
+	name := NormalizePythonName(nameRaw)
 	if name == "" || version == "" {
 		return nil
 	}
@@ -102,14 +104,15 @@ func parseRequirementsLine(line string) *Package {
 	}
 }
 
-// normalizePythonName normalizes a Python package name per PEP 503:
-// lowercase, replace underscores/dots with hyphens, collapse consecutive hyphens.
-func normalizePythonName(name string) string {
+// NormalizePythonName normalizes a Python package name per PEP 503:
+// lowercase, replace underscores/dots with hyphens, collapse consecutive hyphens,
+// strip leading/trailing hyphens.
+func NormalizePythonName(name string) string {
 	name = strings.ToLower(name)
 	name = strings.ReplaceAll(name, "_", "-")
 	name = strings.ReplaceAll(name, ".", "-")
 	for strings.Contains(name, "--") {
 		name = strings.ReplaceAll(name, "--", "-")
 	}
-	return strings.TrimSpace(name)
+	return strings.Trim(strings.TrimSpace(name), "-")
 }

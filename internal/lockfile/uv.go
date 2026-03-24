@@ -67,7 +67,7 @@ func (p *UVParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, err
 
 		nameRaw, _ := pkgMap["name"].(string)
 		version, _ := pkgMap["version"].(string)
-		name := normalizePythonName(nameRaw)
+		name := NormalizePythonName(nameRaw)
 		if name == "" || version == "" {
 			continue
 		}
@@ -97,7 +97,7 @@ func (p *UVParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, err
 				if depMap, ok := d.(map[string]any); ok {
 					if depName, ok := depMap["name"].(string); ok {
 						pkg.Dependencies = append(pkg.Dependencies, DependencyRef{
-							Name: normalizePythonName(depName),
+							Name: NormalizePythonName(depName),
 						})
 					}
 				}
@@ -134,7 +134,7 @@ func collectDevNames(devDeps any, devPackages map[string]bool) {
 				for _, item := range arr {
 					if dep, ok := item.(map[string]any); ok {
 						if name, ok := dep["name"].(string); ok {
-							devPackages[normalizePythonName(name)] = true
+							devPackages[NormalizePythonName(name)] = true
 						}
 					}
 				}
@@ -144,7 +144,7 @@ func collectDevNames(devDeps any, devPackages map[string]bool) {
 		for _, item := range v {
 			if dep, ok := item.(map[string]any); ok {
 				if name, ok := dep["name"].(string); ok {
-					devPackages[normalizePythonName(name)] = true
+					devPackages[NormalizePythonName(name)] = true
 				}
 			}
 		}
