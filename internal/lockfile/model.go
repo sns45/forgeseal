@@ -8,8 +8,12 @@ const (
 	TypeYarnClassic LockfileType = "yarn-classic"
 	TypeYarnBerry   LockfileType = "yarn-berry"
 	TypePNPM        LockfileType = "pnpm"
-	TypeBunText     LockfileType = "bun-text"
-	TypeBunBinary   LockfileType = "bun-binary"
+	TypeBunText         LockfileType = "bun-text"
+	TypeBunBinary       LockfileType = "bun-binary"
+	TypeRequirementsTxt LockfileType = "requirements-txt"
+	TypePoetry          LockfileType = "poetry"
+	TypePDM             LockfileType = "pdm"
+	TypeUV              LockfileType = "uv"
 )
 
 // Package represents a resolved dependency from a lockfile.

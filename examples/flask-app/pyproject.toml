@@ -1,0 +1,13 @@
+[project]
+name = "flask-demo"
+version = "0.1.0"
+description = "A minimal Flask demo for forgeseal Python lockfile support"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.0.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.1.0",
+]

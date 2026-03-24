@@ -26,17 +26,27 @@ type FileParser interface {
 }
 
 // registry holds parsers in explicit detection priority order.
-// Order: bun.lockb → bun.lock → pnpm-lock.yaml → yarn.lock → package-lock.json
+// Order: bun.lockb > bun.lock > pnpm-lock.yaml > yarn.lock > package-lock.json >
+//        uv.lock > poetry.lock > pdm.lock > requirements.txt
+// JS/TS lockfiles take precedence in mixed projects; among Python lockfiles,
+// uv.lock is preferred (most precise), followed by poetry.lock, pdm.lock,
+// and requirements.txt (least precise).
 var registry []Parser
 
 func init() {
 	registry = []Parser{
+		// JS/TS (higher priority)
 		&BunBinaryParser{},
 		&BunTextParser{},
 		&PNPMParser{},
 		&YarnBerryParser{},  // yarn.lock detection picks between berry/classic by content
 		&YarnClassicParser{},
 		&NPMParser{},
+		// Python (lower priority)
+		&UVParser{},
+		&PoetryParser{},
+		&PDMParser{},
+		&RequirementsTxtParser{},
 	}
 }
 
@@ -64,7 +74,8 @@ type DetectResult struct {
 }
 
 // Detect scans the given directory for lockfiles and returns the best match.
-// Detection order: bun.lockb -> bun.lock -> pnpm-lock.yaml -> yarn.lock -> package-lock.json
+// Detection order: bun.lockb > bun.lock > pnpm-lock.yaml > yarn.lock > package-lock.json >
+// uv.lock > poetry.lock > pdm.lock > requirements.txt
 // If multiple lockfiles are found, the first match is returned and others are listed in warnings.
 func Detect(dir string) (*DetectResult, []string, error) {
 	var found []DetectResult
@@ -84,7 +95,7 @@ func Detect(dir string) (*DetectResult, []string, error) {
 	}
 
 	if len(found) == 0 {
-		return nil, nil, fmt.Errorf("no lockfile found in %s; supported: bun.lockb, bun.lock, pnpm-lock.yaml, yarn.lock, package-lock.json", dir)
+		return nil, nil, fmt.Errorf("no lockfile found in %s; supported: bun.lockb, bun.lock, pnpm-lock.yaml, yarn.lock, package-lock.json, uv.lock, poetry.lock, pdm.lock, requirements.txt", dir)
 	}
 
 	// Special case: if both bun.lockb and bun.lock exist, prefer bun.lock (no CLI dependency).
