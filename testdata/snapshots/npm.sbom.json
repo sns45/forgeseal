@@ -1,0 +1,129 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:00000000-0000-0000-0000-000000000000",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-01-01T00:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "forgeseal",
+          "version": "snapshot-test"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "pkg:npm/unknown@0.0.0",
+      "type": "application",
+      "name": "unknown",
+      "version": "0.0.0",
+      "purl": "pkg:npm/unknown@0.0.0"
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:npm/babel/core@7.24.0",
+      "type": "library",
+      "name": "@babel/core",
+      "version": "7.24.0",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "fQfkg0Gjkza3nf0c7/w6Xf34BW4YvzNfACRLmmb7XRLa6XHdR+K9AlJlxneFfWYf6uhOzuzZVTjF/8KfndZAQ=="
+        }
+      ],
+      "purl": "pkg:npm/babel/core@7.24.0",
+      "externalReferences": [
+        {
+          "url": "https://www.npmjs.com/package/@babel/core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/babel/helper-compilation-targets@7.23.6",
+      "type": "library",
+      "name": "@babel/helper-compilation-targets",
+      "version": "7.23.6",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "9JB548GZoQVmzrFgp8o7KxdgkTGm6xs9DW0o/Pim72UDjzr0HQtiioJHXg5u/sJGRvFORYDtph0YBthE6NQE=="
+        }
+      ],
+      "purl": "pkg:npm/babel/helper-compilation-targets@7.23.6",
+      "externalReferences": [
+        {
+          "url": "https://www.npmjs.com/package/@babel/helper-compilation-targets",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/lodash@4.17.21",
+      "type": "library",
+      "name": "lodash",
+      "version": "4.17.21",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5cvA=="
+        }
+      ],
+      "purl": "pkg:npm/lodash@4.17.21",
+      "externalReferences": [
+        {
+          "url": "https://www.npmjs.com/package/lodash",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/prettier@3.2.5",
+      "type": "library",
+      "name": "prettier",
+      "version": "3.2.5",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgLeUXJDg6ViHjUoZUvek7H62IAG2MBCbxA=="
+        }
+      ],
+      "purl": "pkg:npm/prettier@3.2.5",
+      "externalReferences": [
+        {
+          "url": "https://www.npmjs.com/package/prettier",
+          "type": "distribution"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:npm/babel/core@7.24.0",
+      "dependsOn": [
+        "pkg:npm/babel/helper-compilation-targets@7.23.6"
+      ]
+    },
+    {
+      "ref": "pkg:npm/babel/helper-compilation-targets@7.23.6"
+    },
+    {
+      "ref": "pkg:npm/lodash@4.17.21"
+    },
+    {
+      "ref": "pkg:npm/prettier@3.2.5"
+    },
+    {
+      "ref": "pkg:npm/unknown@0.0.0",
+      "dependsOn": [
+        "pkg:npm/babel/core@7.24.0",
+        "pkg:npm/babel/helper-compilation-targets@7.23.6",
+        "pkg:npm/lodash@4.17.21",
+        "pkg:npm/prettier@3.2.5"
+      ]
+    }
+  ]
+}
