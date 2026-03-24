@@ -10,8 +10,8 @@ import (
 )
 
 // mapComponent converts a lockfile.Package to a CycloneDX component.
-func mapComponent(pkg lockfile.Package) cdx.Component {
-	purl := BuildPURL(pkg.Name, pkg.Version)
+func mapComponent(pkg lockfile.Package, ecosystem string) cdx.Component {
+	purl := BuildPURL(pkg.Name, pkg.Version, ecosystem)
 
 	comp := cdx.Component{
 		Type:    cdx.ComponentTypeLibrary,
@@ -27,10 +27,17 @@ func mapComponent(pkg lockfile.Package) cdx.Component {
 	}
 
 	// External references
+	var registryURL string
+	if ecosystem == "pypi" {
+		registryURL = "https://pypi.org/project/" + normalizePyPIName(pkg.Name) + "/"
+	} else {
+		registryURL = npmRegistryURL(pkg.Name)
+	}
+
 	comp.ExternalReferences = &[]cdx.ExternalReference{
 		{
 			Type: cdx.ERTypeDistribution,
-			URL:  npmRegistryURL(pkg.Name),
+			URL:  registryURL,
 		},
 	}
 
@@ -48,15 +55,23 @@ func parseIntegrityHashes(integrity string) *[]cdx.Hash {
 			continue
 		}
 
-		if strings.HasPrefix(part, "sha512-") {
+		if strings.HasPrefix(part, "sha512-") || strings.HasPrefix(part, "sha512:") {
+			val := strings.TrimPrefix(strings.TrimPrefix(part, "sha512-"), "sha512:")
 			hashes = append(hashes, cdx.Hash{
 				Algorithm: cdx.HashAlgoSHA512,
-				Value:     strings.TrimPrefix(part, "sha512-"),
+				Value:     val,
 			})
-		} else if strings.HasPrefix(part, "sha256-") {
+		} else if strings.HasPrefix(part, "sha384-") || strings.HasPrefix(part, "sha384:") {
+			val := strings.TrimPrefix(strings.TrimPrefix(part, "sha384-"), "sha384:")
+			hashes = append(hashes, cdx.Hash{
+				Algorithm: cdx.HashAlgoSHA384,
+				Value:     val,
+			})
+		} else if strings.HasPrefix(part, "sha256-") || strings.HasPrefix(part, "sha256:") {
+			val := strings.TrimPrefix(strings.TrimPrefix(part, "sha256-"), "sha256:")
 			hashes = append(hashes, cdx.Hash{
 				Algorithm: cdx.HashAlgoSHA256,
-				Value:     strings.TrimPrefix(part, "sha256-"),
+				Value:     val,
 			})
 		} else if strings.HasPrefix(part, "sha1-") {
 			hashes = append(hashes, cdx.Hash{
@@ -84,7 +99,7 @@ func hashContent(data []byte) string {
 }
 
 // mapDependencies builds the CycloneDX dependencies array from lockfile packages.
-func mapDependencies(packages []lockfile.Package, rootRef string) *[]cdx.Dependency {
+func mapDependencies(packages []lockfile.Package, rootRef string, ecosystem string) *[]cdx.Dependency {
 	deps := make([]cdx.Dependency, 0, len(packages)+1)
 
 	// Root depends on all direct (non-transitive) packages
@@ -94,7 +109,7 @@ func mapDependencies(packages []lockfile.Package, rootRef string) *[]cdx.Depende
 	purlMap := make(map[string]string) // name -> purl
 
 	for _, pkg := range packages {
-		purl := BuildPURL(pkg.Name, pkg.Version)
+		purl := BuildPURL(pkg.Name, pkg.Version, ecosystem)
 		purlMap[pkg.Name] = purl
 		rootDeps = append(rootDeps, purl)
 	}
@@ -105,7 +120,7 @@ func mapDependencies(packages []lockfile.Package, rootRef string) *[]cdx.Depende
 	})
 
 	for _, pkg := range packages {
-		purl := BuildPURL(pkg.Name, pkg.Version)
+		purl := BuildPURL(pkg.Name, pkg.Version, ecosystem)
 		var pkgDeps []string
 		for _, dep := range pkg.Dependencies {
 			if depPURL, ok := purlMap[dep.Name]; ok {

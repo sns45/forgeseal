@@ -1,6 +1,6 @@
 # forgeseal
 
-Supply chain security for JavaScript and TypeScript projects. Generates CycloneDX SBOMs from lockfiles, signs them with Sigstore (keyless), produces SLSA provenance attestations, and manages VEX vulnerability documents.
+Supply chain security for JavaScript, TypeScript, and Python projects. Generates CycloneDX SBOMs from lockfiles, signs them with Sigstore (keyless), produces SLSA provenance attestations, and manages VEX vulnerability documents.
 
 Built for EU Cyber Resilience Act (CRA) compliance. forgeseal's own releases are attested by forgeseal.
 
@@ -8,7 +8,7 @@ Built for EU Cyber Resilience Act (CRA) compliance. forgeseal's own releases are
 
 | Capability | Description |
 |---|---|
-| **SBOM Generation** | CycloneDX v1.4/v1.5/v1.6 from any JS/TS lockfile (JSON and XML output) |
+| **SBOM Generation** | CycloneDX v1.4/v1.5/v1.6 from any JS/TS/Python lockfile (JSON and XML output) |
 | **Sigstore Signing** | Keyless signing via Fulcio + Rekor transparency log (OIDC identity) |
 | **SLSA Provenance** | In-toto attestations with SLSA v1 provenance predicate |
 | **VEX Management** | OpenVEX v0.2 document CRUD, automated triage via OSV.dev, CVSS severity classification |
@@ -25,10 +25,16 @@ Built for EU Cyber Resilience Act (CRA) compliance. forgeseal's own releases are
 | pnpm | `pnpm-lock.yaml` | v6 and v9 schemas |
 | Bun | `bun.lock` | JSONC text format (Bun v1.2+) |
 | Bun (binary) | `bun.lockb` | Shells out to `bun` CLI; prefers `bun.lock` when both exist |
+| pip | `requirements.txt` | Pinned (`==`) dependencies with optional hashes |
+| Poetry | `poetry.lock` | TOML v2 format with full dependency graph |
+| PDM | `pdm.lock` | TOML format with groups based dev detection |
+| uv | `uv.lock` | TOML format (Astral uv v0.1+) |
 
-Detection priority: `bun.lockb` > `bun.lock` > `pnpm-lock.yaml` > `yarn.lock` > `package-lock.json`. Yarn v1 vs Berry is determined by content inspection.
+Detection priority: `bun.lockb` > `bun.lock` > `pnpm-lock.yaml` > `yarn.lock` > `package-lock.json` > `uv.lock` > `poetry.lock` > `pdm.lock` > `requirements.txt`. JS/TS lockfiles take precedence in mixed projects. Among Python lockfiles, uv.lock is preferred (most precise), followed by poetry.lock, pdm.lock, and requirements.txt (least precise). Yarn v1 vs Berry is determined by content inspection.
 
 **Note on Yarn Berry hashes:** Yarn Berry uses a proprietary checksum format that is not compatible with standard SRI hashes or CycloneDX hash algorithms. Components from Yarn Berry lockfiles will be included in the SBOM without integrity hashes. This is a format limitation, not a forgeseal bug.
+
+**Python PURL normalization:** PyPI package names are normalized per PEP 503 (lowercase, underscores and dots replaced with hyphens). This ensures correct lookups against OSV.dev for vulnerability triage.
 
 ## Installation
 
@@ -54,8 +60,11 @@ Requires Go 1.23+ for building from source.
 ## Quick Start
 
 ```bash
-# Generate an SBOM from the current directory
+# Generate an SBOM from a JS/TS project
 forgeseal sbom --dir .
+
+# Generate an SBOM from a Python project (uv, poetry, pdm, or pip)
+forgeseal sbom --dir ./my-python-app
 
 # Full pipeline: SBOM + sign + attest + VEX triage
 forgeseal pipeline --dir . --output-dir ./forgeseal-output --vex-triage
@@ -311,8 +320,8 @@ cmd/forgeseal/          Entrypoint
 internal/
   cli/                  Cobra commands (sbom, sign, attest, vex, verify, pipeline)
   config/               Viper configuration loading
-  lockfile/             6 parsers + auto-detection + domain types
-  sbom/                 CycloneDX BOM generation, PURL construction, dependency mapping
+  lockfile/             10 parsers (6 JS/TS + 4 Python) + auto-detection + domain types
+  sbom/                 CycloneDX BOM generation, ecosystem aware PURL construction (npm + PyPI), dependency mapping
   signing/              Sigstore signer interface, bundle serialization
   provenance/           SLSA v1 attestation builder, CI environment detection
   vex/                  OpenVEX CRUD, OSV.dev client, CycloneDX VEX embedding
@@ -323,11 +332,11 @@ internal/
 
 **Parser interface.** Each lockfile format implements `Parser` with `Parse(ctx, io.Reader)`, `Type()`, and `Filenames()`. Binary formats (bun.lockb) additionally implement `FileParser` with `ParseFile(ctx, path)`. Detection iterates a priority ordered registry and uses content inspection for yarn v1 vs Berry disambiguation.
 
-**PURL construction.** Package URLs follow the PURL spec: scoped packages like `@babel/core@7.24.0` become `pkg:npm/babel/core@7.24.0` (the `@` prefix is stripped from the namespace per spec).
+**PURL construction.** Package URLs follow the PURL spec. npm scoped packages like `@babel/core@7.24.0` become `pkg:npm/babel/core@7.24.0` (the `@` prefix is stripped from the namespace per spec). PyPI packages use `pkg:pypi/` with PEP 503 normalized names (e.g., `Flask` becomes `pkg:pypi/flask@3.0.2`). The ecosystem is determined automatically from the lockfile type.
 
 **Signing abstraction.** The `Signer` interface provides `SignBlob` (raw content) and `SignDSSE` (in-toto envelope). The current implementation generates ephemeral ECDSA P-256 signatures. Full Sigstore integration (Fulcio certificate issuance + Rekor log recording) can be added by depending on `sigstore-go` without changing the interface.
 
-**VEX triage.** PURLs extracted from the SBOM are batched in groups of 1000 and sent to the OSV.dev `/v1/querybatch` endpoint. Each vulnerability is classified by CVSS v3 severity (critical 9.0+, high 7.0+, medium 4.0+, low 0.1+). Results are mapped to VEX stubs with severity metadata. The `--fail-on` flag enables CI gating by exiting non-zero when vulnerabilities meet or exceed the specified threshold.
+**VEX triage.** PURLs extracted from the SBOM are batched in groups of 1000 and sent to the OSV.dev `/v1/querybatch` endpoint. Both npm and PyPI PURLs are supported; the correct ecosystem is encoded in the PURL type prefix. Each vulnerability is classified by CVSS v3 severity (critical 9.0+, high 7.0+, medium 4.0+, low 0.1+). Results are mapped to VEX stubs with severity metadata. The `--fail-on` flag enables CI gating by exiting non-zero when vulnerabilities meet or exceed the specified threshold.
 
 ## Output Artifacts
 

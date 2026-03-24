@@ -1,0 +1,2623 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:00000000-0000-0000-0000-000000000000",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-01-01T00:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "forgeseal",
+          "version": "snapshot-test"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "pkg:pypi/unknown@0.0.0",
+      "type": "application",
+      "name": "unknown",
+      "version": "0.0.0",
+      "purl": "pkg:pypi/unknown@0.0.0"
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:pypi/annotated-types@0.7.0",
+      "type": "library",
+      "name": "annotated-types",
+      "version": "0.7.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"
+        }
+      ],
+      "purl": "pkg:pypi/annotated-types@0.7.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/annotated-types/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/anyio@4.10.0",
+      "type": "library",
+      "name": "anyio",
+      "version": "4.10.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "60e474ac86736bbfd6f210f7a61218939c318f43f9972497381f1c5e930ed3d1"
+        }
+      ],
+      "purl": "pkg:pypi/anyio@4.10.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/anyio/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/asttokens@3.0.0",
+      "type": "library",
+      "name": "asttokens",
+      "version": "3.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e3078351a059199dd5138cb1c706e6430c05eff2ff136af5eb4790f9d28932e2"
+        }
+      ],
+      "purl": "pkg:pypi/asttokens@3.0.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/asttokens/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/attrs@25.3.0",
+      "type": "library",
+      "name": "attrs",
+      "version": "25.3.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3"
+        }
+      ],
+      "purl": "pkg:pypi/attrs@25.3.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/attrs/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/babel@2.17.0",
+      "type": "library",
+      "name": "babel",
+      "version": "2.17.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4d0b53093fdfb4b21c92b5213dba5a1b23885afa8383709427046b21c366e5f2"
+        }
+      ],
+      "purl": "pkg:pypi/babel@2.17.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/babel/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/backrefs@5.9",
+      "type": "library",
+      "name": "backrefs",
+      "version": "5.9",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "db8e8ba0e9de81fcd635f440deab5ae5f2591b54ac1ebe0550a2ca063488cd9f"
+        }
+      ],
+      "purl": "pkg:pypi/backrefs@5.9",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/backrefs/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/black@26.3.1",
+      "type": "library",
+      "name": "black",
+      "version": "26.3.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "86a8b5035fce64f5dcd1b794cf8ec4d31fe458cf6ce3986a30deb434df82a1d2"
+        }
+      ],
+      "purl": "pkg:pypi/black@26.3.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/black/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/cairocffi@1.7.1",
+      "type": "library",
+      "name": "cairocffi",
+      "version": "1.7.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9803a0e11f6c962f3b0ae2ec8ba6ae45e957a146a004697a1ac1bbf16b073b3f"
+        }
+      ],
+      "purl": "pkg:pypi/cairocffi@1.7.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/cairocffi/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/cairosvg@2.8.2",
+      "type": "library",
+      "name": "cairosvg",
+      "version": "2.8.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "eab46dad4674f33267a671dce39b64be245911c901c70d65d2b7b0821e852bf5"
+        }
+      ],
+      "purl": "pkg:pypi/cairosvg@2.8.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/cairosvg/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/certifi@2025.8.3",
+      "type": "library",
+      "name": "certifi",
+      "version": "2025.8.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f6c12493cfb1b06ba2ff328595af9350c65d6644968e5d3a2ffd78699af217a5"
+        }
+      ],
+      "purl": "pkg:pypi/certifi@2025.8.3",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/certifi/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/cffi@2.0.0",
+      "type": "library",
+      "name": "cffi",
+      "version": "2.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0cf2d91ecc3fcc0625c2c530fe004f82c110405f101548512cce44322fa8ac44"
+        }
+      ],
+      "purl": "pkg:pypi/cffi@2.0.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/cffi/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/charset-normalizer@3.4.3",
+      "type": "library",
+      "name": "charset-normalizer",
+      "version": "3.4.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fb7f67a1bfa6e40b438170ebdc8158b78dc465a5a67b6dde178a46987b244a72"
+        }
+      ],
+      "purl": "pkg:pypi/charset-normalizer@3.4.3",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/charset-normalizer/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/click@8.2.1",
+      "type": "library",
+      "name": "click",
+      "version": "8.2.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "61a3265b914e850b85317d0b3109c7f8cd35a670f963866005d6ef1d5175a12b"
+        }
+      ],
+      "purl": "pkg:pypi/click@8.2.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/click/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/colorama@0.4.6",
+      "type": "library",
+      "name": "colorama",
+      "version": "0.4.6",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+        }
+      ],
+      "purl": "pkg:pypi/colorama@0.4.6",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/colorama/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/coverage@7.13.0",
+      "type": "library",
+      "name": "coverage",
+      "version": "7.13.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "02d9fb9eccd48f6843c98a37bd6817462f130b86da8660461e8f5e54d4c06070"
+        }
+      ],
+      "purl": "pkg:pypi/coverage@7.13.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/coverage/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/cryptography@46.0.5",
+      "type": "library",
+      "name": "cryptography",
+      "version": "46.0.5",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "351695ada9ea9618b3500b490ad54c739860883df6c1f555e088eaf25b1bbaad"
+        }
+      ],
+      "purl": "pkg:pypi/cryptography@46.0.5",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/cryptography/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/cssselect2@0.9.0",
+      "type": "library",
+      "name": "cssselect2",
+      "version": "0.9.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6a99e5f91f9a016a304dd929b0966ca464bcfda15177b6fb4a118fc0fb5d9563"
+        }
+      ],
+      "purl": "pkg:pypi/cssselect2@0.9.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/cssselect2/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/defusedxml@0.7.1",
+      "type": "library",
+      "name": "defusedxml",
+      "version": "0.7.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"
+        }
+      ],
+      "purl": "pkg:pypi/defusedxml@0.7.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/defusedxml/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/dirty-equals@0.9.0",
+      "type": "library",
+      "name": "dirty-equals",
+      "version": "0.9.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ff4d027f5cfa1b69573af00f7ba9043ea652dbdce3fe5cbe828e478c7346db9c"
+        }
+      ],
+      "purl": "pkg:pypi/dirty-equals@0.9.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/dirty-equals/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/exceptiongroup@1.3.0",
+      "type": "library",
+      "name": "exceptiongroup",
+      "version": "1.3.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4d111e6e0c13d0644cad6ddaa7ed0261a0b36971f6d23e7ec9b4b9097da78a10"
+        }
+      ],
+      "purl": "pkg:pypi/exceptiongroup@1.3.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/exceptiongroup/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/execnet@2.1.1",
+      "type": "library",
+      "name": "execnet",
+      "version": "2.1.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "26dee51f1b80cebd6d0ca8e74dd8745419761d3bef34163928cbebbdc4749fdc"
+        }
+      ],
+      "purl": "pkg:pypi/execnet@2.1.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/execnet/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/executing@2.2.1",
+      "type": "library",
+      "name": "executing",
+      "version": "2.2.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "760643d3452b4d777d295bb167ccc74c64a81df23fb5e08eff250c425a4b2017"
+        }
+      ],
+      "purl": "pkg:pypi/executing@2.2.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/executing/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/ghp-import@2.1.0",
+      "type": "library",
+      "name": "ghp-import",
+      "version": "2.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8337dd7b50877f163d4c0289bc1f1c7f127550241988d568c1db512c4324a619"
+        }
+      ],
+      "purl": "pkg:pypi/ghp-import@2.1.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/ghp-import/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/griffe@1.14.0",
+      "type": "library",
+      "name": "griffe",
+      "version": "1.14.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0e9d52832cccf0f7188cfe585ba962d2674b241c01916d780925df34873bceb0"
+        }
+      ],
+      "purl": "pkg:pypi/griffe@1.14.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/griffe/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/h11@0.16.0",
+      "type": "library",
+      "name": "h11",
+      "version": "0.16.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86"
+        }
+      ],
+      "purl": "pkg:pypi/h11@0.16.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/h11/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/httpcore@1.0.9",
+      "type": "library",
+      "name": "httpcore",
+      "version": "1.0.9",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55"
+        }
+      ],
+      "purl": "pkg:pypi/httpcore@1.0.9",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/httpcore/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/httpx-sse@0.4.1",
+      "type": "library",
+      "name": "httpx-sse",
+      "version": "0.4.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "cba42174344c3a5b06f255ce65b350880f962d99ead85e776f23c6618a377a37"
+        }
+      ],
+      "purl": "pkg:pypi/httpx-sse@0.4.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/httpx-sse/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/httpx@0.28.1",
+      "type": "library",
+      "name": "httpx",
+      "version": "0.28.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad"
+        }
+      ],
+      "purl": "pkg:pypi/httpx@0.28.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/httpx/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/idna@3.10",
+      "type": "library",
+      "name": "idna",
+      "version": "3.10",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3"
+        }
+      ],
+      "purl": "pkg:pypi/idna@3.10",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/idna/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/iniconfig@2.1.0",
+      "type": "library",
+      "name": "iniconfig",
+      "version": "2.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9deba5723312380e77435581c6bf4935c94cbfab9b1ed33ef8d238ea168eb760"
+        }
+      ],
+      "purl": "pkg:pypi/iniconfig@2.1.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/iniconfig/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/inline-snapshot@0.28.0",
+      "type": "library",
+      "name": "inline-snapshot",
+      "version": "0.28.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9988f82ee5e719445bbc437d0dc01e0a3c4c94f0ba910f8ad8b573cf15aa8348"
+        }
+      ],
+      "purl": "pkg:pypi/inline-snapshot@0.28.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/inline-snapshot/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/jinja2@3.1.6",
+      "type": "library",
+      "name": "jinja2",
+      "version": "3.1.6",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67"
+        }
+      ],
+      "purl": "pkg:pypi/jinja2@3.1.6",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/jinja2/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "type": "library",
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/jsonschema-specifications/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/jsonschema@4.25.1",
+      "type": "library",
+      "name": "jsonschema",
+      "version": "4.25.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3fba0169e345c7175110351d456342c364814cfcf3b964ba4587f22915230a63"
+        }
+      ],
+      "purl": "pkg:pypi/jsonschema@4.25.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/jsonschema/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/markdown-it-py@4.0.0",
+      "type": "library",
+      "name": "markdown-it-py",
+      "version": "4.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "87327c59b172c5011896038353a81343b6754500a08cd7a4973bb48c6d578147"
+        }
+      ],
+      "purl": "pkg:pypi/markdown-it-py@4.0.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/markdown-it-py/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/markdown@3.9",
+      "type": "library",
+      "name": "markdown",
+      "version": "3.9",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9f4d91ed810864ea88a6f32c07ba8bee1346c0cc1f6b1f9f6c822f2a9667d280"
+        }
+      ],
+      "purl": "pkg:pypi/markdown@3.9",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/markdown/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/markupsafe@3.0.2",
+      "type": "library",
+      "name": "markupsafe",
+      "version": "3.0.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7e94c425039cde14257288fd61dcfb01963e658efbc0ff54f5306b06054700f8"
+        }
+      ],
+      "purl": "pkg:pypi/markupsafe@3.0.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/markupsafe/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mdurl@0.1.2",
+      "type": "library",
+      "name": "mdurl",
+      "version": "0.1.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"
+        }
+      ],
+      "purl": "pkg:pypi/mdurl@0.1.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mdurl/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mergedeep@1.3.4",
+      "type": "library",
+      "name": "mergedeep",
+      "version": "1.3.4",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "70775750742b25c0d8f36c55aed03d24c3384d17c951b3175d898bd778ef0307"
+        }
+      ],
+      "purl": "pkg:pypi/mergedeep@1.3.4",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mergedeep/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocs-autorefs@1.4.3",
+      "type": "library",
+      "name": "mkdocs-autorefs",
+      "version": "1.4.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "469d85eb3114801d08e9cc55d102b3ba65917a869b893403b8987b601cf55dc9"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocs-autorefs@1.4.3",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocs-autorefs/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocs-gen-files@0.6.0",
+      "type": "library",
+      "name": "mkdocs-gen-files",
+      "version": "0.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "815af15f3e2dbfda379629c1b95c02c8e6f232edf2a901186ea3b204ab1135b2"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocs-gen-files@0.6.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocs-gen-files/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocs-get-deps@0.2.0",
+      "type": "library",
+      "name": "mkdocs-get-deps",
+      "version": "0.2.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2bf11d0b133e77a0dd036abeeb06dec8775e46efa526dc70667d8863eefc6134"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocs-get-deps@0.2.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocs-get-deps/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocs-glightbox@0.5.1",
+      "type": "library",
+      "name": "mkdocs-glightbox",
+      "version": "0.5.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f47af0daff164edf8d36e553338425be3aab6e34b987d9cbbc2ae7819a98cb01"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocs-glightbox@0.5.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocs-glightbox/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocs-literate-nav@0.6.2",
+      "type": "library",
+      "name": "mkdocs-literate-nav",
+      "version": "0.6.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0a6489a26ec7598477b56fa112056a5e3a6c15729f0214bea8a4dbc55bd5f630"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocs-literate-nav@0.6.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocs-literate-nav/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocs-material-extensions@1.3.1",
+      "type": "library",
+      "name": "mkdocs-material-extensions",
+      "version": "1.3.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "adff8b62700b25cb77b53358dad940f3ef973dd6db797907c49e3c2ef3ab4e31"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocs-material-extensions@1.3.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocs-material-extensions/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocs-material@9.7.2",
+      "type": "library",
+      "name": "mkdocs-material",
+      "version": "9.7.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9bf6f53452d4a4d527eac3cef3f92b7b6fc4931c55d57766a7d87890d47e1b92"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocs-material@9.7.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocs-material/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocs@1.6.1",
+      "type": "library",
+      "name": "mkdocs",
+      "version": "1.6.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "db91759624d1647f3f34aa0c3f327dd2601beae39a366d6e064c03468d35c20e"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocs@1.6.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocs/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocstrings-python@2.0.1",
+      "type": "library",
+      "name": "mkdocstrings-python",
+      "version": "2.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "66ecff45c5f8b71bf174e11d49afc845c2dfc7fc0ab17a86b6b337e0f24d8d90"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocstrings-python@2.0.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocstrings-python/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mkdocstrings@0.30.0",
+      "type": "library",
+      "name": "mkdocstrings",
+      "version": "0.30.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ae9e4a0d8c1789697ac776f2e034e2ddd71054ae1cf2c2bb1433ccfd07c226f2"
+        }
+      ],
+      "purl": "pkg:pypi/mkdocstrings@0.30.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mkdocstrings/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/mypy-extensions@1.1.0",
+      "type": "library",
+      "name": "mypy-extensions",
+      "version": "1.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505"
+        }
+      ],
+      "purl": "pkg:pypi/mypy-extensions@1.1.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/mypy-extensions/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/nodeenv@1.9.1",
+      "type": "library",
+      "name": "nodeenv",
+      "version": "1.9.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ba11c9782d29c27c70ffbdda2d7415098754709be8a7056d79a737cd901155c9"
+        }
+      ],
+      "purl": "pkg:pypi/nodeenv@1.9.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/nodeenv/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/outcome@1.3.0.post0",
+      "type": "library",
+      "name": "outcome",
+      "version": "1.3.0.post0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b"
+        }
+      ],
+      "purl": "pkg:pypi/outcome@1.3.0.post0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/outcome/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/packaging@25.0",
+      "type": "library",
+      "name": "packaging",
+      "version": "25.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484"
+        }
+      ],
+      "purl": "pkg:pypi/packaging@25.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/packaging/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/paginate@0.5.7",
+      "type": "library",
+      "name": "paginate",
+      "version": "0.5.7",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b885e2af73abcf01d9559fd5216b57ef722f8c42affbb63942377668e35c7591"
+        }
+      ],
+      "purl": "pkg:pypi/paginate@0.5.7",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/paginate/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pathspec@1.0.4",
+      "type": "library",
+      "name": "pathspec",
+      "version": "1.0.4",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "fb6ae2fd4e7c921a165808a552060e722767cfa526f99ca5156ed2ce45a5c723"
+        }
+      ],
+      "purl": "pkg:pypi/pathspec@1.0.4",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pathspec/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pillow@12.1.1",
+      "type": "library",
+      "name": "pillow",
+      "version": "12.1.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "1f1625b72740fdda5d77b4def688eb8fd6490975d06b909fd19f13f391e077e0"
+        }
+      ],
+      "purl": "pkg:pypi/pillow@12.1.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pillow/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/platformdirs@4.4.0",
+      "type": "library",
+      "name": "platformdirs",
+      "version": "4.4.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "abd01743f24e5287cd7a5db3752faf1a2d65353f38ec26d98e25a6db65958c85"
+        }
+      ],
+      "purl": "pkg:pypi/platformdirs@4.4.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/platformdirs/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pluggy@1.6.0",
+      "type": "library",
+      "name": "pluggy",
+      "version": "1.6.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746"
+        }
+      ],
+      "purl": "pkg:pypi/pluggy@1.6.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pluggy/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pycparser@2.23",
+      "type": "library",
+      "name": "pycparser",
+      "version": "2.23",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e5c6e8d3fbad53479cab09ac03729e0a9faf2bee3db8208a550daf5af81a5934"
+        }
+      ],
+      "purl": "pkg:pypi/pycparser@2.23",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pycparser/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pydantic-core@2.41.5",
+      "type": "library",
+      "name": "pydantic-core",
+      "version": "2.41.5",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "77b63866ca88d804225eaa4af3e664c5faf3568cea95360d21f4725ab6e07146"
+        }
+      ],
+      "purl": "pkg:pypi/pydantic-core@2.41.5",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pydantic-core/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pydantic-settings@2.10.1",
+      "type": "library",
+      "name": "pydantic-settings",
+      "version": "2.10.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a60952460b99cf661dc25c29c0ef171721f98bfcb52ef8d9ea4c943d7c8cc796"
+        }
+      ],
+      "purl": "pkg:pypi/pydantic-settings@2.10.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pydantic-settings/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pydantic@2.12.5",
+      "type": "library",
+      "name": "pydantic",
+      "version": "2.12.5",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e561593fccf61e8a20fc46dfc2dfe075b8be7d0188df33f221ad1f0139180f9d"
+        }
+      ],
+      "purl": "pkg:pypi/pydantic@2.12.5",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pydantic/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pygments@2.19.2",
+      "type": "library",
+      "name": "pygments",
+      "version": "2.19.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b"
+        }
+      ],
+      "purl": "pkg:pypi/pygments@2.19.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pygments/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pyjwt@2.10.1",
+      "type": "library",
+      "name": "pyjwt",
+      "version": "2.10.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "dcdd193e30abefd5debf142f9adfcdd2b58004e644f25406ffaebd50bd98dacb"
+        }
+      ],
+      "purl": "pkg:pypi/pyjwt@2.10.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pyjwt/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pymdown-extensions@10.16.1",
+      "type": "library",
+      "name": "pymdown-extensions",
+      "version": "10.16.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d6ba157a6c03146a7fb122b2b9a121300056384eafeec9c9f9e584adfdb2a32d"
+        }
+      ],
+      "purl": "pkg:pypi/pymdown-extensions@10.16.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pymdown-extensions/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pyright@1.1.405",
+      "type": "library",
+      "name": "pyright",
+      "version": "1.1.405",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a2cb13700b5508ce8e5d4546034cb7ea4aedb60215c6c33f56cec7f53996035a"
+        }
+      ],
+      "purl": "pkg:pypi/pyright@1.1.405",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pyright/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pytest-examples@0.0.18",
+      "type": "library",
+      "name": "pytest-examples",
+      "version": "0.0.18",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "86c195b98c4e55049a0df3a0a990ca89123b7280473ab57608eecc6c47bcfe9c"
+        }
+      ],
+      "purl": "pkg:pypi/pytest-examples@0.0.18",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pytest-examples/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pytest-flakefinder@1.1.0",
+      "type": "library",
+      "name": "pytest-flakefinder",
+      "version": "1.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "741e0e8eea427052f5b8c89c2b3c3019a50c39a59ce4df6a305a2c2d9ba2bd13"
+        }
+      ],
+      "purl": "pkg:pypi/pytest-flakefinder@1.1.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pytest-flakefinder/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pytest-pretty@1.3.0",
+      "type": "library",
+      "name": "pytest-pretty",
+      "version": "1.3.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "074b9d5783cef9571494543de07e768a4dda92a3e85118d6c7458c67297159b7"
+        }
+      ],
+      "purl": "pkg:pypi/pytest-pretty@1.3.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pytest-pretty/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pytest-xdist@3.8.0",
+      "type": "library",
+      "name": "pytest-xdist",
+      "version": "3.8.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "202ca578cfeb7370784a8c33d6d05bc6e13b4f25b5053c30a152269fd10f0b88"
+        }
+      ],
+      "purl": "pkg:pypi/pytest-xdist@3.8.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pytest-xdist/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pytest@8.4.2",
+      "type": "library",
+      "name": "pytest",
+      "version": "8.4.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "872f880de3fc3a5bdc88a11b39c9710c3497a547cfa9320bc3c5e62fbf272e79"
+        }
+      ],
+      "purl": "pkg:pypi/pytest@8.4.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pytest/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/python-dateutil@2.9.0.post0",
+      "type": "library",
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
+        }
+      ],
+      "purl": "pkg:pypi/python-dateutil@2.9.0.post0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/python-dateutil/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/python-dotenv@1.1.1",
+      "type": "library",
+      "name": "python-dotenv",
+      "version": "1.1.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "31f23644fe2602f88ff55e1f5c79ba497e01224ee7737937930c448e4d0e24dc"
+        }
+      ],
+      "purl": "pkg:pypi/python-dotenv@1.1.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/python-dotenv/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/python-multipart@0.0.22",
+      "type": "library",
+      "name": "python-multipart",
+      "version": "0.0.22",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2b2cd894c83d21bf49d702499531c7bafd057d730c201782048f7945d82de155"
+        }
+      ],
+      "purl": "pkg:pypi/python-multipart@0.0.22",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/python-multipart/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pytokens@0.4.1",
+      "type": "library",
+      "name": "pytokens",
+      "version": "0.4.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2a44ed93ea23415c54f3face3b65ef2b844d96aeb3455b8a69b3df6beab6acc5"
+        }
+      ],
+      "purl": "pkg:pypi/pytokens@0.4.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pytokens/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pywin32@311",
+      "type": "library",
+      "name": "pywin32",
+      "version": "311",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d03ff496d2a0cd4a5893504789d4a15399133fe82517455e78bad62efbb7f0a3"
+        }
+      ],
+      "purl": "pkg:pypi/pywin32@311",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pywin32/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pyyaml-env-tag@1.1",
+      "type": "library",
+      "name": "pyyaml-env-tag",
+      "version": "1.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "17109e1a528561e32f026364712fee1264bc2ea6715120891174ed1b980d2e04"
+        }
+      ],
+      "purl": "pkg:pypi/pyyaml-env-tag@1.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pyyaml-env-tag/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/pyyaml@6.0.2",
+      "type": "library",
+      "name": "pyyaml",
+      "version": "6.0.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0a9a2848a5b7feac301353437eb7d5957887edbf81d56e903999a75a3d743086"
+        }
+      ],
+      "purl": "pkg:pypi/pyyaml@6.0.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/pyyaml/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/referencing@0.36.2",
+      "type": "library",
+      "name": "referencing",
+      "version": "0.36.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e8699adbbf8b5c7de96d8ffa0eb5c158b3beafce084968e2ea8bb08c6794dcd0"
+        }
+      ],
+      "purl": "pkg:pypi/referencing@0.36.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/referencing/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/requests@2.32.5",
+      "type": "library",
+      "name": "requests",
+      "version": "2.32.5",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2462f94637a34fd532264295e186976db0f5d453d1cdd31473c85a6a161affb6"
+        }
+      ],
+      "purl": "pkg:pypi/requests@2.32.5",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/requests/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/rich@14.1.0",
+      "type": "library",
+      "name": "rich",
+      "version": "14.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "536f5f1785986d6dbdea3c75205c473f970777b4a0d6c6dd1b696aa05a3fa04f"
+        }
+      ],
+      "purl": "pkg:pypi/rich@14.1.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/rich/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/rpds-py@0.27.1",
+      "type": "library",
+      "name": "rpds-py",
+      "version": "0.27.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "68afeec26d42ab3b47e541b272166a0b4400313946871cba3ed3a4fc0cab1cef"
+        }
+      ],
+      "purl": "pkg:pypi/rpds-py@0.27.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/rpds-py/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/ruff@0.12.12",
+      "type": "library",
+      "name": "ruff",
+      "version": "0.12.12",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "de1c4b916d98ab289818e55ce481e2cacfaad7710b01d1f990c497edf217dafc"
+        }
+      ],
+      "purl": "pkg:pypi/ruff@0.12.12",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/ruff/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/selectolax@0.3.29",
+      "type": "library",
+      "name": "selectolax",
+      "version": "0.3.29",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "85aeae54f055cf5451828a21fbfecac99b8b5c27ec29fd10725b631593a7c9a3"
+        }
+      ],
+      "purl": "pkg:pypi/selectolax@0.3.29",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/selectolax/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/shellingham@1.5.4",
+      "type": "library",
+      "name": "shellingham",
+      "version": "1.5.4",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686"
+        }
+      ],
+      "purl": "pkg:pypi/shellingham@1.5.4",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/shellingham/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/six@1.17.0",
+      "type": "library",
+      "name": "six",
+      "version": "1.17.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"
+        }
+      ],
+      "purl": "pkg:pypi/six@1.17.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/six/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/sniffio@1.3.1",
+      "type": "library",
+      "name": "sniffio",
+      "version": "1.3.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"
+        }
+      ],
+      "purl": "pkg:pypi/sniffio@1.3.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/sniffio/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/sortedcontainers@2.4.0",
+      "type": "library",
+      "name": "sortedcontainers",
+      "version": "2.4.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0"
+        }
+      ],
+      "purl": "pkg:pypi/sortedcontainers@2.4.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/sortedcontainers/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/sse-starlette@3.0.2",
+      "type": "library",
+      "name": "sse-starlette",
+      "version": "3.0.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "16b7cbfddbcd4eaca11f7b586f3b8a080f1afe952c15813455b162edea619e5a"
+        }
+      ],
+      "purl": "pkg:pypi/sse-starlette@3.0.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/sse-starlette/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/starlette@0.49.1",
+      "type": "library",
+      "name": "starlette",
+      "version": "0.49.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d92ce9f07e4a3caa3ac13a79523bd18e3bc0042bb8ff2d759a8e7dd0e1859875"
+        }
+      ],
+      "purl": "pkg:pypi/starlette@0.49.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/starlette/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/strict-no-cover@0.1.1",
+      "type": "library",
+      "name": "strict-no-cover",
+      "version": "0.1.1",
+      "purl": "pkg:pypi/strict-no-cover@0.1.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/strict-no-cover/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/tinycss2@1.5.1",
+      "type": "library",
+      "name": "tinycss2",
+      "version": "1.5.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3415ba0f5839c062696996998176c4a3751d18b7edaaeeb658c9ce21ec150661"
+        }
+      ],
+      "purl": "pkg:pypi/tinycss2@1.5.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/tinycss2/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/tomli@2.2.1",
+      "type": "library",
+      "name": "tomli",
+      "version": "2.2.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "678e4fa69e4575eb77d103de3df8a895e1591b48e740211bd1067378c69e8249"
+        }
+      ],
+      "purl": "pkg:pypi/tomli@2.2.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/tomli/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/trio@0.31.0",
+      "type": "library",
+      "name": "trio",
+      "version": "0.31.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b5d14cd6293d79298b49c3485ffd9c07e3ce03a6da8c7dfbe0cb3dd7dc9a4774"
+        }
+      ],
+      "purl": "pkg:pypi/trio@0.31.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/trio/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/typer@0.17.4",
+      "type": "library",
+      "name": "typer",
+      "version": "0.17.4",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "015534a6edaa450e7007eba705d5c18c3349dcea50a6ad79a5ed530967575824"
+        }
+      ],
+      "purl": "pkg:pypi/typer@0.17.4",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/typer/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/typing-extensions@4.15.0",
+      "type": "library",
+      "name": "typing-extensions",
+      "version": "4.15.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"
+        }
+      ],
+      "purl": "pkg:pypi/typing-extensions@4.15.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/typing-extensions/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/typing-inspection@0.4.2",
+      "type": "library",
+      "name": "typing-inspection",
+      "version": "0.4.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4ed1cacbdc298c220f1bd249ed5287caa16f34d44ef4e9c3d0cbad5b521545e7"
+        }
+      ],
+      "purl": "pkg:pypi/typing-inspection@0.4.2",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/typing-inspection/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/urllib3@2.6.3",
+      "type": "library",
+      "name": "urllib3",
+      "version": "2.6.3",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4"
+        }
+      ],
+      "purl": "pkg:pypi/urllib3@2.6.3",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/urllib3/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/uvicorn@0.35.0",
+      "type": "library",
+      "name": "uvicorn",
+      "version": "0.35.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "197535216b25ff9b785e29a0b79199f55222193d47f820816e7da751e9bc8d4a"
+        }
+      ],
+      "purl": "pkg:pypi/uvicorn@0.35.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/uvicorn/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/watchdog@6.0.0",
+      "type": "library",
+      "name": "watchdog",
+      "version": "6.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d1cdb490583ebd691c012b3d6dae011000fe42edb7a82ece80965b42abd61f26"
+        }
+      ],
+      "purl": "pkg:pypi/watchdog@6.0.0",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/watchdog/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/webencodings@0.5.1",
+      "type": "library",
+      "name": "webencodings",
+      "version": "0.5.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"
+        }
+      ],
+      "purl": "pkg:pypi/webencodings@0.5.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/webencodings/",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/websockets@15.0.1",
+      "type": "library",
+      "name": "websockets",
+      "version": "15.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d63efaa0cd96cf0c5fe4d581521d9fa87744540d4bc999ae6e08595a1014b45b"
+        }
+      ],
+      "purl": "pkg:pypi/websockets@15.0.1",
+      "externalReferences": [
+        {
+          "url": "https://pypi.org/project/websockets/",
+          "type": "distribution"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:pypi/annotated-types@0.7.0"
+    },
+    {
+      "ref": "pkg:pypi/anyio@4.10.0",
+      "dependsOn": [
+        "pkg:pypi/exceptiongroup@1.3.0",
+        "pkg:pypi/idna@3.10",
+        "pkg:pypi/sniffio@1.3.1",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/asttokens@3.0.0"
+    },
+    {
+      "ref": "pkg:pypi/attrs@25.3.0"
+    },
+    {
+      "ref": "pkg:pypi/babel@2.17.0"
+    },
+    {
+      "ref": "pkg:pypi/backrefs@5.9"
+    },
+    {
+      "ref": "pkg:pypi/black@26.3.1",
+      "dependsOn": [
+        "pkg:pypi/click@8.2.1",
+        "pkg:pypi/mypy-extensions@1.1.0",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/pathspec@1.0.4",
+        "pkg:pypi/platformdirs@4.4.0",
+        "pkg:pypi/pytokens@0.4.1",
+        "pkg:pypi/tomli@2.2.1",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/cairocffi@1.7.1",
+      "dependsOn": [
+        "pkg:pypi/cffi@2.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/cairosvg@2.8.2",
+      "dependsOn": [
+        "pkg:pypi/cairocffi@1.7.1",
+        "pkg:pypi/cssselect2@0.9.0",
+        "pkg:pypi/defusedxml@0.7.1",
+        "pkg:pypi/pillow@12.1.1",
+        "pkg:pypi/tinycss2@1.5.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/certifi@2025.8.3"
+    },
+    {
+      "ref": "pkg:pypi/cffi@2.0.0",
+      "dependsOn": [
+        "pkg:pypi/pycparser@2.23"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/charset-normalizer@3.4.3"
+    },
+    {
+      "ref": "pkg:pypi/click@8.2.1",
+      "dependsOn": [
+        "pkg:pypi/colorama@0.4.6"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/colorama@0.4.6"
+    },
+    {
+      "ref": "pkg:pypi/coverage@7.13.0"
+    },
+    {
+      "ref": "pkg:pypi/cryptography@46.0.5",
+      "dependsOn": [
+        "pkg:pypi/cffi@2.0.0",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/cssselect2@0.9.0",
+      "dependsOn": [
+        "pkg:pypi/tinycss2@1.5.1",
+        "pkg:pypi/webencodings@0.5.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/defusedxml@0.7.1"
+    },
+    {
+      "ref": "pkg:pypi/dirty-equals@0.9.0"
+    },
+    {
+      "ref": "pkg:pypi/exceptiongroup@1.3.0",
+      "dependsOn": [
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/execnet@2.1.1"
+    },
+    {
+      "ref": "pkg:pypi/executing@2.2.1"
+    },
+    {
+      "ref": "pkg:pypi/ghp-import@2.1.0",
+      "dependsOn": [
+        "pkg:pypi/python-dateutil@2.9.0.post0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/griffe@1.14.0",
+      "dependsOn": [
+        "pkg:pypi/colorama@0.4.6"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/h11@0.16.0"
+    },
+    {
+      "ref": "pkg:pypi/httpcore@1.0.9",
+      "dependsOn": [
+        "pkg:pypi/certifi@2025.8.3",
+        "pkg:pypi/h11@0.16.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/httpx-sse@0.4.1"
+    },
+    {
+      "ref": "pkg:pypi/httpx@0.28.1",
+      "dependsOn": [
+        "pkg:pypi/anyio@4.10.0",
+        "pkg:pypi/certifi@2025.8.3",
+        "pkg:pypi/httpcore@1.0.9",
+        "pkg:pypi/idna@3.10"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/idna@3.10"
+    },
+    {
+      "ref": "pkg:pypi/iniconfig@2.1.0"
+    },
+    {
+      "ref": "pkg:pypi/inline-snapshot@0.28.0",
+      "dependsOn": [
+        "pkg:pypi/asttokens@3.0.0",
+        "pkg:pypi/executing@2.2.1",
+        "pkg:pypi/pytest@8.4.2",
+        "pkg:pypi/rich@14.1.0",
+        "pkg:pypi/tomli@2.2.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/jinja2@3.1.6",
+      "dependsOn": [
+        "pkg:pypi/markupsafe@3.0.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/jsonschema-specifications@2025.9.1",
+      "dependsOn": [
+        "pkg:pypi/referencing@0.36.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/jsonschema@4.25.1",
+      "dependsOn": [
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/jsonschema-specifications@2025.9.1",
+        "pkg:pypi/referencing@0.36.2",
+        "pkg:pypi/rpds-py@0.27.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/markdown-it-py@4.0.0",
+      "dependsOn": [
+        "pkg:pypi/mdurl@0.1.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/markdown@3.9"
+    },
+    {
+      "ref": "pkg:pypi/markupsafe@3.0.2"
+    },
+    {
+      "ref": "pkg:pypi/mdurl@0.1.2"
+    },
+    {
+      "ref": "pkg:pypi/mergedeep@1.3.4"
+    },
+    {
+      "ref": "pkg:pypi/mkdocs-autorefs@1.4.3",
+      "dependsOn": [
+        "pkg:pypi/markdown@3.9",
+        "pkg:pypi/markupsafe@3.0.2",
+        "pkg:pypi/mkdocs@1.6.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mkdocs-gen-files@0.6.0",
+      "dependsOn": [
+        "pkg:pypi/mkdocs@1.6.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mkdocs-get-deps@0.2.0",
+      "dependsOn": [
+        "pkg:pypi/mergedeep@1.3.4",
+        "pkg:pypi/platformdirs@4.4.0",
+        "pkg:pypi/pyyaml@6.0.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mkdocs-glightbox@0.5.1",
+      "dependsOn": [
+        "pkg:pypi/selectolax@0.3.29"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mkdocs-literate-nav@0.6.2",
+      "dependsOn": [
+        "pkg:pypi/mkdocs@1.6.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mkdocs-material-extensions@1.3.1"
+    },
+    {
+      "ref": "pkg:pypi/mkdocs-material@9.7.2",
+      "dependsOn": [
+        "pkg:pypi/babel@2.17.0",
+        "pkg:pypi/backrefs@5.9",
+        "pkg:pypi/colorama@0.4.6",
+        "pkg:pypi/jinja2@3.1.6",
+        "pkg:pypi/markdown@3.9",
+        "pkg:pypi/mkdocs-material-extensions@1.3.1",
+        "pkg:pypi/mkdocs@1.6.1",
+        "pkg:pypi/paginate@0.5.7",
+        "pkg:pypi/pygments@2.19.2",
+        "pkg:pypi/pymdown-extensions@10.16.1",
+        "pkg:pypi/requests@2.32.5"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mkdocs@1.6.1",
+      "dependsOn": [
+        "pkg:pypi/click@8.2.1",
+        "pkg:pypi/colorama@0.4.6",
+        "pkg:pypi/ghp-import@2.1.0",
+        "pkg:pypi/jinja2@3.1.6",
+        "pkg:pypi/markdown@3.9",
+        "pkg:pypi/markupsafe@3.0.2",
+        "pkg:pypi/mergedeep@1.3.4",
+        "pkg:pypi/mkdocs-get-deps@0.2.0",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/pathspec@1.0.4",
+        "pkg:pypi/pyyaml-env-tag@1.1",
+        "pkg:pypi/pyyaml@6.0.2",
+        "pkg:pypi/watchdog@6.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mkdocstrings-python@2.0.1",
+      "dependsOn": [
+        "pkg:pypi/griffe@1.14.0",
+        "pkg:pypi/mkdocs-autorefs@1.4.3",
+        "pkg:pypi/mkdocstrings@0.30.0",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mkdocstrings@0.30.0",
+      "dependsOn": [
+        "pkg:pypi/jinja2@3.1.6",
+        "pkg:pypi/markdown@3.9",
+        "pkg:pypi/markupsafe@3.0.2",
+        "pkg:pypi/mkdocs-autorefs@1.4.3",
+        "pkg:pypi/mkdocs@1.6.1",
+        "pkg:pypi/pymdown-extensions@10.16.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/mypy-extensions@1.1.0"
+    },
+    {
+      "ref": "pkg:pypi/nodeenv@1.9.1"
+    },
+    {
+      "ref": "pkg:pypi/outcome@1.3.0.post0",
+      "dependsOn": [
+        "pkg:pypi/attrs@25.3.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/packaging@25.0"
+    },
+    {
+      "ref": "pkg:pypi/paginate@0.5.7"
+    },
+    {
+      "ref": "pkg:pypi/pathspec@1.0.4"
+    },
+    {
+      "ref": "pkg:pypi/pillow@12.1.1"
+    },
+    {
+      "ref": "pkg:pypi/platformdirs@4.4.0"
+    },
+    {
+      "ref": "pkg:pypi/pluggy@1.6.0"
+    },
+    {
+      "ref": "pkg:pypi/pycparser@2.23"
+    },
+    {
+      "ref": "pkg:pypi/pydantic-core@2.41.5",
+      "dependsOn": [
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pydantic-settings@2.10.1",
+      "dependsOn": [
+        "pkg:pypi/pydantic@2.12.5",
+        "pkg:pypi/python-dotenv@1.1.1",
+        "pkg:pypi/typing-inspection@0.4.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pydantic@2.12.5",
+      "dependsOn": [
+        "pkg:pypi/annotated-types@0.7.0",
+        "pkg:pypi/pydantic-core@2.41.5",
+        "pkg:pypi/typing-extensions@4.15.0",
+        "pkg:pypi/typing-inspection@0.4.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pygments@2.19.2"
+    },
+    {
+      "ref": "pkg:pypi/pyjwt@2.10.1"
+    },
+    {
+      "ref": "pkg:pypi/pymdown-extensions@10.16.1",
+      "dependsOn": [
+        "pkg:pypi/markdown@3.9",
+        "pkg:pypi/pyyaml@6.0.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pyright@1.1.405",
+      "dependsOn": [
+        "pkg:pypi/nodeenv@1.9.1",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pytest-examples@0.0.18",
+      "dependsOn": [
+        "pkg:pypi/black@26.3.1",
+        "pkg:pypi/pytest@8.4.2",
+        "pkg:pypi/ruff@0.12.12"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pytest-flakefinder@1.1.0",
+      "dependsOn": [
+        "pkg:pypi/pytest@8.4.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pytest-pretty@1.3.0",
+      "dependsOn": [
+        "pkg:pypi/pytest@8.4.2",
+        "pkg:pypi/rich@14.1.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pytest-xdist@3.8.0",
+      "dependsOn": [
+        "pkg:pypi/execnet@2.1.1",
+        "pkg:pypi/pytest@8.4.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pytest@8.4.2",
+      "dependsOn": [
+        "pkg:pypi/colorama@0.4.6",
+        "pkg:pypi/exceptiongroup@1.3.0",
+        "pkg:pypi/iniconfig@2.1.0",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/pluggy@1.6.0",
+        "pkg:pypi/pygments@2.19.2",
+        "pkg:pypi/tomli@2.2.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/python-dateutil@2.9.0.post0",
+      "dependsOn": [
+        "pkg:pypi/six@1.17.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/python-dotenv@1.1.1"
+    },
+    {
+      "ref": "pkg:pypi/python-multipart@0.0.22"
+    },
+    {
+      "ref": "pkg:pypi/pytokens@0.4.1"
+    },
+    {
+      "ref": "pkg:pypi/pywin32@311"
+    },
+    {
+      "ref": "pkg:pypi/pyyaml-env-tag@1.1",
+      "dependsOn": [
+        "pkg:pypi/pyyaml@6.0.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/pyyaml@6.0.2"
+    },
+    {
+      "ref": "pkg:pypi/referencing@0.36.2",
+      "dependsOn": [
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/rpds-py@0.27.1",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/requests@2.32.5",
+      "dependsOn": [
+        "pkg:pypi/certifi@2025.8.3",
+        "pkg:pypi/charset-normalizer@3.4.3",
+        "pkg:pypi/idna@3.10",
+        "pkg:pypi/urllib3@2.6.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/rich@14.1.0",
+      "dependsOn": [
+        "pkg:pypi/markdown-it-py@4.0.0",
+        "pkg:pypi/pygments@2.19.2"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/rpds-py@0.27.1"
+    },
+    {
+      "ref": "pkg:pypi/ruff@0.12.12"
+    },
+    {
+      "ref": "pkg:pypi/selectolax@0.3.29"
+    },
+    {
+      "ref": "pkg:pypi/shellingham@1.5.4"
+    },
+    {
+      "ref": "pkg:pypi/six@1.17.0"
+    },
+    {
+      "ref": "pkg:pypi/sniffio@1.3.1"
+    },
+    {
+      "ref": "pkg:pypi/sortedcontainers@2.4.0"
+    },
+    {
+      "ref": "pkg:pypi/sse-starlette@3.0.2",
+      "dependsOn": [
+        "pkg:pypi/anyio@4.10.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/starlette@0.49.1",
+      "dependsOn": [
+        "pkg:pypi/anyio@4.10.0",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/strict-no-cover@0.1.1",
+      "dependsOn": [
+        "pkg:pypi/pydantic@2.12.5"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/tinycss2@1.5.1",
+      "dependsOn": [
+        "pkg:pypi/webencodings@0.5.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/tomli@2.2.1"
+    },
+    {
+      "ref": "pkg:pypi/trio@0.31.0",
+      "dependsOn": [
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/cffi@2.0.0",
+        "pkg:pypi/exceptiongroup@1.3.0",
+        "pkg:pypi/idna@3.10",
+        "pkg:pypi/outcome@1.3.0.post0",
+        "pkg:pypi/sniffio@1.3.1",
+        "pkg:pypi/sortedcontainers@2.4.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/typer@0.17.4",
+      "dependsOn": [
+        "pkg:pypi/click@8.2.1",
+        "pkg:pypi/rich@14.1.0",
+        "pkg:pypi/shellingham@1.5.4",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/typing-extensions@4.15.0"
+    },
+    {
+      "ref": "pkg:pypi/typing-inspection@0.4.2",
+      "dependsOn": [
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/unknown@0.0.0",
+      "dependsOn": [
+        "pkg:pypi/annotated-types@0.7.0",
+        "pkg:pypi/anyio@4.10.0",
+        "pkg:pypi/asttokens@3.0.0",
+        "pkg:pypi/attrs@25.3.0",
+        "pkg:pypi/babel@2.17.0",
+        "pkg:pypi/backrefs@5.9",
+        "pkg:pypi/black@26.3.1",
+        "pkg:pypi/cairocffi@1.7.1",
+        "pkg:pypi/cairosvg@2.8.2",
+        "pkg:pypi/certifi@2025.8.3",
+        "pkg:pypi/cffi@2.0.0",
+        "pkg:pypi/charset-normalizer@3.4.3",
+        "pkg:pypi/click@8.2.1",
+        "pkg:pypi/colorama@0.4.6",
+        "pkg:pypi/coverage@7.13.0",
+        "pkg:pypi/cryptography@46.0.5",
+        "pkg:pypi/cssselect2@0.9.0",
+        "pkg:pypi/defusedxml@0.7.1",
+        "pkg:pypi/dirty-equals@0.9.0",
+        "pkg:pypi/exceptiongroup@1.3.0",
+        "pkg:pypi/execnet@2.1.1",
+        "pkg:pypi/executing@2.2.1",
+        "pkg:pypi/ghp-import@2.1.0",
+        "pkg:pypi/griffe@1.14.0",
+        "pkg:pypi/h11@0.16.0",
+        "pkg:pypi/httpcore@1.0.9",
+        "pkg:pypi/httpx-sse@0.4.1",
+        "pkg:pypi/httpx@0.28.1",
+        "pkg:pypi/idna@3.10",
+        "pkg:pypi/iniconfig@2.1.0",
+        "pkg:pypi/inline-snapshot@0.28.0",
+        "pkg:pypi/jinja2@3.1.6",
+        "pkg:pypi/jsonschema-specifications@2025.9.1",
+        "pkg:pypi/jsonschema@4.25.1",
+        "pkg:pypi/markdown-it-py@4.0.0",
+        "pkg:pypi/markdown@3.9",
+        "pkg:pypi/markupsafe@3.0.2",
+        "pkg:pypi/mdurl@0.1.2",
+        "pkg:pypi/mergedeep@1.3.4",
+        "pkg:pypi/mkdocs-autorefs@1.4.3",
+        "pkg:pypi/mkdocs-gen-files@0.6.0",
+        "pkg:pypi/mkdocs-get-deps@0.2.0",
+        "pkg:pypi/mkdocs-glightbox@0.5.1",
+        "pkg:pypi/mkdocs-literate-nav@0.6.2",
+        "pkg:pypi/mkdocs-material-extensions@1.3.1",
+        "pkg:pypi/mkdocs-material@9.7.2",
+        "pkg:pypi/mkdocs@1.6.1",
+        "pkg:pypi/mkdocstrings-python@2.0.1",
+        "pkg:pypi/mkdocstrings@0.30.0",
+        "pkg:pypi/mypy-extensions@1.1.0",
+        "pkg:pypi/nodeenv@1.9.1",
+        "pkg:pypi/outcome@1.3.0.post0",
+        "pkg:pypi/packaging@25.0",
+        "pkg:pypi/paginate@0.5.7",
+        "pkg:pypi/pathspec@1.0.4",
+        "pkg:pypi/pillow@12.1.1",
+        "pkg:pypi/platformdirs@4.4.0",
+        "pkg:pypi/pluggy@1.6.0",
+        "pkg:pypi/pycparser@2.23",
+        "pkg:pypi/pydantic-core@2.41.5",
+        "pkg:pypi/pydantic-settings@2.10.1",
+        "pkg:pypi/pydantic@2.12.5",
+        "pkg:pypi/pygments@2.19.2",
+        "pkg:pypi/pyjwt@2.10.1",
+        "pkg:pypi/pymdown-extensions@10.16.1",
+        "pkg:pypi/pyright@1.1.405",
+        "pkg:pypi/pytest-examples@0.0.18",
+        "pkg:pypi/pytest-flakefinder@1.1.0",
+        "pkg:pypi/pytest-pretty@1.3.0",
+        "pkg:pypi/pytest-xdist@3.8.0",
+        "pkg:pypi/pytest@8.4.2",
+        "pkg:pypi/python-dateutil@2.9.0.post0",
+        "pkg:pypi/python-dotenv@1.1.1",
+        "pkg:pypi/python-multipart@0.0.22",
+        "pkg:pypi/pytokens@0.4.1",
+        "pkg:pypi/pywin32@311",
+        "pkg:pypi/pyyaml-env-tag@1.1",
+        "pkg:pypi/pyyaml@6.0.2",
+        "pkg:pypi/referencing@0.36.2",
+        "pkg:pypi/requests@2.32.5",
+        "pkg:pypi/rich@14.1.0",
+        "pkg:pypi/rpds-py@0.27.1",
+        "pkg:pypi/ruff@0.12.12",
+        "pkg:pypi/selectolax@0.3.29",
+        "pkg:pypi/shellingham@1.5.4",
+        "pkg:pypi/six@1.17.0",
+        "pkg:pypi/sniffio@1.3.1",
+        "pkg:pypi/sortedcontainers@2.4.0",
+        "pkg:pypi/sse-starlette@3.0.2",
+        "pkg:pypi/starlette@0.49.1",
+        "pkg:pypi/strict-no-cover@0.1.1",
+        "pkg:pypi/tinycss2@1.5.1",
+        "pkg:pypi/tomli@2.2.1",
+        "pkg:pypi/trio@0.31.0",
+        "pkg:pypi/typer@0.17.4",
+        "pkg:pypi/typing-extensions@4.15.0",
+        "pkg:pypi/typing-inspection@0.4.2",
+        "pkg:pypi/urllib3@2.6.3",
+        "pkg:pypi/uvicorn@0.35.0",
+        "pkg:pypi/watchdog@6.0.0",
+        "pkg:pypi/webencodings@0.5.1",
+        "pkg:pypi/websockets@15.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/urllib3@2.6.3"
+    },
+    {
+      "ref": "pkg:pypi/uvicorn@0.35.0",
+      "dependsOn": [
+        "pkg:pypi/click@8.2.1",
+        "pkg:pypi/h11@0.16.0",
+        "pkg:pypi/typing-extensions@4.15.0"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/watchdog@6.0.0"
+    },
+    {
+      "ref": "pkg:pypi/webencodings@0.5.1"
+    },
+    {
+      "ref": "pkg:pypi/websockets@15.0.1"
+    }
+  ]
+}

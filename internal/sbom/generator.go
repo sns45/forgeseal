@@ -9,6 +9,7 @@ import (
 
 	cdx "github.com/CycloneDX/cyclonedx-go"
 	"github.com/google/uuid"
+	toml "github.com/pelletier/go-toml/v2"
 	"github.com/sn45/forgeseal/internal/lockfile"
 )
 
@@ -20,7 +21,7 @@ type GenerateOptions struct {
 	ProjectDir  string
 }
 
-// ProjectInfo holds metadata from package.json.
+// ProjectInfo holds metadata from package.json or pyproject.toml.
 type ProjectInfo struct {
 	Name    string `json:"name"`
 	Version string `json:"version"`
@@ -31,13 +32,32 @@ type Generator struct {
 	Version string // forgeseal version for tool metadata
 }
 
+// ecosystemFromLockfileType returns the ecosystem string for PURL construction.
+func ecosystemFromLockfileType(lt lockfile.LockfileType) string {
+	switch lt {
+	case lockfile.TypeRequirementsTxt, lockfile.TypePoetry, lockfile.TypePDM, lockfile.TypeUV:
+		return "pypi"
+	default:
+		return "npm"
+	}
+}
+
 // Generate creates a CycloneDX BOM from parsed lockfile data.
 func (g *Generator) Generate(ctx context.Context, lr *lockfile.LockfileResult, opts GenerateOptions) (*cdx.BOM, error) {
 	// Filter packages
 	packages := filterPackages(lr.Packages, opts)
 
-	// Read project info from package.json if available
-	projInfo := readProjectInfo(opts.ProjectDir)
+	// Determine ecosystem from lockfile type
+	ecosystem := ecosystemFromLockfileType(lr.Type)
+
+	// Read project info from package.json or pyproject.toml
+	var projInfo *ProjectInfo
+	if ecosystem == "pypi" {
+		projInfo = readPyProjectInfo(opts.ProjectDir)
+	}
+	if projInfo == nil {
+		projInfo = readProjectInfo(opts.ProjectDir)
+	}
 
 	// Build spec version
 	specVersion := cdx.SpecVersion1_5
@@ -58,12 +78,12 @@ func (g *Generator) Generate(ctx context.Context, lr *lockfile.LockfileResult, o
 			rootVersion = projInfo.Version
 		}
 	}
-	rootPURL := BuildPURL(rootName, rootVersion)
+	rootPURL := BuildPURL(rootName, rootVersion, ecosystem)
 
 	// Map to CycloneDX components
 	components := make([]cdx.Component, 0, len(packages))
 	for _, pkg := range packages {
-		components = append(components, mapComponent(pkg))
+		components = append(components, mapComponent(pkg, ecosystem))
 	}
 
 	toolVersion := g.Version
@@ -98,7 +118,7 @@ func (g *Generator) Generate(ctx context.Context, lr *lockfile.LockfileResult, o
 			},
 		},
 		Components:   &components,
-		Dependencies: mapDependencies(packages, rootPURL),
+		Dependencies: mapDependencies(packages, rootPURL, ecosystem),
 	}
 
 	return bom, nil
@@ -133,4 +153,38 @@ func readProjectInfo(dir string) *ProjectInfo {
 		return nil
 	}
 	return &info
+}
+
+// pyProjectTOML represents the [project] table in pyproject.toml.
+type pyProjectTOML struct {
+	Project struct {
+		Name    string `toml:"name"`
+		Version string `toml:"version"`
+	} `toml:"project"`
+}
+
+// readPyProjectInfo reads project metadata from pyproject.toml.
+func readPyProjectInfo(dir string) *ProjectInfo {
+	if dir == "" {
+		dir = "."
+	}
+
+	data, err := os.ReadFile(fmt.Sprintf("%s/pyproject.toml", dir))
+	if err != nil {
+		return nil
+	}
+
+	var proj pyProjectTOML
+	if err := toml.Unmarshal(data, &proj); err != nil {
+		return nil
+	}
+
+	if proj.Project.Name == "" && proj.Project.Version == "" {
+		return nil
+	}
+
+	return &ProjectInfo{
+		Name:    proj.Project.Name,
+		Version: proj.Project.Version,
+	}
 }
