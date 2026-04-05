@@ -101,7 +101,7 @@ func Detect(dir string) (*DetectResult, []string, error) {
 	}
 
 	if len(found) == 0 {
-		return nil, nil, fmt.Errorf("no lockfile found in %s; supported: bun.lockb, bun.lock, pnpm-lock.yaml, yarn.lock, package-lock.json, uv.lock, poetry.lock, pdm.lock, requirements.txt", dir)
+		return nil, nil, fmt.Errorf("no lockfile found in %s; supported: bun.lockb, bun.lock, pnpm-lock.yaml, yarn.lock, package-lock.json, uv.lock, poetry.lock, pdm.lock, requirements.txt, go.mod, Cargo.lock, gradle.lockfile", dir)
 	}
 
 	// Special case: if both bun.lockb and bun.lock exist, prefer bun.lock (no CLI dependency).

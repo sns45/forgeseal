@@ -40,7 +40,7 @@ brews:
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     homepage: "https://github.com/sns45/forgeseal"
-    description: "Supply chain security for JavaScript and TypeScript projects"
+    description: "Supply chain security for JavaScript, TypeScript, Python, Go, Rust, and Java projects"
     license: "Apache-2.0"
     install: |
       bin.install "forgeseal"
