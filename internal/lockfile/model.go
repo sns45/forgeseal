@@ -16,6 +16,7 @@ const (
 	TypeUV              LockfileType = "uv"
 	TypeGoMod           LockfileType = "gomod"
 	TypeCargoLock       LockfileType = "cargo"
+	TypeGradleLock      LockfileType = "gradle"
 )
 
 // Package represents a resolved dependency from a lockfile.

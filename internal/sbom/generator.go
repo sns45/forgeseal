@@ -43,6 +43,8 @@ func ecosystemFromLockfileType(lt lockfile.LockfileType) string {
 		return "golang"
 	case lockfile.TypeCargoLock:
 		return "cargo"
+	case lockfile.TypeGradleLock:
+		return "maven"
 	default:
 		return "npm"
 	}

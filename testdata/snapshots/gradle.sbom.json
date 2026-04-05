@@ -1,0 +1,204 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:00000000-0000-0000-0000-000000000000",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-01-01T00:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "forgeseal",
+          "version": "snapshot-test"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "pkg:maven/unknown@0.0.0",
+      "type": "application",
+      "name": "unknown",
+      "version": "0.0.0",
+      "purl": "pkg:maven/unknown@0.0.0"
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.4.14",
+      "type": "library",
+      "name": "logback-classic",
+      "version": "1.4.14",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.4.14",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/ch.qos.logback/logback-classic",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.15.3",
+      "type": "library",
+      "name": "jackson-core",
+      "version": "2.15.3",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.15.3",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.google.guava/guava@32.1.3-jre",
+      "type": "library",
+      "name": "guava",
+      "version": "32.1.3-jre",
+      "purl": "pkg:maven/com.google.guava/guava@32.1.3-jre",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.google.guava/guava",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.commons/commons-lang3@3.13.0",
+      "type": "library",
+      "name": "commons-lang3",
+      "version": "3.13.0",
+      "purl": "pkg:maven/org.apache.commons/commons-lang3@3.13.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.apache.commons/commons-lang3",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.10.1",
+      "type": "library",
+      "name": "junit-jupiter-api",
+      "version": "5.10.1",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.10.1",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter-api",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.10.1",
+      "type": "library",
+      "name": "junit-jupiter-engine",
+      "version": "5.10.1",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.10.1",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter-engine",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.mockito/mockito-core@5.8.0",
+      "type": "library",
+      "name": "mockito-core",
+      "version": "5.8.0",
+      "purl": "pkg:maven/org.mockito/mockito-core@5.8.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.mockito/mockito-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.slf4j/slf4j-api@2.0.9",
+      "type": "library",
+      "name": "slf4j-api",
+      "version": "2.0.9",
+      "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.9",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.slf4j/slf4j-api",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-context@6.1.2",
+      "type": "library",
+      "name": "spring-context",
+      "version": "6.1.2",
+      "purl": "pkg:maven/org.springframework/spring-context@6.1.2",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-context",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-core@6.1.2",
+      "type": "library",
+      "name": "spring-core",
+      "version": "6.1.2",
+      "purl": "pkg:maven/org.springframework/spring-core@6.1.2",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-core",
+          "type": "distribution"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.4.14"
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.15.3"
+    },
+    {
+      "ref": "pkg:maven/com.google.guava/guava@32.1.3-jre"
+    },
+    {
+      "ref": "pkg:maven/org.apache.commons/commons-lang3@3.13.0"
+    },
+    {
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.10.1"
+    },
+    {
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.10.1"
+    },
+    {
+      "ref": "pkg:maven/org.mockito/mockito-core@5.8.0"
+    },
+    {
+      "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.9"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-context@6.1.2"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-core@6.1.2"
+    },
+    {
+      "ref": "pkg:maven/unknown@0.0.0",
+      "dependsOn": [
+        "pkg:maven/ch.qos.logback/logback-classic@1.4.14",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.15.3",
+        "pkg:maven/com.google.guava/guava@32.1.3-jre",
+        "pkg:maven/org.apache.commons/commons-lang3@3.13.0",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.10.1",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.10.1",
+        "pkg:maven/org.mockito/mockito-core@5.8.0",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.9",
+        "pkg:maven/org.springframework/spring-context@6.1.2",
+        "pkg:maven/org.springframework/spring-core@6.1.2"
+      ]
+    }
+  ]
+}
