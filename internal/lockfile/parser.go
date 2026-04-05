@@ -47,6 +47,8 @@ func init() {
 		&PoetryParser{},
 		&PDMParser{},
 		&RequirementsTxtParser{},
+		// Go
+		&GoModParser{},
 	}
 }
 

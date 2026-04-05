@@ -1,10 +1,12 @@
 package sbom
 
 import (
+	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	cdx "github.com/CycloneDX/cyclonedx-go"
@@ -37,6 +39,8 @@ func ecosystemFromLockfileType(lt lockfile.LockfileType) string {
 	switch lt {
 	case lockfile.TypeRequirementsTxt, lockfile.TypePoetry, lockfile.TypePDM, lockfile.TypeUV:
 		return "pypi"
+	case lockfile.TypeGoMod:
+		return "golang"
 	default:
 		return "npm"
 	}
@@ -50,10 +54,13 @@ func (g *Generator) Generate(ctx context.Context, lr *lockfile.LockfileResult, o
 	// Determine ecosystem from lockfile type
 	ecosystem := ecosystemFromLockfileType(lr.Type)
 
-	// Read project info from package.json or pyproject.toml
+	// Read project info from package.json, pyproject.toml, or go.mod
 	var projInfo *ProjectInfo
 	if ecosystem == "pypi" {
 		projInfo = readPyProjectInfo(opts.ProjectDir)
+	}
+	if ecosystem == "golang" && projInfo == nil {
+		projInfo = readGoModInfo(opts.ProjectDir)
 	}
 	if projInfo == nil {
 		projInfo = readProjectInfo(opts.ProjectDir)
@@ -187,4 +194,34 @@ func readPyProjectInfo(dir string) *ProjectInfo {
 		Name:    proj.Project.Name,
 		Version: proj.Project.Version,
 	}
+}
+
+// readGoModInfo reads the module directive from go.mod.
+func readGoModInfo(dir string) *ProjectInfo {
+	if dir == "" {
+		dir = "."
+	}
+	f, err := os.Open(fmt.Sprintf("%s/go.mod", dir))
+	if err != nil {
+		return nil
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if strings.HasPrefix(line, "module ") {
+			name := strings.TrimSpace(strings.TrimPrefix(line, "module "))
+			// Strip inline comment.
+			if idx := strings.Index(name, "//"); idx >= 0 {
+				name = strings.TrimSpace(name[:idx])
+			}
+			name = strings.Trim(name, `"`)
+			if name == "" {
+				return nil
+			}
+			return &ProjectInfo{Name: name, Version: "0.0.0"}
+		}
+	}
+	return nil
 }

@@ -21,6 +21,10 @@ func TestBuildPURL(t *testing.T) {
 		{"charset_normalizer", "3.3.2", "pypi", "pkg:pypi/charset-normalizer@3.3.2"},
 		{"MarkupSafe", "2.1.5", "pypi", "pkg:pypi/markupsafe@2.1.5"},
 		{"my.dotted.package", "1.0.0", "pypi", "pkg:pypi/my-dotted-package@1.0.0"},
+		// Go modules
+		{"github.com/gorilla/mux", "v1.8.0", "golang", "pkg:golang/github.com/gorilla/mux@v1.8.0"},
+		{"golang.org/x/sys", "v0.29.0", "golang", "pkg:golang/golang.org/x/sys@v0.29.0"},
+		{"github.com/Foo/Bar/v2", "v2.1.0", "golang", "pkg:golang/github.com/foo/bar/v2@v2.1.0"},
 	}
 
 	for _, tt := range tests {

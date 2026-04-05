@@ -28,9 +28,12 @@ func mapComponent(pkg lockfile.Package, ecosystem string) cdx.Component {
 
 	// External references
 	var registryURL string
-	if ecosystem == "pypi" {
+	switch ecosystem {
+	case "pypi":
 		registryURL = "https://pypi.org/project/" + normalizePyPIName(pkg.Name) + "/"
-	} else {
+	case "golang":
+		registryURL = "https://pkg.go.dev/" + pkg.Name
+	default:
 		registryURL = npmRegistryURL(pkg.Name)
 	}
 
@@ -72,6 +75,12 @@ func parseIntegrityHashes(integrity string) *[]cdx.Hash {
 			hashes = append(hashes, cdx.Hash{
 				Algorithm: cdx.HashAlgoSHA256,
 				Value:     val,
+			})
+		} else if strings.HasPrefix(part, "h1:") {
+			// Go module hash: h1:<base64-sha256>
+			hashes = append(hashes, cdx.Hash{
+				Algorithm: cdx.HashAlgoSHA256,
+				Value:     strings.TrimPrefix(part, "h1:"),
 			})
 		} else if strings.HasPrefix(part, "sha1-") {
 			hashes = append(hashes, cdx.Hash{

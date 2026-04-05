@@ -1,0 +1,264 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:00000000-0000-0000-0000-000000000000",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-01-01T00:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "forgeseal",
+          "version": "snapshot-test"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "pkg:golang/example.com/myproject@0.0.0",
+      "type": "application",
+      "name": "example.com/myproject",
+      "version": "0.0.0",
+      "purl": "pkg:golang/example.com/myproject@0.0.0"
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:golang/github.com/davecgh/go-spew@v1.1.2",
+      "type": "library",
+      "name": "github.com/davecgh/go-spew",
+      "version": "v1.1.2",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa="
+        }
+      ],
+      "purl": "pkg:golang/github.com/davecgh/go-spew@v1.1.2",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/github.com/davecgh/go-spew",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/github.com/go-chi/chi/v5@v5.0.12",
+      "type": "library",
+      "name": "github.com/go-chi/chi/v5",
+      "version": "v5.0.12",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ccccccccccccccccccccccccccccccccccccccccccccc="
+        }
+      ],
+      "purl": "pkg:golang/github.com/go-chi/chi/v5@v5.0.12",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/github.com/go-chi/chi/v5",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/github.com/gorilla/mux@v1.8.1",
+      "type": "library",
+      "name": "github.com/gorilla/mux",
+      "version": "v1.8.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee="
+        }
+      ],
+      "purl": "pkg:golang/github.com/gorilla/mux@v1.8.1",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/github.com/gorilla/mux",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/github.com/inconshreveable/mousetrap@v1.1.0",
+      "type": "library",
+      "name": "github.com/inconshreveable/mousetrap",
+      "version": "v1.1.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ggggggggggggggggggggggggggggggggggggggggggggg="
+        }
+      ],
+      "purl": "pkg:golang/github.com/inconshreveable/mousetrap@v1.1.0",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/github.com/inconshreveable/mousetrap",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/github.com/pmezard/go-difflib@v1.0.0",
+      "type": "library",
+      "name": "github.com/pmezard/go-difflib",
+      "version": "v1.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii="
+        }
+      ],
+      "purl": "pkg:golang/github.com/pmezard/go-difflib@v1.0.0",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/github.com/pmezard/go-difflib",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/github.com/spf13/cobra@v1.8.0",
+      "type": "library",
+      "name": "github.com/spf13/cobra",
+      "version": "v1.8.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk="
+        }
+      ],
+      "purl": "pkg:golang/github.com/spf13/cobra@v1.8.0",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/github.com/spf13/cobra",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/github.com/spf13/pflag@v1.0.5",
+      "type": "library",
+      "name": "github.com/spf13/pflag",
+      "version": "v1.0.5",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm="
+        }
+      ],
+      "purl": "pkg:golang/github.com/spf13/pflag@v1.0.5",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/github.com/spf13/pflag",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/github.com/stretchr/testify@v1.9.0",
+      "type": "library",
+      "name": "github.com/stretchr/testify",
+      "version": "v1.9.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "ooooooooooooooooooooooooooooooooooooooooooooo="
+        }
+      ],
+      "purl": "pkg:golang/github.com/stretchr/testify@v1.9.0",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/github.com/stretchr/testify",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/golang.org/x/sys@v0.30.0",
+      "type": "library",
+      "name": "golang.org/x/sys",
+      "version": "v0.30.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq="
+        }
+      ],
+      "purl": "pkg:golang/golang.org/x/sys@v0.30.0",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/golang.org/x/sys",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:golang/gopkg.in/yaml.v3@v3.0.1",
+      "type": "library",
+      "name": "gopkg.in/yaml.v3",
+      "version": "v3.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "sssssssssssssssssssssssssssssssssssssssssssss="
+        }
+      ],
+      "purl": "pkg:golang/gopkg.in/yaml.v3@v3.0.1",
+      "externalReferences": [
+        {
+          "url": "https://pkg.go.dev/gopkg.in/yaml.v3",
+          "type": "distribution"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:golang/example.com/myproject@0.0.0",
+      "dependsOn": [
+        "pkg:golang/github.com/davecgh/go-spew@v1.1.2",
+        "pkg:golang/github.com/go-chi/chi/v5@v5.0.12",
+        "pkg:golang/github.com/gorilla/mux@v1.8.1",
+        "pkg:golang/github.com/inconshreveable/mousetrap@v1.1.0",
+        "pkg:golang/github.com/pmezard/go-difflib@v1.0.0",
+        "pkg:golang/github.com/spf13/cobra@v1.8.0",
+        "pkg:golang/github.com/spf13/pflag@v1.0.5",
+        "pkg:golang/github.com/stretchr/testify@v1.9.0",
+        "pkg:golang/golang.org/x/sys@v0.30.0",
+        "pkg:golang/gopkg.in/yaml.v3@v3.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:golang/github.com/davecgh/go-spew@v1.1.2"
+    },
+    {
+      "ref": "pkg:golang/github.com/go-chi/chi/v5@v5.0.12"
+    },
+    {
+      "ref": "pkg:golang/github.com/gorilla/mux@v1.8.1"
+    },
+    {
+      "ref": "pkg:golang/github.com/inconshreveable/mousetrap@v1.1.0"
+    },
+    {
+      "ref": "pkg:golang/github.com/pmezard/go-difflib@v1.0.0"
+    },
+    {
+      "ref": "pkg:golang/github.com/spf13/cobra@v1.8.0"
+    },
+    {
+      "ref": "pkg:golang/github.com/spf13/pflag@v1.0.5"
+    },
+    {
+      "ref": "pkg:golang/github.com/stretchr/testify@v1.9.0"
+    },
+    {
+      "ref": "pkg:golang/golang.org/x/sys@v0.30.0"
+    },
+    {
+      "ref": "pkg:golang/gopkg.in/yaml.v3@v3.0.1"
+    }
+  ]
+}

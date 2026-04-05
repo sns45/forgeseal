@@ -127,6 +127,7 @@ func discoverSnapshotCases(t *testing.T) []snapshotCase {
 	knownFiles := []string{
 		"bun.lock", "pnpm-lock.yaml", "yarn.lock", "package-lock.json",
 		"uv.lock", "poetry.lock", "pdm.lock", "requirements.txt",
+		"go.mod",
 	}
 
 	var cases []snapshotCase
