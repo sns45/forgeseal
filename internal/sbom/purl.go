@@ -17,6 +17,8 @@ func BuildPURL(name, version, ecosystem string) string {
 		return BuildGolangPURL(name, version)
 	case "cargo":
 		return BuildCargoPURL(name, version)
+	case "maven":
+		return BuildMavenPURL(name, version)
 	default:
 		return BuildNPMPURL(name, version)
 	}
@@ -25,6 +27,20 @@ func BuildPURL(name, version, ecosystem string) string {
 // BuildCargoPURL constructs a Package URL for a Rust crate.
 func BuildCargoPURL(name, version string) string {
 	purl := packageurl.NewPackageURL("cargo", "", name, version, nil, "")
+	return purl.ToString()
+}
+
+// BuildMavenPURL constructs a Package URL for a Maven artifact.
+// The input `name` is expected to be "group:artifact".
+func BuildMavenPURL(name, version string) string {
+	var group, artifact string
+	if idx := strings.Index(name, ":"); idx > 0 {
+		group = name[:idx]
+		artifact = name[idx+1:]
+	} else {
+		artifact = name
+	}
+	purl := packageurl.NewPackageURL("maven", group, artifact, version, nil, "")
 	return purl.ToString()
 }
 

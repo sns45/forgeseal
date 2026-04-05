@@ -28,6 +28,9 @@ func TestBuildPURL(t *testing.T) {
 		// Cargo crates
 		{"serde", "1.0.124", "cargo", "pkg:cargo/serde@1.0.124"},
 		{"tokio", "1.36.0", "cargo", "pkg:cargo/tokio@1.36.0"},
+		// Maven (group:artifact in name)
+		{"org.apache.logging.log4j:log4j-core", "2.14.1", "maven", "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1"},
+		{"com.google.guava:guava", "32.1.3-jre", "maven", "pkg:maven/com.google.guava/guava@32.1.3-jre"},
 	}
 
 	for _, tt := range tests {
