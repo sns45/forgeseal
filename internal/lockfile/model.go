@@ -15,6 +15,7 @@ const (
 	TypePDM             LockfileType = "pdm"
 	TypeUV              LockfileType = "uv"
 	TypeGoMod           LockfileType = "gomod"
+	TypeCargoLock       LockfileType = "cargo"
 )
 
 // Package represents a resolved dependency from a lockfile.

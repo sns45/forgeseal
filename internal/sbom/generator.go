@@ -41,6 +41,8 @@ func ecosystemFromLockfileType(lt lockfile.LockfileType) string {
 		return "pypi"
 	case lockfile.TypeGoMod:
 		return "golang"
+	case lockfile.TypeCargoLock:
+		return "cargo"
 	default:
 		return "npm"
 	}
@@ -61,6 +63,9 @@ func (g *Generator) Generate(ctx context.Context, lr *lockfile.LockfileResult, o
 	}
 	if ecosystem == "golang" && projInfo == nil {
 		projInfo = readGoModInfo(opts.ProjectDir)
+	}
+	if ecosystem == "cargo" && projInfo == nil {
+		projInfo = readCargoTomlInfo(opts.ProjectDir)
 	}
 	if projInfo == nil {
 		projInfo = readProjectInfo(opts.ProjectDir)
@@ -194,6 +199,31 @@ func readPyProjectInfo(dir string) *ProjectInfo {
 		Name:    proj.Project.Name,
 		Version: proj.Project.Version,
 	}
+}
+
+// readCargoTomlInfo reads [package] metadata from Cargo.toml.
+func readCargoTomlInfo(dir string) *ProjectInfo {
+	if dir == "" {
+		dir = "."
+	}
+	data, err := os.ReadFile(fmt.Sprintf("%s/Cargo.toml", dir))
+	if err != nil {
+		return nil
+	}
+	var raw map[string]any
+	if err := toml.Unmarshal(data, &raw); err != nil {
+		return nil
+	}
+	pkgMap, ok := raw["package"].(map[string]any)
+	if !ok {
+		return nil
+	}
+	name, _ := pkgMap["name"].(string)
+	version, _ := pkgMap["version"].(string)
+	if name == "" && version == "" {
+		return nil
+	}
+	return &ProjectInfo{Name: name, Version: version}
 }
 
 // readGoModInfo reads the module directive from go.mod.
