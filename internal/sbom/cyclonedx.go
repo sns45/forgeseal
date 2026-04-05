@@ -13,9 +13,16 @@ import (
 func mapComponent(pkg lockfile.Package, ecosystem string) cdx.Component {
 	purl := BuildPURL(pkg.Name, pkg.Version, ecosystem)
 
+	displayName := pkg.Name
+	if ecosystem == "maven" {
+		if idx := strings.Index(pkg.Name, ":"); idx > 0 {
+			displayName = pkg.Name[idx+1:]
+		}
+	}
+
 	comp := cdx.Component{
 		Type:    cdx.ComponentTypeLibrary,
-		Name:    pkg.Name,
+		Name:    displayName,
 		Version: pkg.Version,
 		BOMRef:  purl,
 		PackageURL: purl,
@@ -35,6 +42,8 @@ func mapComponent(pkg lockfile.Package, ecosystem string) cdx.Component {
 		registryURL = "https://pkg.go.dev/" + pkg.Name
 	case "cargo":
 		registryURL = "https://crates.io/crates/" + pkg.Name
+	case "maven":
+		registryURL = mavenRegistryURL(pkg.Name)
 	default:
 		registryURL = npmRegistryURL(pkg.Name)
 	}
@@ -101,6 +110,15 @@ func parseIntegrityHashes(integrity string) *[]cdx.Hash {
 // npmRegistryURL returns the npm registry URL for a package.
 func npmRegistryURL(name string) string {
 	return "https://www.npmjs.com/package/" + name
+}
+
+// mavenRegistryURL returns the Sonatype Central URL for a "group:artifact" coordinate.
+func mavenRegistryURL(name string) string {
+	parts := strings.SplitN(name, ":", 2)
+	if len(parts) != 2 {
+		return "https://central.sonatype.com/artifact/" + name
+	}
+	return "https://central.sonatype.com/artifact/" + parts[0] + "/" + parts[1]
 }
 
 // hashContent computes SHA-256 of the given content.

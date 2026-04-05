@@ -51,6 +51,8 @@ func init() {
 		&GoModParser{},
 		// Rust
 		&CargoParser{},
+		// Java/Gradle
+		&GradleParser{},
 	}
 }
 
