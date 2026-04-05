@@ -15,9 +15,17 @@ func BuildPURL(name, version, ecosystem string) string {
 		return BuildPyPIPURL(name, version)
 	case "golang":
 		return BuildGolangPURL(name, version)
+	case "cargo":
+		return BuildCargoPURL(name, version)
 	default:
 		return BuildNPMPURL(name, version)
 	}
+}
+
+// BuildCargoPURL constructs a Package URL for a Rust crate.
+func BuildCargoPURL(name, version string) string {
+	purl := packageurl.NewPackageURL("cargo", "", name, version, nil, "")
+	return purl.ToString()
 }
 
 // BuildGolangPURL constructs a Package URL for a Go module.

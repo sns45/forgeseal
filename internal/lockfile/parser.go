@@ -49,6 +49,8 @@ func init() {
 		&RequirementsTxtParser{},
 		// Go
 		&GoModParser{},
+		// Rust
+		&CargoParser{},
 	}
 }
 

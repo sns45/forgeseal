@@ -33,6 +33,8 @@ func mapComponent(pkg lockfile.Package, ecosystem string) cdx.Component {
 		registryURL = "https://pypi.org/project/" + normalizePyPIName(pkg.Name) + "/"
 	case "golang":
 		registryURL = "https://pkg.go.dev/" + pkg.Name
+	case "cargo":
+		registryURL = "https://crates.io/crates/" + pkg.Name
 	default:
 		registryURL = npmRegistryURL(pkg.Name)
 	}

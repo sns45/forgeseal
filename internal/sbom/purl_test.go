@@ -25,6 +25,9 @@ func TestBuildPURL(t *testing.T) {
 		{"github.com/gorilla/mux", "v1.8.0", "golang", "pkg:golang/github.com/gorilla/mux@v1.8.0"},
 		{"golang.org/x/sys", "v0.29.0", "golang", "pkg:golang/golang.org/x/sys@v0.29.0"},
 		{"github.com/Foo/Bar/v2", "v2.1.0", "golang", "pkg:golang/github.com/foo/bar/v2@v2.1.0"},
+		// Cargo crates
+		{"serde", "1.0.124", "cargo", "pkg:cargo/serde@1.0.124"},
+		{"tokio", "1.36.0", "cargo", "pkg:cargo/tokio@1.36.0"},
 	}
 
 	for _, tt := range tests {
