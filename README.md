@@ -33,7 +33,29 @@ Built for EU Cyber Resilience Act (CRA) compliance. forgeseal's own releases are
 | Cargo | `Cargo.lock` | TOML v3 format with SHA-256 checksums; skips workspace roots |
 | Gradle | `gradle.lockfile` | Line-oriented `group:artifact:version=configurations` with test-only dev detection |
 
-Detection priority: `bun.lockb` > `bun.lock` > `pnpm-lock.yaml` > `yarn.lock` > `package-lock.json` > `uv.lock` > `poetry.lock` > `pdm.lock` > `requirements.txt` > `go.mod` > `Cargo.lock` > `gradle.lockfile`. JS/TS > Python > Go > Rust > Java. Among Python lockfiles, uv.lock is preferred (most precise), followed by poetry.lock, pdm.lock, and requirements.txt (least precise). Yarn v1 vs Berry is determined by content inspection.
+### Detection Priority
+
+When a project contains lockfiles for multiple ecosystems, forgeseal picks the first match from the ordered list below. Ecosystem buckets are ordered JS/TS > Python > Go > Rust > Java, and within each ecosystem the most precise lockfile wins.
+
+| Rank | File | Ecosystem |
+|---|---|---|
+| 1 | `bun.lockb` | JS/TS (Bun binary) |
+| 2 | `bun.lock` | JS/TS (Bun text) |
+| 3 | `pnpm-lock.yaml` | JS/TS (pnpm) |
+| 4 | `yarn.lock` | JS/TS (Yarn Classic or Berry, decided by content) |
+| 5 | `package-lock.json` | JS/TS (npm) |
+| 6 | `uv.lock` | Python (uv) |
+| 7 | `poetry.lock` | Python (Poetry) |
+| 8 | `pdm.lock` | Python (PDM) |
+| 9 | `requirements.txt` | Python (pip) |
+| 10 | `go.mod` | Go |
+| 11 | `Cargo.lock` | Rust |
+| 12 | `gradle.lockfile` | Java / Gradle |
+
+Notes:
+- If both `bun.lockb` and `bun.lock` exist, forgeseal prefers `bun.lock` so no `bun` CLI is required.
+- `yarn.lock` is probed for a `__metadata:` header to decide Yarn v1 (classic) vs Yarn v2+ (Berry).
+- In practice a project targets a single ecosystem, so this priority list only comes into play for mixed repos.
 
 **Note on Yarn Berry hashes:** Yarn Berry uses a proprietary checksum format that is not compatible with standard SRI hashes or CycloneDX hash algorithms. Components from Yarn Berry lockfiles will be included in the SBOM without integrity hashes. This is a format limitation, not a forgeseal bug.
 
