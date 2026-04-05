@@ -1,17 +1,40 @@
 package sbom
 
 import (
+	"strings"
+
 	"github.com/package-url/packageurl-go"
 	"github.com/sn45/forgeseal/internal/lockfile"
 )
 
 // BuildPURL constructs a Package URL for the given ecosystem.
-// Ecosystem should be "npm" or "pypi".
+// Supported ecosystems: "npm", "pypi", "golang".
 func BuildPURL(name, version, ecosystem string) string {
-	if ecosystem == "pypi" {
+	switch ecosystem {
+	case "pypi":
 		return BuildPyPIPURL(name, version)
+	case "golang":
+		return BuildGolangPURL(name, version)
+	default:
+		return BuildNPMPURL(name, version)
 	}
-	return BuildNPMPURL(name, version)
+}
+
+// BuildGolangPURL constructs a Package URL for a Go module.
+// The full module path (e.g., github.com/gorilla/mux) is split on the last
+// '/' segment: namespace is the prefix, name is the last segment.
+// Module paths are lowercased per the purl spec.
+func BuildGolangPURL(name, version string) string {
+	lowered := strings.ToLower(name)
+	var namespace, pkgName string
+	if idx := strings.LastIndex(lowered, "/"); idx > 0 {
+		namespace = lowered[:idx]
+		pkgName = lowered[idx+1:]
+	} else {
+		pkgName = lowered
+	}
+	purl := packageurl.NewPackageURL("golang", namespace, pkgName, version, nil, "")
+	return purl.ToString()
 }
 
 // BuildNPMPURL constructs a Package URL for an npm package.

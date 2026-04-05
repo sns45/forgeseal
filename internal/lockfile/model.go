@@ -14,6 +14,7 @@ const (
 	TypePoetry          LockfileType = "poetry"
 	TypePDM             LockfileType = "pdm"
 	TypeUV              LockfileType = "uv"
+	TypeGoMod           LockfileType = "gomod"
 )
 
 // Package represents a resolved dependency from a lockfile.
