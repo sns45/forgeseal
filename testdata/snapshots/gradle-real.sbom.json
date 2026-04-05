@@ -1,0 +1,1445 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:00000000-0000-0000-0000-000000000000",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-01-01T00:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "forgeseal",
+          "version": "snapshot-test"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "pkg:maven/unknown@0.0.0",
+      "type": "application",
+      "name": "unknown",
+      "version": "0.0.0",
+      "purl": "pkg:maven/unknown@0.0.0"
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:maven/com.esotericsoftware/kryo@5.6.2",
+      "type": "library",
+      "name": "kryo",
+      "version": "5.6.2",
+      "purl": "pkg:maven/com.esotericsoftware/kryo@5.6.2",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.esotericsoftware/kryo",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.esotericsoftware/minlog@1.3.1",
+      "type": "library",
+      "name": "minlog",
+      "version": "1.3.1",
+      "purl": "pkg:maven/com.esotericsoftware/minlog@1.3.1",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.esotericsoftware/minlog",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.esotericsoftware/reflectasm@1.11.9",
+      "type": "library",
+      "name": "reflectasm",
+      "version": "1.11.9",
+      "purl": "pkg:maven/com.esotericsoftware/reflectasm@1.11.9",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.esotericsoftware/reflectasm",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20",
+      "type": "library",
+      "name": "jackson-annotations",
+      "version": "2.20",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-annotations",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0",
+      "type": "library",
+      "name": "jackson-core",
+      "version": "2.20.0",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0",
+      "type": "library",
+      "name": "jackson-databind",
+      "version": "2.20.0",
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-databind",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.0",
+      "type": "library",
+      "name": "jackson-dataformat-yaml",
+      "version": "2.20.0",
+      "purl": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0",
+      "type": "library",
+      "name": "jackson-datatype-jsr310",
+      "version": "2.20.0",
+      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/com.fasterxml.jackson/jackson-bom@2.20.0",
+      "type": "library",
+      "name": "jackson-bom",
+      "version": "2.20.0",
+      "purl": "pkg:maven/com.fasterxml.jackson/jackson-bom@2.20.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/com.fasterxml.jackson/jackson-bom",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-autoconfigure@3.4.0",
+      "type": "library",
+      "name": "spring-cloud-aws-autoconfigure",
+      "version": "3.4.0",
+      "purl": "pkg:maven/io.awspring.cloud/spring-cloud-aws-autoconfigure@3.4.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.awspring.cloud/spring-cloud-aws-autoconfigure",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-core@3.4.0",
+      "type": "library",
+      "name": "spring-cloud-aws-core",
+      "version": "3.4.0",
+      "purl": "pkg:maven/io.awspring.cloud/spring-cloud-aws-core@3.4.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.awspring.cloud/spring-cloud-aws-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-sns@3.4.0",
+      "type": "library",
+      "name": "spring-cloud-aws-sns",
+      "version": "3.4.0",
+      "purl": "pkg:maven/io.awspring.cloud/spring-cloud-aws-sns@3.4.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.awspring.cloud/spring-cloud-aws-sns",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-sqs@3.4.0",
+      "type": "library",
+      "name": "spring-cloud-aws-sqs",
+      "version": "3.4.0",
+      "purl": "pkg:maven/io.awspring.cloud/spring-cloud-aws-sqs@3.4.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.awspring.cloud/spring-cloud-aws-sqs",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter-sns@3.4.0",
+      "type": "library",
+      "name": "spring-cloud-aws-starter-sns",
+      "version": "3.4.0",
+      "purl": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter-sns@3.4.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.awspring.cloud/spring-cloud-aws-starter-sns",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter-sqs@3.4.0",
+      "type": "library",
+      "name": "spring-cloud-aws-starter-sqs",
+      "version": "3.4.0",
+      "purl": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter-sqs@3.4.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.awspring.cloud/spring-cloud-aws-starter-sqs",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter@3.4.0",
+      "type": "library",
+      "name": "spring-cloud-aws-starter",
+      "version": "3.4.0",
+      "purl": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter@3.4.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.awspring.cloud/spring-cloud-aws-starter",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.micrometer/context-propagation@1.1.3",
+      "type": "library",
+      "name": "context-propagation",
+      "version": "1.1.3",
+      "purl": "pkg:maven/io.micrometer/context-propagation@1.1.3",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.micrometer/context-propagation",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.0",
+      "type": "library",
+      "name": "micrometer-commons",
+      "version": "1.15.0",
+      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.15.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.micrometer/micrometer-commons",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.0",
+      "type": "library",
+      "name": "micrometer-observation",
+      "version": "1.15.0",
+      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.15.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.micrometer/micrometer-observation",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-buffer@4.1.127.Final",
+      "type": "library",
+      "name": "netty-buffer",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-buffer@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-buffer",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-codec-dns@4.1.127.Final",
+      "type": "library",
+      "name": "netty-codec-dns",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-codec-dns@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-codec-dns",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-codec@4.1.127.Final",
+      "type": "library",
+      "name": "netty-codec",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-codec@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-codec",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-common@4.1.127.Final",
+      "type": "library",
+      "name": "netty-common",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-common@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-common",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-handler@4.1.127.Final",
+      "type": "library",
+      "name": "netty-handler",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-handler@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-handler",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-resolver-dns@4.1.127.Final",
+      "type": "library",
+      "name": "netty-resolver-dns",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-resolver-dns@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-resolver-dns",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-resolver@4.1.127.Final",
+      "type": "library",
+      "name": "netty-resolver",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-resolver@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-resolver",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-transport-native-unix-common@4.1.127.Final",
+      "type": "library",
+      "name": "netty-transport-native-unix-common",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-transport-native-unix-common@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-transport-native-unix-common",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.netty/netty-transport@4.1.127.Final",
+      "type": "library",
+      "name": "netty-transport",
+      "version": "4.1.127.Final",
+      "purl": "pkg:maven/io.netty/netty-transport@4.1.127.Final",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.netty/netty-transport",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.projectreactor/reactor-core@3.6.2",
+      "type": "library",
+      "name": "reactor-core",
+      "version": "3.6.2",
+      "purl": "pkg:maven/io.projectreactor/reactor-core@3.6.2",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.projectreactor/reactor-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/io.reactivex.rxjava3/rxjava@3.1.8",
+      "type": "library",
+      "name": "rxjava",
+      "version": "3.1.8",
+      "purl": "pkg:maven/io.reactivex.rxjava3/rxjava@3.1.8",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/io.reactivex.rxjava3/rxjava",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1",
+      "type": "library",
+      "name": "jakarta.annotation-api",
+      "version": "2.1.1",
+      "purl": "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/jakarta.annotation/jakarta.annotation-api",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/javax.cache/cache-api@1.1.1",
+      "type": "library",
+      "name": "cache-api",
+      "version": "1.1.1",
+      "purl": "pkg:maven/javax.cache/cache-api@1.1.1",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/javax.cache/cache-api",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/net.bytebuddy/byte-buddy@1.17.7",
+      "type": "library",
+      "name": "byte-buddy",
+      "version": "1.17.7",
+      "purl": "pkg:maven/net.bytebuddy/byte-buddy@1.17.7",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/net.bytebuddy/byte-buddy",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.logging.log4j/log4j-api@2.24.3",
+      "type": "library",
+      "name": "log4j-api",
+      "version": "2.24.3",
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-api@2.24.3",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.apache.logging.log4j/log4j-api",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.24.3",
+      "type": "library",
+      "name": "log4j-to-slf4j",
+      "version": "2.24.3",
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.24.3",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.apache.logging.log4j/log4j-to-slf4j",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.jodd/jodd-util@6.3.0",
+      "type": "library",
+      "name": "jodd-util",
+      "version": "6.3.0",
+      "purl": "pkg:maven/org.jodd/jodd-util@6.3.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.jodd/jodd-util",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.objenesis/objenesis@3.4",
+      "type": "library",
+      "name": "objenesis",
+      "version": "3.4",
+      "purl": "pkg:maven/org.objenesis/objenesis@3.4",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.objenesis/objenesis",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.projectlombok/lombok@1.18.42",
+      "type": "library",
+      "name": "lombok",
+      "version": "1.18.42",
+      "purl": "pkg:maven/org.projectlombok/lombok@1.18.42",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.projectlombok/lombok",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.reactivestreams/reactive-streams@1.0.4",
+      "type": "library",
+      "name": "reactive-streams",
+      "version": "1.0.4",
+      "purl": "pkg:maven/org.reactivestreams/reactive-streams@1.0.4",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.reactivestreams/reactive-streams",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.redisson/redisson@3.52.0",
+      "type": "library",
+      "name": "redisson",
+      "version": "3.52.0",
+      "purl": "pkg:maven/org.redisson/redisson@3.52.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.redisson/redisson",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17",
+      "type": "library",
+      "name": "jul-to-slf4j",
+      "version": "2.0.17",
+      "purl": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.slf4j/jul-to-slf4j",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.slf4j/slf4j-api@2.0.17",
+      "type": "library",
+      "name": "slf4j-api",
+      "version": "2.0.17",
+      "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.17",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.slf4j/slf4j-api",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework.boot/spring-boot-autoconfigure@3.5.0",
+      "type": "library",
+      "name": "spring-boot-autoconfigure",
+      "version": "3.5.0",
+      "purl": "pkg:maven/org.springframework.boot/spring-boot-autoconfigure@3.5.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-autoconfigure",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework.boot/spring-boot-starter-logging@3.5.0",
+      "type": "library",
+      "name": "spring-boot-starter-logging",
+      "version": "3.5.0",
+      "purl": "pkg:maven/org.springframework.boot/spring-boot-starter-logging@3.5.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter-logging",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework.boot/spring-boot-starter@3.5.0",
+      "type": "library",
+      "name": "spring-boot-starter",
+      "version": "3.5.0",
+      "purl": "pkg:maven/org.springframework.boot/spring-boot-starter@3.5.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-starter",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework.boot/spring-boot@3.5.0",
+      "type": "library",
+      "name": "spring-boot",
+      "version": "3.5.0",
+      "purl": "pkg:maven/org.springframework.boot/spring-boot@3.5.0",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework.boot/spring-boot",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework.retry/spring-retry@2.0.12",
+      "type": "library",
+      "name": "spring-retry",
+      "version": "2.0.12",
+      "purl": "pkg:maven/org.springframework.retry/spring-retry@2.0.12",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework.retry/spring-retry",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-aop@6.2.7",
+      "type": "library",
+      "name": "spring-aop",
+      "version": "6.2.7",
+      "purl": "pkg:maven/org.springframework/spring-aop@6.2.7",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-aop",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-beans@6.2.7",
+      "type": "library",
+      "name": "spring-beans",
+      "version": "6.2.7",
+      "purl": "pkg:maven/org.springframework/spring-beans@6.2.7",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-beans",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-context@6.2.7",
+      "type": "library",
+      "name": "spring-context",
+      "version": "6.2.7",
+      "purl": "pkg:maven/org.springframework/spring-context@6.2.7",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-context",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-core@6.2.7",
+      "type": "library",
+      "name": "spring-core",
+      "version": "6.2.7",
+      "purl": "pkg:maven/org.springframework/spring-core@6.2.7",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-expression@6.2.7",
+      "type": "library",
+      "name": "spring-expression",
+      "version": "6.2.7",
+      "purl": "pkg:maven/org.springframework/spring-expression@6.2.7",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-expression",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-jcl@6.2.7",
+      "type": "library",
+      "name": "spring-jcl",
+      "version": "6.2.7",
+      "purl": "pkg:maven/org.springframework/spring-jcl@6.2.7",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-jcl",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.springframework/spring-messaging@6.2.7",
+      "type": "library",
+      "name": "spring-messaging",
+      "version": "6.2.7",
+      "purl": "pkg:maven/org.springframework/spring-messaging@6.2.7",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.springframework/spring-messaging",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.yaml/snakeyaml@2.4",
+      "type": "library",
+      "name": "snakeyaml",
+      "version": "2.4",
+      "purl": "pkg:maven/org.yaml/snakeyaml@2.4",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/org.yaml/snakeyaml",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/annotations@2.31.54",
+      "type": "library",
+      "name": "annotations",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/annotations@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/annotations",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/arns@2.31.54",
+      "type": "library",
+      "name": "arns",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/arns@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/arns",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/auth@2.31.54",
+      "type": "library",
+      "name": "auth",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/auth@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/auth",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/aws-core@2.31.54",
+      "type": "library",
+      "name": "aws-core",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/aws-core@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/aws-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/aws-json-protocol@2.31.54",
+      "type": "library",
+      "name": "aws-json-protocol",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/aws-json-protocol@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/aws-json-protocol",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/aws-query-protocol@2.31.54",
+      "type": "library",
+      "name": "aws-query-protocol",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/aws-query-protocol@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/aws-query-protocol",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/checksums-spi@2.31.54",
+      "type": "library",
+      "name": "checksums-spi",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/checksums-spi@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/checksums-spi",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/checksums@2.31.54",
+      "type": "library",
+      "name": "checksums",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/checksums@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/checksums",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/endpoints-spi@2.31.54",
+      "type": "library",
+      "name": "endpoints-spi",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/endpoints-spi@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/endpoints-spi",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/http-auth-aws-eventstream@2.31.54",
+      "type": "library",
+      "name": "http-auth-aws-eventstream",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/http-auth-aws-eventstream@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/http-auth-aws-eventstream",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/http-auth-aws@2.31.54",
+      "type": "library",
+      "name": "http-auth-aws",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/http-auth-aws@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/http-auth-aws",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/http-auth-spi@2.31.54",
+      "type": "library",
+      "name": "http-auth-spi",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/http-auth-spi@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/http-auth-spi",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/http-auth@2.31.54",
+      "type": "library",
+      "name": "http-auth",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/http-auth@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/http-auth",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/http-client-spi@2.31.54",
+      "type": "library",
+      "name": "http-client-spi",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/http-client-spi@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/http-client-spi",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/identity-spi@2.31.54",
+      "type": "library",
+      "name": "identity-spi",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/identity-spi@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/identity-spi",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/json-utils@2.31.54",
+      "type": "library",
+      "name": "json-utils",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/json-utils@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/json-utils",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/metrics-spi@2.31.54",
+      "type": "library",
+      "name": "metrics-spi",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/metrics-spi@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/metrics-spi",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/profiles@2.31.54",
+      "type": "library",
+      "name": "profiles",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/profiles@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/profiles",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/protocol-core@2.31.54",
+      "type": "library",
+      "name": "protocol-core",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/protocol-core@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/protocol-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/regions@2.31.54",
+      "type": "library",
+      "name": "regions",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/regions@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/regions",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/retries-spi@2.31.54",
+      "type": "library",
+      "name": "retries-spi",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/retries-spi@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/retries-spi",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/retries@2.31.54",
+      "type": "library",
+      "name": "retries",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/retries@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/retries",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/sdk-core@2.31.54",
+      "type": "library",
+      "name": "sdk-core",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/sdk-core@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/sdk-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/sns@2.31.54",
+      "type": "library",
+      "name": "sns",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/sns@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/sns",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/sqs@2.31.54",
+      "type": "library",
+      "name": "sqs",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/sqs@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/sqs",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/third-party-jackson-core@2.31.54",
+      "type": "library",
+      "name": "third-party-jackson-core",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/third-party-jackson-core@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/third-party-jackson-core",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.awssdk/utils@2.31.54",
+      "type": "library",
+      "name": "utils",
+      "version": "2.31.54",
+      "purl": "pkg:maven/software.amazon.awssdk/utils@2.31.54",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.awssdk/utils",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/software.amazon.eventstream/eventstream@1.0.1",
+      "type": "library",
+      "name": "eventstream",
+      "version": "1.0.1",
+      "purl": "pkg:maven/software.amazon.eventstream/eventstream@1.0.1",
+      "externalReferences": [
+        {
+          "url": "https://central.sonatype.com/artifact/software.amazon.eventstream/eventstream",
+          "type": "distribution"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:maven/com.esotericsoftware/kryo@5.6.2"
+    },
+    {
+      "ref": "pkg:maven/com.esotericsoftware/minlog@1.3.1"
+    },
+    {
+      "ref": "pkg:maven/com.esotericsoftware/reflectasm@1.11.9"
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20"
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0"
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0"
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.0"
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0"
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson/jackson-bom@2.20.0"
+    },
+    {
+      "ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-autoconfigure@3.4.0"
+    },
+    {
+      "ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-core@3.4.0"
+    },
+    {
+      "ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-sns@3.4.0"
+    },
+    {
+      "ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-sqs@3.4.0"
+    },
+    {
+      "ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter-sns@3.4.0"
+    },
+    {
+      "ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter-sqs@3.4.0"
+    },
+    {
+      "ref": "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter@3.4.0"
+    },
+    {
+      "ref": "pkg:maven/io.micrometer/context-propagation@1.1.3"
+    },
+    {
+      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.0"
+    },
+    {
+      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.0"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-buffer@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-codec-dns@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-codec@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-common@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-handler@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-resolver-dns@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-resolver@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-transport-native-unix-common@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.netty/netty-transport@4.1.127.Final"
+    },
+    {
+      "ref": "pkg:maven/io.projectreactor/reactor-core@3.6.2"
+    },
+    {
+      "ref": "pkg:maven/io.reactivex.rxjava3/rxjava@3.1.8"
+    },
+    {
+      "ref": "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1"
+    },
+    {
+      "ref": "pkg:maven/javax.cache/cache-api@1.1.1"
+    },
+    {
+      "ref": "pkg:maven/net.bytebuddy/byte-buddy@1.17.7"
+    },
+    {
+      "ref": "pkg:maven/org.apache.logging.log4j/log4j-api@2.24.3"
+    },
+    {
+      "ref": "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.24.3"
+    },
+    {
+      "ref": "pkg:maven/org.jodd/jodd-util@6.3.0"
+    },
+    {
+      "ref": "pkg:maven/org.objenesis/objenesis@3.4"
+    },
+    {
+      "ref": "pkg:maven/org.projectlombok/lombok@1.18.42"
+    },
+    {
+      "ref": "pkg:maven/org.reactivestreams/reactive-streams@1.0.4"
+    },
+    {
+      "ref": "pkg:maven/org.redisson/redisson@3.52.0"
+    },
+    {
+      "ref": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17"
+    },
+    {
+      "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.17"
+    },
+    {
+      "ref": "pkg:maven/org.springframework.boot/spring-boot-autoconfigure@3.5.0"
+    },
+    {
+      "ref": "pkg:maven/org.springframework.boot/spring-boot-starter-logging@3.5.0"
+    },
+    {
+      "ref": "pkg:maven/org.springframework.boot/spring-boot-starter@3.5.0"
+    },
+    {
+      "ref": "pkg:maven/org.springframework.boot/spring-boot@3.5.0"
+    },
+    {
+      "ref": "pkg:maven/org.springframework.retry/spring-retry@2.0.12"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-aop@6.2.7"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-beans@6.2.7"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-context@6.2.7"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-core@6.2.7"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-expression@6.2.7"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-jcl@6.2.7"
+    },
+    {
+      "ref": "pkg:maven/org.springframework/spring-messaging@6.2.7"
+    },
+    {
+      "ref": "pkg:maven/org.yaml/snakeyaml@2.4"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/annotations@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/arns@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/auth@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/aws-core@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/aws-json-protocol@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/aws-query-protocol@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/checksums-spi@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/checksums@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/endpoints-spi@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/http-auth-aws-eventstream@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/http-auth-aws@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/http-auth-spi@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/http-auth@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/http-client-spi@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/identity-spi@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/json-utils@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/metrics-spi@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/profiles@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/protocol-core@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/regions@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/retries-spi@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/retries@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/sdk-core@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/sns@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/sqs@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/third-party-jackson-core@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.awssdk/utils@2.31.54"
+    },
+    {
+      "ref": "pkg:maven/software.amazon.eventstream/eventstream@1.0.1"
+    },
+    {
+      "ref": "pkg:maven/unknown@0.0.0",
+      "dependsOn": [
+        "pkg:maven/com.esotericsoftware/kryo@5.6.2",
+        "pkg:maven/com.esotericsoftware/minlog@1.3.1",
+        "pkg:maven/com.esotericsoftware/reflectasm@1.11.9",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0",
+        "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.20.0",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.0",
+        "pkg:maven/com.fasterxml.jackson/jackson-bom@2.20.0",
+        "pkg:maven/io.awspring.cloud/spring-cloud-aws-autoconfigure@3.4.0",
+        "pkg:maven/io.awspring.cloud/spring-cloud-aws-core@3.4.0",
+        "pkg:maven/io.awspring.cloud/spring-cloud-aws-sns@3.4.0",
+        "pkg:maven/io.awspring.cloud/spring-cloud-aws-sqs@3.4.0",
+        "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter-sns@3.4.0",
+        "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter-sqs@3.4.0",
+        "pkg:maven/io.awspring.cloud/spring-cloud-aws-starter@3.4.0",
+        "pkg:maven/io.micrometer/context-propagation@1.1.3",
+        "pkg:maven/io.micrometer/micrometer-commons@1.15.0",
+        "pkg:maven/io.micrometer/micrometer-observation@1.15.0",
+        "pkg:maven/io.netty/netty-buffer@4.1.127.Final",
+        "pkg:maven/io.netty/netty-codec-dns@4.1.127.Final",
+        "pkg:maven/io.netty/netty-codec@4.1.127.Final",
+        "pkg:maven/io.netty/netty-common@4.1.127.Final",
+        "pkg:maven/io.netty/netty-handler@4.1.127.Final",
+        "pkg:maven/io.netty/netty-resolver-dns@4.1.127.Final",
+        "pkg:maven/io.netty/netty-resolver@4.1.127.Final",
+        "pkg:maven/io.netty/netty-transport-native-unix-common@4.1.127.Final",
+        "pkg:maven/io.netty/netty-transport@4.1.127.Final",
+        "pkg:maven/io.projectreactor/reactor-core@3.6.2",
+        "pkg:maven/io.reactivex.rxjava3/rxjava@3.1.8",
+        "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1",
+        "pkg:maven/javax.cache/cache-api@1.1.1",
+        "pkg:maven/net.bytebuddy/byte-buddy@1.17.7",
+        "pkg:maven/org.apache.logging.log4j/log4j-api@2.24.3",
+        "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.24.3",
+        "pkg:maven/org.jodd/jodd-util@6.3.0",
+        "pkg:maven/org.objenesis/objenesis@3.4",
+        "pkg:maven/org.projectlombok/lombok@1.18.42",
+        "pkg:maven/org.reactivestreams/reactive-streams@1.0.4",
+        "pkg:maven/org.redisson/redisson@3.52.0",
+        "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.17",
+        "pkg:maven/org.springframework.boot/spring-boot-autoconfigure@3.5.0",
+        "pkg:maven/org.springframework.boot/spring-boot-starter-logging@3.5.0",
+        "pkg:maven/org.springframework.boot/spring-boot-starter@3.5.0",
+        "pkg:maven/org.springframework.boot/spring-boot@3.5.0",
+        "pkg:maven/org.springframework.retry/spring-retry@2.0.12",
+        "pkg:maven/org.springframework/spring-aop@6.2.7",
+        "pkg:maven/org.springframework/spring-beans@6.2.7",
+        "pkg:maven/org.springframework/spring-context@6.2.7",
+        "pkg:maven/org.springframework/spring-core@6.2.7",
+        "pkg:maven/org.springframework/spring-expression@6.2.7",
+        "pkg:maven/org.springframework/spring-jcl@6.2.7",
+        "pkg:maven/org.springframework/spring-messaging@6.2.7",
+        "pkg:maven/org.yaml/snakeyaml@2.4",
+        "pkg:maven/software.amazon.awssdk/annotations@2.31.54",
+        "pkg:maven/software.amazon.awssdk/arns@2.31.54",
+        "pkg:maven/software.amazon.awssdk/auth@2.31.54",
+        "pkg:maven/software.amazon.awssdk/aws-core@2.31.54",
+        "pkg:maven/software.amazon.awssdk/aws-json-protocol@2.31.54",
+        "pkg:maven/software.amazon.awssdk/aws-query-protocol@2.31.54",
+        "pkg:maven/software.amazon.awssdk/checksums-spi@2.31.54",
+        "pkg:maven/software.amazon.awssdk/checksums@2.31.54",
+        "pkg:maven/software.amazon.awssdk/endpoints-spi@2.31.54",
+        "pkg:maven/software.amazon.awssdk/http-auth-aws-eventstream@2.31.54",
+        "pkg:maven/software.amazon.awssdk/http-auth-aws@2.31.54",
+        "pkg:maven/software.amazon.awssdk/http-auth-spi@2.31.54",
+        "pkg:maven/software.amazon.awssdk/http-auth@2.31.54",
+        "pkg:maven/software.amazon.awssdk/http-client-spi@2.31.54",
+        "pkg:maven/software.amazon.awssdk/identity-spi@2.31.54",
+        "pkg:maven/software.amazon.awssdk/json-utils@2.31.54",
+        "pkg:maven/software.amazon.awssdk/metrics-spi@2.31.54",
+        "pkg:maven/software.amazon.awssdk/profiles@2.31.54",
+        "pkg:maven/software.amazon.awssdk/protocol-core@2.31.54",
+        "pkg:maven/software.amazon.awssdk/regions@2.31.54",
+        "pkg:maven/software.amazon.awssdk/retries-spi@2.31.54",
+        "pkg:maven/software.amazon.awssdk/retries@2.31.54",
+        "pkg:maven/software.amazon.awssdk/sdk-core@2.31.54",
+        "pkg:maven/software.amazon.awssdk/sns@2.31.54",
+        "pkg:maven/software.amazon.awssdk/sqs@2.31.54",
+        "pkg:maven/software.amazon.awssdk/third-party-jackson-core@2.31.54",
+        "pkg:maven/software.amazon.awssdk/utils@2.31.54",
+        "pkg:maven/software.amazon.eventstream/eventstream@1.0.1"
+      ]
+    }
+  ]
+}
