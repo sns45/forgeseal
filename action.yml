@@ -1,5 +1,5 @@
 name: 'forgeseal'
-description: 'Supply chain security for JS/TS: SBOM generation, Sigstore signing, SLSA provenance, VEX triage'
+description: 'Supply chain security for JS/TS, Python, Go, Rust, and Java: SBOM generation, Sigstore signing, SLSA provenance, VEX triage'
 author: 'sns45'
 
 branding:

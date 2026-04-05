@@ -118,6 +118,76 @@ func TestGeneratorGeneratePyPI(t *testing.T) {
 	}
 }
 
+func TestGeneratorGenerateGo(t *testing.T) {
+	lr := &lockfile.LockfileResult{
+		Type: lockfile.TypeGoMod,
+		Packages: []lockfile.Package{
+			{Name: "github.com/gorilla/mux", Version: "v1.8.1"},
+			{Name: "golang.org/x/sys", Version: "v0.29.0"},
+		},
+	}
+	gen := &Generator{Version: "test"}
+	bom, err := gen.Generate(context.Background(), lr, GenerateOptions{SpecVersion: "1.5", IncludeDev: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bom.Components == nil || len(*bom.Components) != 2 {
+		t.Fatalf("expected 2 components")
+	}
+	for _, comp := range *bom.Components {
+		if len(comp.PackageURL) < 11 || comp.PackageURL[:11] != "pkg:golang/" {
+			t.Errorf("expected pkg:golang/ prefix, got %s", comp.PackageURL)
+		}
+	}
+}
+
+func TestGeneratorGenerateRust(t *testing.T) {
+	lr := &lockfile.LockfileResult{
+		Type: lockfile.TypeCargoLock,
+		Packages: []lockfile.Package{
+			{Name: "serde", Version: "1.0.197"},
+			{Name: "tokio", Version: "1.36.0"},
+		},
+	}
+	gen := &Generator{Version: "test"}
+	bom, err := gen.Generate(context.Background(), lr, GenerateOptions{SpecVersion: "1.5", IncludeDev: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bom.Components == nil || len(*bom.Components) != 2 {
+		t.Fatalf("expected 2 components")
+	}
+	for _, comp := range *bom.Components {
+		if len(comp.PackageURL) < 10 || comp.PackageURL[:10] != "pkg:cargo/" {
+			t.Errorf("expected pkg:cargo/ prefix, got %s", comp.PackageURL)
+		}
+	}
+}
+
+func TestGeneratorGenerateGradle(t *testing.T) {
+	lr := &lockfile.LockfileResult{
+		Type: lockfile.TypeGradleLock,
+		Packages: []lockfile.Package{
+			{Name: "org.springframework:spring-core", Version: "6.1.2"},
+			{Name: "com.google.guava:guava", Version: "32.1.3-jre"},
+			{Name: "org.junit.jupiter:junit-jupiter-api", Version: "5.10.1", Dev: true},
+		},
+	}
+	gen := &Generator{Version: "test"}
+	bom, err := gen.Generate(context.Background(), lr, GenerateOptions{SpecVersion: "1.5", IncludeDev: false})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if bom.Components == nil || len(*bom.Components) != 2 {
+		t.Fatalf("expected 2 components (dev excluded), got %d", len(*bom.Components))
+	}
+	for _, comp := range *bom.Components {
+		if len(comp.PackageURL) < 10 || comp.PackageURL[:10] != "pkg:maven/" {
+			t.Errorf("expected pkg:maven/ prefix, got %s", comp.PackageURL)
+		}
+	}
+}
+
 func TestEcosystemFromLockfileType(t *testing.T) {
 	tests := []struct {
 		lt   lockfile.LockfileType
@@ -133,6 +203,9 @@ func TestEcosystemFromLockfileType(t *testing.T) {
 		{lockfile.TypePoetry, "pypi"},
 		{lockfile.TypePDM, "pypi"},
 		{lockfile.TypeUV, "pypi"},
+		{lockfile.TypeGoMod, "golang"},
+		{lockfile.TypeCargoLock, "cargo"},
+		{lockfile.TypeGradleLock, "maven"},
 	}
 
 	for _, tt := range tests {
