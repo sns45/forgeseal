@@ -1,0 +1,255 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:00000000-0000-0000-0000-000000000000",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2024-01-01T00:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "forgeseal",
+          "version": "snapshot-test"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "pkg:cargo/unknown@0.0.0",
+      "type": "application",
+      "name": "unknown",
+      "version": "0.0.0",
+      "purl": "pkg:cargo/unknown@0.0.0"
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:cargo/cfg-if@1.0.0",
+      "type": "library",
+      "name": "cfg-if",
+      "version": "1.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
+        }
+      ],
+      "purl": "pkg:cargo/cfg-if@1.0.0",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/cfg-if",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/getrandom@0.2.12",
+      "type": "library",
+      "name": "getrandom",
+      "version": "0.2.12",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "190092ea657667030ac6a35e305e62fc4dd69fd98ac98631e5d3a2b1575a12b5"
+        }
+      ],
+      "purl": "pkg:cargo/getrandom@0.2.12",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/getrandom",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/libc@0.2.153",
+      "type": "library",
+      "name": "libc",
+      "version": "0.2.153",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "9c198f91728a82281a64e1f4f9eeb25d82cb32a5de251c6bd1b5154d63a8e7bd"
+        }
+      ],
+      "purl": "pkg:cargo/libc@0.2.153",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/libc",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/proc-macro2@1.0.78",
+      "type": "library",
+      "name": "proc-macro2",
+      "version": "1.0.78",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "e2422ad645d89c99f8f3e6b88a9fdeca7fabeac836b1002371c4367c8f984aae"
+        }
+      ],
+      "purl": "pkg:cargo/proc-macro2@1.0.78",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/proc-macro2",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/rand@0.8.5",
+      "type": "library",
+      "name": "rand",
+      "version": "0.8.5",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
+        }
+      ],
+      "purl": "pkg:cargo/rand@0.8.5",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/rand",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/serde@0.9.15",
+      "type": "library",
+      "name": "serde",
+      "version": "0.9.15",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "34b623917345a631dc9608d5194cc206b3fe6c3554cd1c75b937e55e285254af"
+        }
+      ],
+      "purl": "pkg:cargo/serde@0.9.15",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/serde",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/serde@1.0.197",
+      "type": "library",
+      "name": "serde",
+      "version": "1.0.197",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "3fb1c873e1b9b056a4dc4c0c198b24c3ffa059243875552b2bd0933b1aee4ce2"
+        }
+      ],
+      "purl": "pkg:cargo/serde@1.0.197",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/serde",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/syn@2.0.52",
+      "type": "library",
+      "name": "syn",
+      "version": "2.0.52",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b699d15b36d1f02c3e7c69f8ffef53de37aefae075d8488d4ba1a7788d574a07"
+        }
+      ],
+      "purl": "pkg:cargo/syn@2.0.52",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/syn",
+          "type": "distribution"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:cargo/tokio@1.36.0",
+      "type": "library",
+      "name": "tokio",
+      "version": "1.36.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "61285f6515fa018fb2d1e46eb21223fff441ee8db5d0f1435e8ab4f5cdb80931"
+        }
+      ],
+      "purl": "pkg:cargo/tokio@1.36.0",
+      "externalReferences": [
+        {
+          "url": "https://crates.io/crates/tokio",
+          "type": "distribution"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:cargo/cfg-if@1.0.0"
+    },
+    {
+      "ref": "pkg:cargo/getrandom@0.2.12",
+      "dependsOn": [
+        "pkg:cargo/cfg-if@1.0.0",
+        "pkg:cargo/libc@0.2.153"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/libc@0.2.153"
+    },
+    {
+      "ref": "pkg:cargo/proc-macro2@1.0.78"
+    },
+    {
+      "ref": "pkg:cargo/rand@0.8.5",
+      "dependsOn": [
+        "pkg:cargo/getrandom@0.2.12",
+        "pkg:cargo/libc@0.2.153"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/serde@0.9.15"
+    },
+    {
+      "ref": "pkg:cargo/serde@1.0.197"
+    },
+    {
+      "ref": "pkg:cargo/syn@2.0.52",
+      "dependsOn": [
+        "pkg:cargo/proc-macro2@1.0.78"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/tokio@1.36.0",
+      "dependsOn": [
+        "pkg:cargo/libc@0.2.153"
+      ]
+    },
+    {
+      "ref": "pkg:cargo/unknown@0.0.0",
+      "dependsOn": [
+        "pkg:cargo/cfg-if@1.0.0",
+        "pkg:cargo/getrandom@0.2.12",
+        "pkg:cargo/libc@0.2.153",
+        "pkg:cargo/proc-macro2@1.0.78",
+        "pkg:cargo/rand@0.8.5",
+        "pkg:cargo/serde@0.9.15",
+        "pkg:cargo/serde@1.0.197",
+        "pkg:cargo/syn@2.0.52",
+        "pkg:cargo/tokio@1.36.0"
+      ]
+    }
+  ]
+}
