@@ -22,18 +22,47 @@ jobs:
       - name: Test
         run: make test
 
-      # End-to-end: run full pipeline against reference project
+      # End-to-end: run full pipeline against reference projects
       - name: E2E pipeline (examples/hono-app)
         run: |
           ./bin/forgeseal pipeline \
             --dir ./examples/hono-app \
-            --output-dir ./e2e-output \
+            --output-dir ./e2e-output/hono-app \
+            --sign=false \
+            --attest=false \
+            --vex-triage
+
+      - name: E2E pipeline (examples/go-app)
+        run: |
+          ./bin/forgeseal pipeline \
+            --dir ./examples/go-app \
+            --output-dir ./e2e-output/go-app \
+            --sign=false \
+            --attest=false \
+            --vex-triage
+
+      - name: E2E pipeline (examples/rust-app)
+        run: |
+          ./bin/forgeseal pipeline \
+            --dir ./examples/rust-app \
+            --output-dir ./e2e-output/rust-app \
+            --sign=false \
+            --attest=false \
+            --vex-triage
+
+      - name: E2E pipeline (examples/gradle-app)
+        run: |
+          ./bin/forgeseal pipeline \
+            --dir ./examples/gradle-app \
+            --output-dir ./e2e-output/gradle-app \
             --sign=false \
             --attest=false \
             --vex-triage
 
       - name: Verify E2E output
         run: |
-          test -f ./e2e-output/sbom.cdx.json || (echo "SBOM not generated" && exit 1)
-          test -f ./e2e-output/vex.json || (echo "VEX not generated" && exit 1)
-          echo "E2E pipeline passed"
+          for app in hono-app go-app rust-app gradle-app; do
+            test -f "./e2e-output/$app/sbom.cdx.json" || (echo "SBOM not generated for $app" && exit 1)
+            test -f "./e2e-output/$app/vex.json" || (echo "VEX not generated for $app" && exit 1)
+          done
+          echo "E2E pipelines passed for all example apps"
