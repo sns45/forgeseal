@@ -1,6 +1,6 @@
 # forgeseal
 
-Supply chain security for JavaScript, TypeScript, and Python projects. Generates CycloneDX SBOMs from lockfiles, signs them with Sigstore (keyless), produces SLSA provenance attestations, and manages VEX vulnerability documents.
+Supply chain security for JavaScript, TypeScript, Python, Go, Rust, and Java/Gradle projects. Generates CycloneDX SBOMs from lockfiles, signs them with Sigstore (keyless), produces SLSA provenance attestations, and manages VEX vulnerability documents.
 
 Built for EU Cyber Resilience Act (CRA) compliance. forgeseal's own releases are attested by forgeseal.
 
@@ -8,7 +8,7 @@ Built for EU Cyber Resilience Act (CRA) compliance. forgeseal's own releases are
 
 | Capability | Description |
 |---|---|
-| **SBOM Generation** | CycloneDX v1.4/v1.5/v1.6 from any JS/TS/Python lockfile (JSON and XML output) |
+| **SBOM Generation** | CycloneDX v1.4/v1.5/v1.6 from any JS/TS, Python, Go, Rust, or Java/Gradle lockfile (JSON and XML output) |
 | **Sigstore Signing** | Keyless signing via Fulcio + Rekor transparency log (OIDC identity) |
 | **SLSA Provenance** | In-toto attestations with SLSA v1 provenance predicate |
 | **VEX Management** | OpenVEX v0.2 document CRUD, automated triage via OSV.dev, CVSS severity classification |
@@ -29,8 +29,11 @@ Built for EU Cyber Resilience Act (CRA) compliance. forgeseal's own releases are
 | Poetry | `poetry.lock` | TOML v2 format with full dependency graph |
 | PDM | `pdm.lock` | TOML format with groups based dev detection |
 | uv | `uv.lock` | TOML format (Astral uv v0.1+) |
+| Go modules | `go.mod` + `go.sum` | Parses require/replace directives and pairs with `h1:` hashes |
+| Cargo | `Cargo.lock` | TOML v3 format with SHA-256 checksums; skips workspace roots |
+| Gradle | `gradle.lockfile` | Line-oriented `group:artifact:version=configurations` with test-only dev detection |
 
-Detection priority: `bun.lockb` > `bun.lock` > `pnpm-lock.yaml` > `yarn.lock` > `package-lock.json` > `uv.lock` > `poetry.lock` > `pdm.lock` > `requirements.txt`. JS/TS lockfiles take precedence in mixed projects. Among Python lockfiles, uv.lock is preferred (most precise), followed by poetry.lock, pdm.lock, and requirements.txt (least precise). Yarn v1 vs Berry is determined by content inspection.
+Detection priority: `bun.lockb` > `bun.lock` > `pnpm-lock.yaml` > `yarn.lock` > `package-lock.json` > `uv.lock` > `poetry.lock` > `pdm.lock` > `requirements.txt` > `go.mod` > `Cargo.lock` > `gradle.lockfile`. JS/TS > Python > Go > Rust > Java. Among Python lockfiles, uv.lock is preferred (most precise), followed by poetry.lock, pdm.lock, and requirements.txt (least precise). Yarn v1 vs Berry is determined by content inspection.
 
 **Note on Yarn Berry hashes:** Yarn Berry uses a proprietary checksum format that is not compatible with standard SRI hashes or CycloneDX hash algorithms. Components from Yarn Berry lockfiles will be included in the SBOM without integrity hashes. This is a format limitation, not a forgeseal bug.
 
@@ -65,6 +68,15 @@ forgeseal sbom --dir .
 
 # Generate an SBOM from a Python project (uv, poetry, pdm, or pip)
 forgeseal sbom --dir ./my-python-app
+
+# Generate an SBOM from a Go project (go.mod + go.sum)
+forgeseal sbom --dir ./my-go-service
+
+# Generate an SBOM from a Rust project (Cargo.lock)
+forgeseal sbom --dir ./my-rust-crate
+
+# Generate an SBOM from a Gradle project (gradle.lockfile)
+forgeseal sbom --dir ./my-gradle-app
 
 # Full pipeline: SBOM + sign + attest + VEX triage
 forgeseal pipeline --dir . --output-dir ./forgeseal-output --vex-triage
