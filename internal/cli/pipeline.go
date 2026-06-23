@@ -131,6 +131,7 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 	}
 
 	// Step 2: Sign SBOM
+	caExported := false
 	if doSign {
 		if !quiet {
 			fmt.Fprintln(os.Stderr, "Step 2/4: Signing SBOM...")
@@ -153,6 +154,7 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 				if err := keyedSigner.ExportCATo(outputDir); err != nil {
 					return fmt.Errorf("exporting CA cert: %w", err)
 				}
+				caExported = true
 				if !quiet {
 					fmt.Fprintf(os.Stderr, "  CA cert exported to %s/forgeseal-signing-ca.crt\n", outputDir)
 				}
@@ -201,6 +203,16 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 					bundlePath := filepath.Join(outputDir, "sbom.cdx.json.intoto.jsonl.sigstore.json")
 					if err := signing.WriteBundle(signResult.Bundle, bundlePath); err != nil {
 						return fmt.Errorf("writing attestation signature: %w", err)
+					}
+					// Export CA cert here if it wasn't already exported during SBOM signing
+					// (e.g. if SBOM signing was skipped or failed before ExportCATo was reached)
+					if keyed && !caExported {
+						if err := keyedSigner.ExportCATo(outputDir); err != nil {
+							return fmt.Errorf("exporting CA cert: %w", err)
+						}
+						if !quiet {
+							fmt.Fprintf(os.Stderr, "  CA cert exported to %s/forgeseal-signing-ca.crt\n", outputDir)
+						}
 					}
 				}
 			}

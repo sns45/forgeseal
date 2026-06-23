@@ -25,7 +25,7 @@ jobs:
 
       - name: Self-attest with forgeseal pipeline
         run: |
-          ./forgeseal pipeline \
+          ./bin/forgeseal pipeline \
             --dir . \
             --output-dir ./forgeseal-output \
             --sign \
@@ -35,7 +35,7 @@ jobs:
       - name: Compute artifact digest
         id: digest
         run: |
-          DIGEST=$(sha256sum ./forgeseal 2>/dev/null || sha256sum ./bin/forgeseal 2>/dev/null || echo "sha256:unknown")
+          DIGEST="sha256:$(sha256sum ./bin/forgeseal 2>/dev/null | awk '{print $1}' || echo 'unknown')"
           echo "value=$DIGEST" >> "$GITHUB_OUTPUT"
 
       - name: Obtain svidmint SVID
