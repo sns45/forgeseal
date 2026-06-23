@@ -4,10 +4,10 @@ package lockfile
 type LockfileType string
 
 const (
-	TypeNPM         LockfileType = "npm"
-	TypeYarnClassic LockfileType = "yarn-classic"
-	TypeYarnBerry   LockfileType = "yarn-berry"
-	TypePNPM        LockfileType = "pnpm"
+	TypeNPM             LockfileType = "npm"
+	TypeYarnClassic     LockfileType = "yarn-classic"
+	TypeYarnBerry       LockfileType = "yarn-berry"
+	TypePNPM            LockfileType = "pnpm"
 	TypeBunText         LockfileType = "bun-text"
 	TypeBunBinary       LockfileType = "bun-binary"
 	TypeRequirementsTxt LockfileType = "requirements-txt"

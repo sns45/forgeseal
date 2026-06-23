@@ -12,7 +12,7 @@ import (
 // PNPMParser handles pnpm-lock.yaml (v6 and v9 schemas).
 type PNPMParser struct{}
 
-func (p *PNPMParser) Type() LockfileType { return TypePNPM }
+func (p *PNPMParser) Type() LockfileType  { return TypePNPM }
 func (p *PNPMParser) Filenames() []string { return []string{"pnpm-lock.yaml"} }
 
 func (p *PNPMParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {
@@ -150,17 +150,17 @@ func parsePNPMV9Key(key string) (name, version string) {
 }
 
 type pnpmLockfile struct {
-	LockfileVersion string                     `yaml:"lockfileVersion"`
-	Packages        map[string]pnpmPackage     `yaml:"packages"`
-	Snapshots       map[string]pnpmSnapshot    `yaml:"snapshots"`
+	LockfileVersion string                  `yaml:"lockfileVersion"`
+	Packages        map[string]pnpmPackage  `yaml:"packages"`
+	Snapshots       map[string]pnpmSnapshot `yaml:"snapshots"`
 }
 
 type pnpmPackage struct {
-	Resolution             pnpmResolution    `yaml:"resolution"`
-	Dependencies           map[string]string `yaml:"dependencies"`
-	OptionalDependencies   map[string]string `yaml:"optionalDependencies"`
-	Dev                    bool              `yaml:"dev"`
-	Optional               bool              `yaml:"optional"`
+	Resolution           pnpmResolution    `yaml:"resolution"`
+	Dependencies         map[string]string `yaml:"dependencies"`
+	OptionalDependencies map[string]string `yaml:"optionalDependencies"`
+	Dev                  bool              `yaml:"dev"`
+	Optional             bool              `yaml:"optional"`
 }
 
 type pnpmResolution struct {
@@ -169,6 +169,6 @@ type pnpmResolution struct {
 }
 
 type pnpmSnapshot struct {
-	Dependencies           map[string]string `yaml:"dependencies"`
-	OptionalDependencies   map[string]string `yaml:"optionalDependencies"`
+	Dependencies         map[string]string `yaml:"dependencies"`
+	OptionalDependencies map[string]string `yaml:"optionalDependencies"`
 }

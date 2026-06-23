@@ -1,4 +1,4 @@
-module github.com/sn45/forgeseal
+module github.com/sns45/forgeseal
 
 go 1.23.0
 

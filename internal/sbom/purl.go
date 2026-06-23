@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/package-url/packageurl-go"
-	"github.com/sn45/forgeseal/internal/lockfile"
+	"github.com/sns45/forgeseal/internal/lockfile"
 )
 
 // BuildPURL constructs a Package URL for the given ecosystem.

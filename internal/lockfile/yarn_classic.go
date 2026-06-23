@@ -10,7 +10,7 @@ import (
 // YarnClassicParser handles yarn.lock v1 (custom text format).
 type YarnClassicParser struct{}
 
-func (p *YarnClassicParser) Type() LockfileType { return TypeYarnClassic }
+func (p *YarnClassicParser) Type() LockfileType  { return TypeYarnClassic }
 func (p *YarnClassicParser) Filenames() []string { return []string{"yarn.lock"} }
 
 func (p *YarnClassicParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {

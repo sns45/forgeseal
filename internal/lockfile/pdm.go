@@ -11,7 +11,7 @@ import (
 // PDMParser handles pdm.lock files (TOML format).
 type PDMParser struct{}
 
-func (p *PDMParser) Type() LockfileType { return TypePDM }
+func (p *PDMParser) Type() LockfileType  { return TypePDM }
 func (p *PDMParser) Filenames() []string { return []string{"pdm.lock"} }
 
 func (p *PDMParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {

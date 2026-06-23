@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/sn45/forgeseal/internal/verify"
+	"github.com/sns45/forgeseal/internal/verify"
 )
 
 func init() {

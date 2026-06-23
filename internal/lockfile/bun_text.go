@@ -12,7 +12,7 @@ import (
 // BunTextParser handles bun.lock (JSONC format, Bun v1.2+).
 type BunTextParser struct{}
 
-func (p *BunTextParser) Type() LockfileType { return TypeBunText }
+func (p *BunTextParser) Type() LockfileType  { return TypeBunText }
 func (p *BunTextParser) Filenames() []string { return []string{"bun.lock"} }
 
 func (p *BunTextParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {

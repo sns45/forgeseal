@@ -8,16 +8,16 @@ import (
 
 // CIEnvironment holds detected CI build context.
 type CIEnvironment struct {
-	Platform     string
-	Repository   string
-	Commit       string
-	Ref          string
-	RunID        string
-	RunURL       string
-	Workflow     string
-	BuilderID    string
-	RunnerOS     string
-	RunnerArch   string
+	Platform   string
+	Repository string
+	Commit     string
+	Ref        string
+	RunID      string
+	RunURL     string
+	Workflow   string
+	BuilderID  string
+	RunnerOS   string
+	RunnerArch string
 }
 
 // CIDetector detects CI environment variables.

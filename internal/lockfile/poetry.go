@@ -11,7 +11,7 @@ import (
 // PoetryParser handles poetry.lock files (TOML format).
 type PoetryParser struct{}
 
-func (p *PoetryParser) Type() LockfileType { return TypePoetry }
+func (p *PoetryParser) Type() LockfileType  { return TypePoetry }
 func (p *PoetryParser) Filenames() []string { return []string{"poetry.lock"} }
 
 func (p *PoetryParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {

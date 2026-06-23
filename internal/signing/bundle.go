@@ -16,8 +16,8 @@ type Bundle struct {
 
 // BundleContent holds the signing artifacts.
 type BundleContent struct {
-	MessageSignature *MessageSignature     `json:"messageSignature,omitempty"`
-	DSSEEnvelope     *DSSEEnvelope         `json:"dsseEnvelope,omitempty"`
+	MessageSignature     *MessageSignature     `json:"messageSignature,omitempty"`
+	DSSEEnvelope         *DSSEEnvelope         `json:"dsseEnvelope,omitempty"`
 	VerificationMaterial *VerificationMaterial `json:"verificationMaterial,omitempty"`
 }
 
@@ -48,8 +48,8 @@ type DSSESignature struct {
 
 // VerificationMaterial contains verification data.
 type VerificationMaterial struct {
-	Certificate        *CertificateInfo   `json:"certificate,omitempty"`
-	TlogEntries        []TlogEntry        `json:"tlogEntries,omitempty"`
+	Certificate *CertificateInfo `json:"certificate,omitempty"`
+	TlogEntries []TlogEntry      `json:"tlogEntries,omitempty"`
 }
 
 // CertificateInfo holds a Fulcio signing certificate.

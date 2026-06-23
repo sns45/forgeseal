@@ -6,9 +6,9 @@ builds:
     binary: forgeseal
     ldflags:
       - -s -w
-      - -X github.com/sn45/forgeseal/internal/cli.version={{.Version}}
-      - -X github.com/sn45/forgeseal/internal/cli.commit={{.Commit}}
-      - -X github.com/sn45/forgeseal/internal/cli.date={{.Date}}
+      - -X github.com/sns45/forgeseal/internal/cli.version={{.Version}}
+      - -X github.com/sns45/forgeseal/internal/cli.commit={{.Commit}}
+      - -X github.com/sns45/forgeseal/internal/cli.date={{.Date}}
     goos:
       - linux
       - darwin

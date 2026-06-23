@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/sn45/forgeseal/internal/provenance"
-	"github.com/sn45/forgeseal/internal/signing"
+	"github.com/sns45/forgeseal/internal/provenance"
+	"github.com/sns45/forgeseal/internal/signing"
 )
 
 func init() {

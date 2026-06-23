@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/sn45/forgeseal/internal/vex"
+	"github.com/sns45/forgeseal/internal/vex"
 )
 
 func init() {

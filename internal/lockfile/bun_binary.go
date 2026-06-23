@@ -12,7 +12,7 @@ import (
 // BunBinaryParser handles bun.lockb by shelling out to the bun CLI.
 type BunBinaryParser struct{}
 
-func (p *BunBinaryParser) Type() LockfileType { return TypeBunBinary }
+func (p *BunBinaryParser) Type() LockfileType  { return TypeBunBinary }
 func (p *BunBinaryParser) Filenames() []string { return []string{"bun.lockb"} }
 
 func (p *BunBinaryParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {

@@ -12,7 +12,7 @@ import (
 	cdx "github.com/CycloneDX/cyclonedx-go"
 	"github.com/google/uuid"
 	toml "github.com/pelletier/go-toml/v2"
-	"github.com/sn45/forgeseal/internal/lockfile"
+	"github.com/sns45/forgeseal/internal/lockfile"
 )
 
 // GenerateOptions configures SBOM generation.

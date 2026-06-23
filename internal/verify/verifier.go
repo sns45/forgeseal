@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/sn45/forgeseal/internal/provenance"
-	"github.com/sn45/forgeseal/internal/signing"
+	"github.com/sns45/forgeseal/internal/provenance"
+	"github.com/sns45/forgeseal/internal/signing"
 )
 
 // VerifyOptions configures verification.
@@ -23,9 +23,9 @@ type VerifyOptions struct {
 
 // VerifyResult holds verification results.
 type VerifyResult struct {
-	SignatureValid    bool
-	AttestationValid  bool
-	IdentityMatch     bool
+	SignatureValid   bool
+	AttestationValid bool
+	IdentityMatch    bool
 	Errors           []string
 	Warnings         []string
 }

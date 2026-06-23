@@ -10,7 +10,7 @@ import (
 // UVParser handles uv.lock files (TOML format from Astral's uv).
 type UVParser struct{}
 
-func (p *UVParser) Type() LockfileType { return TypeUV }
+func (p *UVParser) Type() LockfileType  { return TypeUV }
 func (p *UVParser) Filenames() []string { return []string{"uv.lock"} }
 
 func (p *UVParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {

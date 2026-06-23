@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/sn45/forgeseal/internal/provenance"
-	"github.com/sn45/forgeseal/internal/signing"
+	"github.com/sns45/forgeseal/internal/provenance"
+	"github.com/sns45/forgeseal/internal/signing"
 )
 
 func TestVerifyAttestation(t *testing.T) {

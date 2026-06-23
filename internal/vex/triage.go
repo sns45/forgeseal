@@ -27,9 +27,9 @@ type VulnDetail struct {
 
 // TriageResult holds the results of a VEX triage.
 type TriageResult struct {
-	Document       *OpenVEXDocument
-	VulnCount      int
-	ComponentCount int
+	Document        *OpenVEXDocument
+	VulnCount       int
+	ComponentCount  int
 	Vulnerabilities []VulnDetail
 	CountBySeverity map[SeverityLevel]int
 }

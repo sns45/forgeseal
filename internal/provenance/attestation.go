@@ -32,10 +32,10 @@ type AttestOptions struct {
 
 // Statement is an in-toto v1 attestation statement.
 type Statement struct {
-	Type          string        `json:"_type"`
-	Subject       []Subject     `json:"subject"`
-	PredicateType string        `json:"predicateType"`
-	Predicate     interface{}   `json:"predicate"`
+	Type          string      `json:"_type"`
+	Subject       []Subject   `json:"subject"`
+	PredicateType string      `json:"predicateType"`
+	Predicate     interface{} `json:"predicate"`
 }
 
 // Subject is the artifact being attested.
@@ -53,8 +53,8 @@ type SLSAProvenance struct {
 // BuildDefinition describes what was built and how.
 type BuildDefinition struct {
 	BuildType            string               `json:"buildType"`
-	ExternalParameters   map[string]string     `json:"externalParameters"`
-	ResolvedDependencies []ResourceDescriptor  `json:"resolvedDependencies,omitempty"`
+	ExternalParameters   map[string]string    `json:"externalParameters"`
+	ResolvedDependencies []ResourceDescriptor `json:"resolvedDependencies,omitempty"`
 }
 
 // ResourceDescriptor is a reference to a build input.
@@ -66,8 +66,8 @@ type ResourceDescriptor struct {
 
 // RunDetails describes the build execution.
 type RunDetails struct {
-	Builder  Builder        `json:"builder"`
-	Metadata BuildMetadata  `json:"metadata"`
+	Builder  Builder       `json:"builder"`
+	Metadata BuildMetadata `json:"metadata"`
 }
 
 // Builder identifies the build system.

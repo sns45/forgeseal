@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/sn45/forgeseal/internal/cli"
+	"github.com/sns45/forgeseal/internal/cli"
 )
 
 func main() {

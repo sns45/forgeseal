@@ -11,8 +11,8 @@ import (
 // NPMParser handles package-lock.json (v2 and v3 schemas).
 type NPMParser struct{}
 
-func (p *NPMParser) Type() LockfileType      { return TypeNPM }
-func (p *NPMParser) Filenames() []string      { return []string{"package-lock.json"} }
+func (p *NPMParser) Type() LockfileType  { return TypeNPM }
+func (p *NPMParser) Filenames() []string { return []string{"package-lock.json"} }
 
 func (p *NPMParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {
 	var raw npmLockfile
@@ -72,8 +72,8 @@ func extractNPMPackageName(key string) string {
 }
 
 type npmLockfile struct {
-	LockfileVersion int                    `json:"lockfileVersion"`
-	Packages        map[string]npmPackage  `json:"packages"`
+	LockfileVersion int                   `json:"lockfileVersion"`
+	Packages        map[string]npmPackage `json:"packages"`
 }
 
 type npmPackage struct {

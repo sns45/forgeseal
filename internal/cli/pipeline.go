@@ -10,11 +10,11 @@ import (
 	cdx "github.com/CycloneDX/cyclonedx-go"
 	"github.com/spf13/cobra"
 
-	"github.com/sn45/forgeseal/internal/lockfile"
-	"github.com/sn45/forgeseal/internal/provenance"
-	"github.com/sn45/forgeseal/internal/sbom"
-	"github.com/sn45/forgeseal/internal/signing"
-	"github.com/sn45/forgeseal/internal/vex"
+	"github.com/sns45/forgeseal/internal/lockfile"
+	"github.com/sns45/forgeseal/internal/provenance"
+	"github.com/sns45/forgeseal/internal/sbom"
+	"github.com/sns45/forgeseal/internal/signing"
+	"github.com/sns45/forgeseal/internal/vex"
 )
 
 func init() {

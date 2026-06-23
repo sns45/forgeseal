@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	cdx "github.com/CycloneDX/cyclonedx-go"
-	"github.com/sn45/forgeseal/internal/lockfile"
+	"github.com/sns45/forgeseal/internal/lockfile"
 )
 
 // mapComponent converts a lockfile.Package to a CycloneDX component.
@@ -21,10 +21,10 @@ func mapComponent(pkg lockfile.Package, ecosystem string) cdx.Component {
 	}
 
 	comp := cdx.Component{
-		Type:    cdx.ComponentTypeLibrary,
-		Name:    displayName,
-		Version: pkg.Version,
-		BOMRef:  purl,
+		Type:       cdx.ComponentTypeLibrary,
+		Name:       displayName,
+		Version:    pkg.Version,
+		BOMRef:     purl,
 		PackageURL: purl,
 	}
 

@@ -71,7 +71,7 @@ brew install sns45/tap/forgeseal
 curl -sSL https://raw.githubusercontent.com/sns45/forgeseal/main/scripts/install.sh | sh
 
 # Go
-go install github.com/sn45/forgeseal/cmd/forgeseal@latest
+go install github.com/sns45/forgeseal/cmd/forgeseal@latest
 
 # Docker
 docker run --rm -v $(pwd):/src ghcr.io/sns45/forgeseal pipeline --dir /src

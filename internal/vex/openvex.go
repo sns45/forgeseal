@@ -10,9 +10,9 @@ import (
 const (
 	OpenVEXContext = "https://openvex.dev/ns/v0.2.0"
 
-	StatusNotAffected       = "not_affected"
-	StatusAffected          = "affected"
-	StatusFixed             = "fixed"
+	StatusNotAffected        = "not_affected"
+	StatusAffected           = "affected"
+	StatusFixed              = "fixed"
 	StatusUnderInvestigation = "under_investigation"
 )
 

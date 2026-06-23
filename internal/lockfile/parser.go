@@ -27,7 +27,9 @@ type FileParser interface {
 
 // registry holds parsers in explicit detection priority order.
 // Order: bun.lockb > bun.lock > pnpm-lock.yaml > yarn.lock > package-lock.json >
-//        uv.lock > poetry.lock > pdm.lock > requirements.txt
+//
+//	uv.lock > poetry.lock > pdm.lock > requirements.txt
+//
 // JS/TS lockfiles take precedence in mixed projects; among Python lockfiles,
 // uv.lock is preferred (most precise), followed by poetry.lock, pdm.lock,
 // and requirements.txt (least precise).
@@ -39,7 +41,7 @@ func init() {
 		&BunBinaryParser{},
 		&BunTextParser{},
 		&PNPMParser{},
-		&YarnBerryParser{},  // yarn.lock detection picks between berry/classic by content
+		&YarnBerryParser{}, // yarn.lock detection picks between berry/classic by content
 		&YarnClassicParser{},
 		&NPMParser{},
 		// Python (lower priority)

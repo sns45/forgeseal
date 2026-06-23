@@ -12,7 +12,7 @@ import (
 // YarnBerryParser handles yarn.lock v2/v3/v4 (YAML with __metadata: header).
 type YarnBerryParser struct{}
 
-func (p *YarnBerryParser) Type() LockfileType { return TypeYarnBerry }
+func (p *YarnBerryParser) Type() LockfileType  { return TypeYarnBerry }
 func (p *YarnBerryParser) Filenames() []string { return []string{"yarn.lock"} }
 
 func (p *YarnBerryParser) Parse(ctx context.Context, r io.Reader) (*LockfileResult, error) {

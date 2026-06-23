@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/sn45/forgeseal/internal/lockfile"
+	"github.com/sns45/forgeseal/internal/lockfile"
 )
 
 func TestGeneratorGenerate(t *testing.T) {

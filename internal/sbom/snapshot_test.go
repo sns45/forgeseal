@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	cdx "github.com/CycloneDX/cyclonedx-go"
-	"github.com/sn45/forgeseal/internal/lockfile"
+	"github.com/sns45/forgeseal/internal/lockfile"
 )
 
 var update = flag.Bool("update", false, "update snapshot files")

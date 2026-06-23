@@ -12,9 +12,9 @@ import (
 var cfgFile string
 
 var rootCmd = &cobra.Command{
-	Use:   "forgeseal",
-	Short: "Supply chain security for JS/TS, Python, Go, Rust, and Java projects",
-	Long:  `forgeseal generates CycloneDX SBOMs, signs them with Sigstore, produces SLSA provenance attestations, and manages VEX documents for JavaScript/TypeScript, Python, Go, Rust, and Java/Gradle projects.`,
+	Use:           "forgeseal",
+	Short:         "Supply chain security for JS/TS, Python, Go, Rust, and Java projects",
+	Long:          `forgeseal generates CycloneDX SBOMs, signs them with Sigstore, produces SLSA provenance attestations, and manages VEX documents for JavaScript/TypeScript, Python, Go, Rust, and Java/Gradle projects.`,
 	SilenceUsage:  true,
 	SilenceErrors: true,
 }
