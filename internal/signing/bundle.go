@@ -10,15 +10,15 @@ const BundleMediaType = "application/vnd.dev.sigstore.bundle.v0.3+json"
 
 // Bundle represents a Sigstore bundle (.sigstore.json).
 type Bundle struct {
-	MediaType string        `json:"mediaType"`
-	Content   BundleContent `json:"content"`
+	MediaType            string                `json:"mediaType"`
+	VerificationMaterial *VerificationMaterial `json:"verificationMaterial,omitempty"`
+	Content              BundleContent         `json:"content"`
 }
 
 // BundleContent holds the signing artifacts.
 type BundleContent struct {
-	MessageSignature     *MessageSignature     `json:"messageSignature,omitempty"`
-	DSSEEnvelope         *DSSEEnvelope         `json:"dsseEnvelope,omitempty"`
-	VerificationMaterial *VerificationMaterial `json:"verificationMaterial,omitempty"`
+	MessageSignature *MessageSignature `json:"messageSignature,omitempty"`
+	DSSEEnvelope     *DSSEEnvelope     `json:"dsseEnvelope,omitempty"`
 }
 
 // MessageSignature holds the signature for blob signing.
@@ -48,12 +48,12 @@ type DSSESignature struct {
 
 // VerificationMaterial contains verification data.
 type VerificationMaterial struct {
-	Certificate *CertificateInfo `json:"certificate,omitempty"`
-	TlogEntries []TlogEntry      `json:"tlogEntries,omitempty"`
+	Certificate *CertInfo   `json:"certificate,omitempty"`
+	TlogEntries []TlogEntry `json:"tlogEntries,omitempty"`
 }
 
-// CertificateInfo holds a Fulcio signing certificate.
-type CertificateInfo struct {
+// CertInfo holds a Fulcio signing certificate.
+type CertInfo struct {
 	RawBytes string `json:"rawBytes"` // base64 DER
 }
 

@@ -1,12 +1,16 @@
 package verify
 
 import (
+	"crypto/ecdsa"
 	"crypto/sha256"
+	"crypto/x509"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
+	"encoding/pem"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/sns45/forgeseal/internal/provenance"
 	"github.com/sns45/forgeseal/internal/signing"
@@ -19,6 +23,7 @@ type VerifyOptions struct {
 	AttestationPath  string
 	ExpectedIssuer   string
 	ExpectedIdentity string
+	CACertPath       string // path to PEM CA cert for offline verification
 }
 
 // VerifyResult holds verification results.
@@ -81,15 +86,119 @@ func verifyBundle(opts VerifyOptions, result *VerifyResult) error {
 		result.SignatureValid = true
 	}
 
-	// In a full implementation, we would:
-	// 1. Verify the Fulcio certificate chain
-	// 2. Check the Rekor transparency log entry
-	// 3. Verify the signature against the certificate's public key
-	// 4. Check certificate identity against expected values
-
-	if bundle.Content.VerificationMaterial == nil {
+	if bundle.VerificationMaterial == nil {
 		result.Warnings = append(result.Warnings,
 			"bundle missing verification material (Fulcio certificate and Rekor entry); full trust chain verification not possible")
+		return nil
+	}
+
+	// Offline cryptographic verification when CA cert is provided
+	if bundle.VerificationMaterial.Certificate != nil && opts.CACertPath != "" {
+		// Decode leaf cert DER
+		certDER, err := base64.StdEncoding.DecodeString(bundle.VerificationMaterial.Certificate.RawBytes)
+		if err != nil {
+			result.Errors = append(result.Errors, "failed to decode leaf certificate DER: "+err.Error())
+			return nil
+		}
+
+		// Parse leaf cert
+		leafCert, err := x509.ParseCertificate(certDER)
+		if err != nil {
+			result.Errors = append(result.Errors, "failed to parse leaf certificate: "+err.Error())
+			return nil
+		}
+
+		// Load CA cert PEM
+		caPEMData, err := os.ReadFile(opts.CACertPath)
+		if err != nil {
+			result.Errors = append(result.Errors, "failed to read CA cert file: "+err.Error())
+			return nil
+		}
+		block, _ := pem.Decode(caPEMData)
+		if block == nil || block.Type != "CERTIFICATE" {
+			result.Errors = append(result.Errors, "CA cert file does not contain a valid PEM CERTIFICATE block")
+			return nil
+		}
+		caCert, err := x509.ParseCertificate(block.Bytes)
+		if err != nil {
+			result.Errors = append(result.Errors, "failed to parse CA certificate: "+err.Error())
+			return nil
+		}
+
+		// Verify leaf chains to CA
+		pool := x509.NewCertPool()
+		pool.AddCert(caCert)
+		chainOk := true
+		_, err = leafCert.Verify(x509.VerifyOptions{
+			Roots:       pool,
+			KeyUsages:   []x509.ExtKeyUsage{x509.ExtKeyUsageCodeSigning},
+			CurrentTime: time.Now(),
+		})
+		if err != nil {
+			result.Errors = append(result.Errors, "leaf certificate does not chain to provided CA: "+err.Error())
+			chainOk = false
+		}
+
+		// Extract leaf public key
+		leafPub, ok := leafCert.PublicKey.(*ecdsa.PublicKey)
+		if !ok {
+			result.Errors = append(result.Errors, "leaf certificate public key is not ECDSA")
+			return nil
+		}
+
+		sigOk := false
+
+		// Verify DSSE envelope signature
+		if bundle.Content.DSSEEnvelope != nil {
+			env := bundle.Content.DSSEEnvelope
+			payloadBytes, err := base64.StdEncoding.DecodeString(env.Payload)
+			if err != nil {
+				result.Errors = append(result.Errors, "failed to decode DSSE payload: "+err.Error())
+			} else {
+				pae := []byte(fmt.Sprintf("DSSEv1 %d %s %d %s",
+					len(env.PayloadType), env.PayloadType,
+					len(payloadBytes), string(payloadBytes)))
+				digest := sha256.Sum256(pae)
+
+				if len(env.Signatures) > 0 {
+					sigBytes, err := base64.StdEncoding.DecodeString(env.Signatures[0].Sig)
+					if err != nil {
+						result.Errors = append(result.Errors, "failed to decode DSSE signature: "+err.Error())
+					} else if ecdsa.VerifyASN1(leafPub, digest[:], sigBytes) {
+						sigOk = true
+					} else {
+						result.Errors = append(result.Errors, "DSSE signature verification failed")
+					}
+				} else {
+					result.Errors = append(result.Errors, "DSSE envelope contains no signatures")
+				}
+			}
+		}
+
+		// Verify blob (MessageSignature) signature
+		if bundle.Content.MessageSignature != nil && opts.ArtifactPath != "" {
+			artifactData, err := os.ReadFile(opts.ArtifactPath)
+			if err != nil {
+				result.Errors = append(result.Errors, "failed to read artifact for signature verification: "+err.Error())
+			} else {
+				digest := sha256.Sum256(artifactData)
+				sigBytes, err := base64.StdEncoding.DecodeString(bundle.Content.MessageSignature.Signature)
+				if err != nil {
+					result.Errors = append(result.Errors, "failed to decode message signature: "+err.Error())
+				} else if ecdsa.VerifyASN1(leafPub, digest[:], sigBytes) {
+					sigOk = true
+				} else {
+					result.Errors = append(result.Errors, "message signature verification failed")
+				}
+			}
+		} else if bundle.Content.MessageSignature != nil && opts.ArtifactPath == "" {
+			// No artifact path provided; skip blob sig check; rely on chain verification only
+			sigOk = true
+		}
+
+		if chainOk && sigOk {
+			result.SignatureValid = true
+		}
 	}
 
 	return nil

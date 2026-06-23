@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 
@@ -19,6 +20,8 @@ func init() {
 	attestCmd.Flags().String("repo", "", "source repository URI (auto-detected in CI)")
 	attestCmd.Flags().String("commit", "", "source commit SHA (auto-detected in CI)")
 	attestCmd.Flags().Bool("sign", true, "sign the attestation with Sigstore")
+	attestCmd.Flags().String("ca-key", defaultCAKeyPath(), "path to CA private key PEM")
+	attestCmd.Flags().String("ca-cert", defaultCACertPath(), "path to CA cert PEM")
 }
 
 var attestCmd = &cobra.Command{
@@ -35,6 +38,8 @@ func runAttest(cmd *cobra.Command, args []string) error {
 	repo, _ := cmd.Flags().GetString("repo")
 	commit, _ := cmd.Flags().GetString("commit")
 	doSign, _ := cmd.Flags().GetBool("sign")
+	caKeyPath, _ := cmd.Flags().GetString("ca-key")
+	caCertPath, _ := cmd.Flags().GetString("ca-cert")
 
 	if subjectPath == "" && subjectDigest == "" {
 		return fmt.Errorf("either --subject or --subject-digest is required")
@@ -68,10 +73,10 @@ func runAttest(cmd *cobra.Command, args []string) error {
 
 	// Sign if requested
 	if doSign {
-		signer := signing.NewSigstoreSigner(signing.SigstoreOptions{})
-		result, err := signer.SignDSSE(ctx, "application/vnd.in-toto+json", attestationJSON)
+		keyedSigner := signing.NewKeyedSigner(caKeyPath, caCertPath, "")
+		result, err := keyedSigner.SignDSSE(ctx, "application/vnd.in-toto+json", attestationJSON)
 		if err != nil {
-			// Signing may fail in non-CI environments; write unsigned attestation
+			// Signing may fail if CA paths are inaccessible; write unsigned attestation
 			quiet, _ := cmd.Flags().GetBool("quiet")
 			if !quiet {
 				fmt.Fprintf(os.Stderr, "Warning: signing failed (%v), writing unsigned attestation\n", err)
@@ -80,6 +85,10 @@ func runAttest(cmd *cobra.Command, args []string) error {
 			bundlePath := outputPath + ".sigstore.json"
 			if err := signing.WriteBundle(result.Bundle, bundlePath); err != nil {
 				return fmt.Errorf("writing signature bundle: %w", err)
+			}
+			bundleDir := filepath.Dir(bundlePath)
+			if err := keyedSigner.ExportCATo(bundleDir); err != nil {
+				return fmt.Errorf("exporting CA cert: %w", err)
 			}
 			quiet, _ := cmd.Flags().GetBool("quiet")
 			if !quiet {

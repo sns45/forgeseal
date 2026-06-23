@@ -13,6 +13,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 )
 
 // Signer defines the interface for signing operations.
@@ -219,4 +220,137 @@ func createPAE(payloadType string, payload []byte) []byte {
 	return []byte(fmt.Sprintf("DSSEv1 %d %s %d %s",
 		len(payloadType), payloadType,
 		len(payload), string(payload)))
+}
+
+// KeyedSigner implements Signer using a local CA to issue ephemeral leaf certs,
+// producing offline-verifiable Sigstore v0.3 bundles.
+type KeyedSigner struct {
+	caKeyPath  string
+	caCertPath string
+	builderID  string
+	ca         *SigningCA
+}
+
+// NewKeyedSigner creates a KeyedSigner with the given CA paths and builderID.
+// The CA is loaded lazily on first use. If builderID is empty the default
+// "https://forgeseal.dev/cli" is used.
+func NewKeyedSigner(caKeyPath, caCertPath, builderID string) *KeyedSigner {
+	if builderID == "" {
+		builderID = "https://forgeseal.dev/cli"
+	}
+	return &KeyedSigner{
+		caKeyPath:  caKeyPath,
+		caCertPath: caCertPath,
+		builderID:  builderID,
+	}
+}
+
+// ensureCA loads the CA from disk (or generates it) if it has not been loaded yet.
+func (s *KeyedSigner) ensureCA() error {
+	if s.ca != nil {
+		return nil
+	}
+	ca, err := LoadOrGenerateCA(s.caKeyPath, s.caCertPath)
+	if err != nil {
+		return fmt.Errorf("loading CA: %w", err)
+	}
+	s.ca = ca
+	return nil
+}
+
+// SignDSSE signs an in-toto attestation with a DSSE envelope and embeds the
+// ephemeral leaf certificate in the returned Sigstore bundle.
+func (s *KeyedSigner) SignDSSE(ctx context.Context, payloadType string, payload []byte) (*SignResult, error) {
+	if err := s.ensureCA(); err != nil {
+		return nil, err
+	}
+
+	leafPrivKey, leafCertDER, err := s.ca.IssueCert(s.builderID)
+	if err != nil {
+		return nil, fmt.Errorf("issuing leaf cert: %w", err)
+	}
+
+	pae := createPAE(payloadType, payload)
+	digest := sha256.Sum256(pae)
+
+	sig, err := ecdsa.SignASN1(rand.Reader, leafPrivKey, digest[:])
+	if err != nil {
+		return nil, fmt.Errorf("signing DSSE envelope: %w", err)
+	}
+
+	bundle := &Bundle{
+		MediaType: BundleMediaType,
+		VerificationMaterial: &VerificationMaterial{
+			Certificate: &CertInfo{
+				RawBytes: base64.StdEncoding.EncodeToString(leafCertDER),
+			},
+		},
+		Content: BundleContent{
+			DSSEEnvelope: &DSSEEnvelope{
+				PayloadType: payloadType,
+				Payload:     base64.StdEncoding.EncodeToString(payload),
+				Signatures: []DSSESignature{
+					{Sig: base64.StdEncoding.EncodeToString(sig)},
+				},
+			},
+		},
+	}
+
+	return &SignResult{Signature: sig, Bundle: bundle}, nil
+}
+
+// SignBlob signs raw content and embeds the ephemeral leaf certificate in the
+// returned Sigstore bundle.
+func (s *KeyedSigner) SignBlob(ctx context.Context, content []byte) (*SignResult, error) {
+	if err := s.ensureCA(); err != nil {
+		return nil, err
+	}
+
+	leafPrivKey, leafCertDER, err := s.ca.IssueCert(s.builderID)
+	if err != nil {
+		return nil, fmt.Errorf("issuing leaf cert: %w", err)
+	}
+
+	digest := sha256.Sum256(content)
+
+	sig, err := ecdsa.SignASN1(rand.Reader, leafPrivKey, digest[:])
+	if err != nil {
+		return nil, fmt.Errorf("signing content: %w", err)
+	}
+
+	bundle := &Bundle{
+		MediaType: BundleMediaType,
+		VerificationMaterial: &VerificationMaterial{
+			Certificate: &CertInfo{
+				RawBytes: base64.StdEncoding.EncodeToString(leafCertDER),
+			},
+		},
+		Content: BundleContent{
+			MessageSignature: &MessageSignature{
+				MessageDigest: DigestInfo{
+					Algorithm: "SHA2_256",
+					Digest:    base64.StdEncoding.EncodeToString(digest[:]),
+				},
+				Signature: base64.StdEncoding.EncodeToString(sig),
+			},
+		},
+	}
+
+	return &SignResult{Signature: sig, Bundle: bundle}, nil
+}
+
+// ExportCATo writes the CA certificate PEM to outputDir/forgeseal-signing-ca.crt.
+// The directory is created if it does not exist.
+func (s *KeyedSigner) ExportCATo(outputDir string) error {
+	if err := s.ensureCA(); err != nil {
+		return err
+	}
+	if err := os.MkdirAll(outputDir, 0755); err != nil {
+		return fmt.Errorf("creating output directory %s: %w", outputDir, err)
+	}
+	dest := filepath.Join(outputDir, "forgeseal-signing-ca.crt")
+	if err := os.WriteFile(dest, s.ca.ExportCACert(), 0644); err != nil {
+		return fmt.Errorf("writing CA cert to %s: %w", dest, err)
+	}
+	return nil
 }

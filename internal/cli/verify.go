@@ -17,6 +17,7 @@ func init() {
 	verifyCmd.Flags().String("attestation", "", "path to the SLSA provenance attestation")
 	verifyCmd.Flags().String("expected-issuer", "", "expected OIDC issuer")
 	verifyCmd.Flags().String("expected-identity", "", "expected signer identity regex")
+	verifyCmd.Flags().String("ca-cert", "", "path to CA cert PEM for offline verification")
 }
 
 var verifyCmd = &cobra.Command{
@@ -31,6 +32,7 @@ func runVerify(cmd *cobra.Command, args []string) error {
 	attestationPath, _ := cmd.Flags().GetString("attestation")
 	expectedIssuer, _ := cmd.Flags().GetString("expected-issuer")
 	expectedIdentity, _ := cmd.Flags().GetString("expected-identity")
+	caCertPath, _ := cmd.Flags().GetString("ca-cert")
 
 	if bundlePath == "" && attestationPath == "" {
 		return fmt.Errorf("at least one of --bundle or --attestation is required")
@@ -42,6 +44,7 @@ func runVerify(cmd *cobra.Command, args []string) error {
 		AttestationPath:  attestationPath,
 		ExpectedIssuer:   expectedIssuer,
 		ExpectedIdentity: expectedIdentity,
+		CACertPath:       caCertPath,
 	})
 	if err != nil {
 		return err

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -19,6 +20,9 @@ func init() {
 	signCmd.Flags().String("fulcio-url", "https://fulcio.sigstore.dev", "Fulcio instance URL")
 	signCmd.Flags().String("rekor-url", "https://rekor.sigstore.dev", "Rekor instance URL")
 	signCmd.Flags().String("bundle", "", "output path for .sigstore.json bundle")
+	signCmd.Flags().String("ca-key", defaultCAKeyPath(), "path to CA private key PEM")
+	signCmd.Flags().String("ca-cert", defaultCACertPath(), "path to CA cert PEM")
+	signCmd.Flags().Bool("keyed", true, "use keyed (offline CA-based) signing instead of keyless")
 
 	_ = signCmd.MarkFlagRequired("artifact")
 
@@ -26,9 +30,21 @@ func init() {
 	_ = viper.BindPFlag("sign.rekor_url", signCmd.Flags().Lookup("rekor-url"))
 }
 
+// defaultCAKeyPath returns the default path to the CA private key PEM.
+func defaultCAKeyPath() string {
+	home, _ := os.UserHomeDir()
+	return filepath.Join(home, ".forgeseal", "signing-ca.key")
+}
+
+// defaultCACertPath returns the default path to the CA certificate PEM.
+func defaultCACertPath() string {
+	home, _ := os.UserHomeDir()
+	return filepath.Join(home, ".forgeseal", "signing-ca.crt")
+}
+
 var signCmd = &cobra.Command{
 	Use:   "sign",
-	Short: "Sign an SBOM or artifact with Sigstore (keyless)",
+	Short: "Sign an SBOM or artifact with Sigstore (keyless) or keyed CA",
 	RunE:  runSign,
 }
 
@@ -40,6 +56,9 @@ func runSign(cmd *cobra.Command, args []string) error {
 	fulcioURL, _ := cmd.Flags().GetString("fulcio-url")
 	rekorURL, _ := cmd.Flags().GetString("rekor-url")
 	bundlePath, _ := cmd.Flags().GetString("bundle")
+	caKeyPath, _ := cmd.Flags().GetString("ca-key")
+	caCertPath, _ := cmd.Flags().GetString("ca-cert")
+	keyed, _ := cmd.Flags().GetBool("keyed")
 
 	// Apply config overrides
 	if v := viper.GetString("sign.fulcio_url"); v != "" && !cmd.Flags().Changed("fulcio-url") {
@@ -55,26 +74,43 @@ func runSign(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("reading artifact: %w", err)
 	}
 
-	// Create signer
-	signer := signing.NewSigstoreSigner(signing.SigstoreOptions{
-		FulcioURL:     fulcioURL,
-		RekorURL:      rekorURL,
-		IdentityToken: identityToken,
-	})
-
-	// Sign
-	result, err := signer.SignBlob(ctx, content)
-	if err != nil {
-		return fmt.Errorf("signing artifact: %w", err)
-	}
-
-	// Write bundle
+	// Write bundle path
 	if bundlePath == "" {
 		bundlePath = artifactPath + ".sigstore.json"
 	}
 
-	if err := signing.WriteBundle(result.Bundle, bundlePath); err != nil {
-		return fmt.Errorf("writing bundle: %w", err)
+	if keyed {
+		// Keyed signing with local CA
+		keyedSigner := signing.NewKeyedSigner(caKeyPath, caCertPath, "")
+		result, err := keyedSigner.SignBlob(ctx, content)
+		if err != nil {
+			return fmt.Errorf("signing artifact: %w", err)
+		}
+
+		if err := signing.WriteBundle(result.Bundle, bundlePath); err != nil {
+			return fmt.Errorf("writing bundle: %w", err)
+		}
+
+		outputDir := filepath.Dir(bundlePath)
+		if err := keyedSigner.ExportCATo(outputDir); err != nil {
+			return fmt.Errorf("exporting CA cert: %w", err)
+		}
+	} else {
+		// Keyless Sigstore signing
+		signer := signing.NewSigstoreSigner(signing.SigstoreOptions{
+			FulcioURL:     fulcioURL,
+			RekorURL:      rekorURL,
+			IdentityToken: identityToken,
+		})
+
+		result, err := signer.SignBlob(ctx, content)
+		if err != nil {
+			return fmt.Errorf("signing artifact: %w", err)
+		}
+
+		if err := signing.WriteBundle(result.Bundle, bundlePath); err != nil {
+			return fmt.Errorf("writing bundle: %w", err)
+		}
 	}
 
 	quiet, _ := cmd.Flags().GetBool("quiet")
