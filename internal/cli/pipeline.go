@@ -142,6 +142,14 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 			if !quiet {
 				fmt.Fprintf(os.Stderr, "  Warning: signing failed: %v\n", err)
 			}
+		} else if result.RawBundleJSON != nil {
+			// Keyless path: write canonical protojson bytes verbatim so that all
+			// Sigstore fields (Fulcio x509CertificateChain, Rekor tlogEntries) are
+			// preserved. Round-tripping through Bundle would silently drop them.
+			bundlePath := filepath.Join(outputDir, "sbom.cdx.json.sigstore.json")
+			if err := signing.WriteRawBundle(result.RawBundleJSON, bundlePath); err != nil {
+				return fmt.Errorf("writing signature bundle: %w", err)
+			}
 		} else if result.Bundle != nil {
 			bundlePath := filepath.Join(outputDir, "sbom.cdx.json.sigstore.json")
 			if err := signing.WriteBundle(result.Bundle, bundlePath); err != nil {
@@ -198,6 +206,12 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 				if err != nil {
 					if !quiet {
 						fmt.Fprintf(os.Stderr, "  Warning: attestation signing failed: %v\n", err)
+					}
+				} else if signResult.RawBundleJSON != nil {
+					// Keyless path: write verbatim to preserve Fulcio/Rekor fields.
+					bundlePath := filepath.Join(outputDir, "sbom.cdx.json.intoto.jsonl.sigstore.json")
+					if err := signing.WriteRawBundle(signResult.RawBundleJSON, bundlePath); err != nil {
+						return fmt.Errorf("writing attestation signature: %w", err)
 					}
 				} else if signResult.Bundle != nil {
 					bundlePath := filepath.Join(outputDir, "sbom.cdx.json.intoto.jsonl.sigstore.json")

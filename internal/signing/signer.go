@@ -39,6 +39,14 @@ type SignResult struct {
 	Signature   []byte
 	Certificate []byte // PEM-encoded Fulcio certificate
 	Bundle      *Bundle
+
+	// RawBundleJSON, when non-nil, is the canonical protojson bytes produced by
+	// the keyless Sigstore path. It must be written verbatim to the .sigstore.json
+	// file (via WriteRawBundle) so that fields not modelled in Bundle (e.g.
+	// verificationMaterial.x509CertificateChain, tlogEntries with inclusion
+	// proof / SET) are preserved. When this field is set, callers MUST use
+	// WriteRawBundle instead of WriteBundle.
+	RawBundleJSON []byte
 }
 
 // SigstoreOptions configures Sigstore signing.
@@ -101,15 +109,12 @@ func (s *SigstoreSigner) SignBlob(ctx context.Context, content []byte) (*SignRes
 		return nil, fmt.Errorf("keyless signing: %w", err)
 	}
 
-	// Parse the canonical Sigstore bundle JSON into the forgeseal Bundle type
-	// so callers can use the existing WriteBundle helper.
-	var bundle Bundle
-	if err := json.Unmarshal(bundleJSON, &bundle); err != nil {
-		return nil, fmt.Errorf("parsing keyless bundle: %w", err)
-	}
-
+	// Return the raw protojson bytes so the caller can write them verbatim.
+	// Do NOT round-trip through Bundle: that would silently drop fields not
+	// modelled in the struct (x509CertificateChain, tlogEntries inclusion proof
+	// / SET) making the bundle unverifiable by sigstore-go.
 	return &SignResult{
-		Bundle: &bundle,
+		RawBundleJSON: bundleJSON,
 	}, nil
 }
 
@@ -139,15 +144,12 @@ func (s *SigstoreSigner) SignDSSE(ctx context.Context, payloadType string, paylo
 		return nil, fmt.Errorf("keyless signing: %w", err)
 	}
 
-	// Parse the canonical Sigstore bundle JSON into the forgeseal Bundle type
-	// so callers can use the existing WriteBundle helper.
-	var bundle Bundle
-	if err := json.Unmarshal(bundleJSON, &bundle); err != nil {
-		return nil, fmt.Errorf("parsing keyless bundle: %w", err)
-	}
-
+	// Return the raw protojson bytes so the caller can write them verbatim.
+	// Do NOT round-trip through Bundle: that would silently drop fields not
+	// modelled in the struct (x509CertificateChain, tlogEntries inclusion proof
+	// / SET) making the bundle unverifiable by sigstore-go.
 	return &SignResult{
-		Bundle: &bundle,
+		RawBundleJSON: bundleJSON,
 	}, nil
 }
 

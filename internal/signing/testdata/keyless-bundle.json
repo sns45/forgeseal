@@ -1,0 +1,48 @@
+{
+  "mediaType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+  "verificationMaterial": {
+    "x509CertificateChain": {
+      "certificates": [
+        {
+          "rawBytes": "MIIBsjCCAVigAwIBAgIUABCDEFGHIJKLMNOPQRSTUVWXYZ01234wCgYIKoZIzj0EAwMwKjEVMBMGA1UEChMMc2lnc3RvcmUuZGV2MREwDwYDVQQDEwhzaWdzdG9yZTAeFw0yNDA2MjIxMjAwMDBaFw0yNDA2MjIxMjEwMDBaMAAwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARfakecert123456789012345678901234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567o2YwZDAOBgNVHQ8BAf8EBAMCB4AwEwYDVR0lBAwwCgYIKwYBBQUHAwMwHQYDVR0OBBYEFAAABBBBCCCCDDDDEEEEFFFFGGGGHHHH"
+        }
+      ]
+    },
+    "tlogEntries": [
+      {
+        "logIndex": "99887766",
+        "logId": {
+          "keyId": "wNI9atQGlz+VWfO6LRygH4QUfY/8W4RFwiT5i5WRgB0="
+        },
+        "kindVersion": {
+          "kind": "hashedrekord",
+          "version": "0.0.1"
+        },
+        "integratedTime": "1719057600",
+        "inclusionPromise": {
+          "signedEntryTimestamp": "MEUCIQDZ8sampleSETbytesForFidelityTestAABBCCDDEEFF1234567890+/wIgXsampleSETtailbytes=="
+        },
+        "inclusionProof": {
+          "logIndex": "99887766",
+          "rootHash": "sampleroothash1234567890abcdef1234567890abcdef1234567890abcde=",
+          "treeSize": "1000000",
+          "hashes": [
+            "abc123def456ghi789jkl012mno345pqr678stu901vwx234yz=",
+            "zzz999yyy888xxx777www666vvv555uuu444ttt333sss222rrr="
+          ],
+          "checkpoint": {
+            "envelope": "rekor.sigstore.dev - 2605736670972794746\n1000000\nsampleroothash1234567890abcdef1234567890abcdef1234567890abcde=\n\n— rekor.sigstore.dev wNI9at sampleCheckpointSig=="
+          }
+        },
+        "canonicalizedBody": "eyJhcGlWZXJzaW9uIjoiMC4wLjEiLCJraW5kIjoiaGFzaGVkcmVrb3JkIiwic3BlYyI6eyJkYXRhIjp7Imhhc2giOnsiYWxnb3JpdGhtIjoic2hhMjU2IiwidmFsdWUiOiJhYmMxMjMifX0sInNpZ25hdHVyZSI6eyJjb250ZW50IjoiZmFrZXNpZz09IiwicHVibGljS2V5Ijp7ImNvbnRlbnQiOiJmYWtlY2VydD09In19fX0="
+      }
+    ]
+  },
+  "messageSignature": {
+    "messageDigest": {
+      "algorithm": "SHA2_256",
+      "digest": "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+    },
+    "signature": "MEQCIAFakeSignatureForFidelityTestAAAABBBBCCCCDDDDAIHFakeSignatureTailBBBBCCCC=="
+  }
+}

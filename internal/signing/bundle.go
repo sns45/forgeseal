@@ -66,12 +66,26 @@ type TlogEntry struct {
 }
 
 // WriteBundle serializes a bundle to a file.
+// Use this for the keyed CA path, where Bundle holds all relevant fields.
+// For the keyless Sigstore path use WriteRawBundle so that protojson fields
+// not modelled in Bundle (x509CertificateChain, tlogEntries) are preserved.
 func WriteBundle(bundle *Bundle, path string) error {
 	data, err := json.MarshalIndent(bundle, "", "  ")
 	if err != nil {
 		return fmt.Errorf("marshaling bundle: %w", err)
 	}
 	return os.WriteFile(path, data, 0644)
+}
+
+// WriteRawBundle writes canonical protojson bytes directly to a file without
+// any re-marshalling. Use this for the keyless Sigstore path so that every
+// field produced by protojson.Marshal (Fulcio x509CertificateChain, Rekor
+// tlogEntries with inclusion proof / SET, etc.) is preserved byte-for-byte.
+func WriteRawBundle(rawJSON []byte, path string) error {
+	if err := os.WriteFile(path, rawJSON, 0644); err != nil {
+		return fmt.Errorf("writing raw bundle: %w", err)
+	}
+	return nil
 }
 
 // ReadBundle deserializes a bundle from a file.

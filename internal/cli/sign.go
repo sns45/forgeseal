@@ -108,7 +108,11 @@ func runSign(cmd *cobra.Command, args []string) error {
 			return fmt.Errorf("signing artifact: %w", err)
 		}
 
-		if err := signing.WriteBundle(result.Bundle, bundlePath); err != nil {
+		// Write the raw protojson bytes verbatim to preserve all Sigstore fields
+		// (Fulcio x509CertificateChain, Rekor tlogEntries) that are not modelled
+		// in forgeseal's Bundle struct. Round-tripping through Bundle would drop
+		// them silently, making the bundle unverifiable by sigstore-go.
+		if err := signing.WriteRawBundle(result.RawBundleJSON, bundlePath); err != nil {
 			return fmt.Errorf("writing bundle: %w", err)
 		}
 	}
