@@ -210,6 +210,7 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 						if err := keyedSigner.ExportCATo(outputDir); err != nil {
 							return fmt.Errorf("exporting CA cert: %w", err)
 						}
+						caExported = true
 						if !quiet {
 							fmt.Fprintf(os.Stderr, "  CA cert exported to %s/forgeseal-signing-ca.crt\n", outputDir)
 						}
