@@ -28,7 +28,10 @@ func init() {
 	pipelineCmd.Flags().Bool("vex-triage", false, "run VEX triage against OSV.dev")
 	pipelineCmd.Flags().String("fail-on", "", "fail with exit code 2 if vulnerabilities at or above this severity: critical, high, medium, low")
 	pipelineCmd.Flags().Bool("include-dev", false, "include devDependencies")
-	pipelineCmd.Flags().String("identity-token", "", "explicit OIDC token for signing")
+	pipelineCmd.Flags().String("identity-token", "", "explicit OIDC token for signing (keyless mode only)")
+	pipelineCmd.Flags().Bool("keyed", true, "use keyed (offline CA-based) signing instead of keyless Sigstore")
+	pipelineCmd.Flags().String("ca-key", defaultCAKeyPath(), "path to CA private key PEM (keyed mode)")
+	pipelineCmd.Flags().String("ca-cert", defaultCACertPath(), "path to CA cert PEM (keyed mode)")
 }
 
 var pipelineCmd = &cobra.Command{
@@ -49,6 +52,9 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 	failOn, _ := cmd.Flags().GetString("fail-on")
 	includeDev, _ := cmd.Flags().GetBool("include-dev")
 	identityToken, _ := cmd.Flags().GetString("identity-token")
+	keyed, _ := cmd.Flags().GetBool("keyed")
+	caKeyPath, _ := cmd.Flags().GetString("ca-key")
+	caCertPath, _ := cmd.Flags().GetString("ca-cert")
 	quiet, _ := cmd.Flags().GetBool("quiet")
 
 	// Create output directory
@@ -112,15 +118,23 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 		fmt.Fprintf(os.Stderr, "  SBOM written to %s (%d components)\n", sbomPath, componentCount(bom))
 	}
 
+	// Build signer once; reused for both SBOM sign and attest sign steps.
+	var signer signing.Signer
+	var keyedSigner *signing.KeyedSigner
+	if keyed {
+		keyedSigner = signing.NewKeyedSigner(caKeyPath, caCertPath, "")
+		signer = keyedSigner
+	} else {
+		signer = signing.NewSigstoreSigner(signing.SigstoreOptions{
+			IdentityToken: identityToken,
+		})
+	}
+
 	// Step 2: Sign SBOM
 	if doSign {
 		if !quiet {
 			fmt.Fprintln(os.Stderr, "Step 2/4: Signing SBOM...")
 		}
-
-		signer := signing.NewSigstoreSigner(signing.SigstoreOptions{
-			IdentityToken: identityToken,
-		})
 
 		result, err := signer.SignBlob(ctx, sbomData)
 		if err != nil {
@@ -134,6 +148,14 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 			}
 			if !quiet {
 				fmt.Fprintf(os.Stderr, "  Bundle written to %s\n", bundlePath)
+			}
+			if keyed {
+				if err := keyedSigner.ExportCATo(outputDir); err != nil {
+					return fmt.Errorf("exporting CA cert: %w", err)
+				}
+				if !quiet {
+					fmt.Fprintf(os.Stderr, "  CA cert exported to %s/forgeseal-signing-ca.crt\n", outputDir)
+				}
 			}
 		}
 	} else if !quiet {
@@ -170,9 +192,6 @@ func runPipeline(cmd *cobra.Command, args []string) error {
 
 			// Sign attestation
 			if doSign {
-				signer := signing.NewSigstoreSigner(signing.SigstoreOptions{
-					IdentityToken: identityToken,
-				})
 				signResult, err := signer.SignDSSE(ctx, "application/vnd.in-toto+json", attestData)
 				if err != nil {
 					if !quiet {
