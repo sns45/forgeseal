@@ -2,6 +2,7 @@ package signing
 
 import (
 	"context"
+	"errors"
 	"testing"
 )
 
@@ -52,6 +53,35 @@ func TestSigstoreSignerSignDSSE(t *testing.T) {
 	}
 	if len(result.Bundle.Content.DSSEEnvelope.Signatures) != 1 {
 		t.Errorf("expected 1 signature, got %d", len(result.Bundle.Content.DSSEEnvelope.Signatures))
+	}
+}
+
+func TestSigstoreSignerRequiresOIDCOffline(t *testing.T) {
+	// Ensure no GitHub Actions env is set
+	t.Setenv("ACTIONS_ID_TOKEN_REQUEST_URL", "")
+	t.Setenv("ACTIONS_ID_TOKEN_REQUEST_TOKEN", "")
+
+	signer := NewSigstoreSigner(SigstoreOptions{}) // no token
+	_, err := signer.SignBlob(context.Background(), []byte("test"))
+	if err == nil {
+		t.Fatal("expected error, got nil")
+	}
+	if !errors.Is(err, ErrOIDCRequired) {
+		t.Fatalf("expected errors.Is(err, ErrOIDCRequired), got: %v", err)
+	}
+}
+
+func TestSigstoreSignerSignDSSERequiresOIDCOffline(t *testing.T) {
+	t.Setenv("ACTIONS_ID_TOKEN_REQUEST_URL", "")
+	t.Setenv("ACTIONS_ID_TOKEN_REQUEST_TOKEN", "")
+
+	signer := NewSigstoreSigner(SigstoreOptions{})
+	_, err := signer.SignDSSE(context.Background(), "application/vnd.in-toto+json", []byte("{}"))
+	if err == nil {
+		t.Fatal("expected error, got nil")
+	}
+	if !errors.Is(err, ErrOIDCRequired) {
+		t.Fatalf("expected errors.Is(err, ErrOIDCRequired), got: %v", err)
 	}
 }
 

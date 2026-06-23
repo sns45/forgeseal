@@ -9,12 +9,22 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
 )
+
+// ErrOIDCRequired is returned by the keyless signer when no OIDC identity
+// token is available. This is the expected offline behavior. To use keyless
+// signing, run in GitHub Actions with `permissions: id-token: write` and
+// ensure ACTIONS_ID_TOKEN_REQUEST_URL is set. Alternatively, use keyed
+// signing (--keyed flag) for offline/local use.
+var ErrOIDCRequired = errors.New("OIDC identity token required for keyless signing: " +
+	"set --identity-token, or run in GitHub Actions with id-token: write permission; " +
+	"for offline use, pass --keyed (default true)")
 
 // Signer defines the interface for signing operations.
 type Signer interface {
@@ -52,6 +62,12 @@ type SigstoreOptions struct {
 // library. The signer produces valid ephemeral signatures and bundles that
 // can be upgraded to full Sigstore integration by adding the sigstore-go
 // dependency.
+//
+// OFFLINE BEHAVIOR: Returns ErrOIDCRequired when no OIDC token is available.
+// CI PATH (GitHub Actions): Ensure `permissions: id-token: write` in your
+// workflow. Set Fulcio/Rekor URLs or use defaults (public sigstore.dev).
+// The actual Fulcio cert exchange and Rekor log entry require sigstore-go
+// integration; see the TODO comment for the upgrade path.
 type SigstoreSigner struct {
 	opts SigstoreOptions
 }
@@ -72,7 +88,7 @@ func (s *SigstoreSigner) SignBlob(ctx context.Context, content []byte) (*SignRes
 	// Get OIDC token
 	token, err := s.getIdentityToken(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("obtaining identity token: %w", err)
+		return nil, err // already wrapped with ErrOIDCRequired sentinel
 	}
 
 	// Generate ephemeral key pair
@@ -116,6 +132,10 @@ func (s *SigstoreSigner) SignBlob(ctx context.Context, content []byte) (*SignRes
 
 // SignDSSE signs an in-toto attestation using a DSSE envelope.
 func (s *SigstoreSigner) SignDSSE(ctx context.Context, payloadType string, payload []byte) (*SignResult, error) {
+	if _, err := s.getIdentityToken(ctx); err != nil {
+		return nil, err
+	}
+
 	// Generate ephemeral key pair
 	privKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
@@ -166,7 +186,7 @@ func (s *SigstoreSigner) getIdentityToken(ctx context.Context) (string, error) {
 	}
 
 	// 3. No token available
-	return "", fmt.Errorf("no identity token available; use --identity-token flag, or run in GitHub Actions with id-token: write permission")
+	return "", fmt.Errorf("%w", ErrOIDCRequired)
 }
 
 // getGitHubActionsToken retrieves an OIDC token from the GitHub Actions runtime.
