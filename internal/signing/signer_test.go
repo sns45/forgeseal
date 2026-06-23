@@ -6,58 +6,11 @@ import (
 	"testing"
 )
 
-func TestSigstoreSignerSignBlob(t *testing.T) {
-	signer := NewSigstoreSigner(SigstoreOptions{
-		IdentityToken: "test-token",
-	})
-
-	content := []byte("test content for signing")
-	result, err := signer.SignBlob(context.Background(), content)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if result.Signature == nil {
-		t.Error("expected signature")
-	}
-	if result.Bundle == nil {
-		t.Error("expected bundle")
-	}
-	if result.Bundle.MediaType != BundleMediaType {
-		t.Errorf("expected media type %s, got %s", BundleMediaType, result.Bundle.MediaType)
-	}
-	if result.Bundle.Content.MessageSignature == nil {
-		t.Error("expected message signature in bundle")
-	}
-}
-
-func TestSigstoreSignerSignDSSE(t *testing.T) {
-	signer := NewSigstoreSigner(SigstoreOptions{
-		IdentityToken: "test-token",
-	})
-
-	payload := []byte(`{"_type": "https://in-toto.io/Statement/v1"}`)
-	result, err := signer.SignDSSE(context.Background(), "application/vnd.in-toto+json", payload)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if result.Bundle == nil {
-		t.Error("expected bundle")
-	}
-	if result.Bundle.Content.DSSEEnvelope == nil {
-		t.Error("expected DSSE envelope in bundle")
-	}
-	if result.Bundle.Content.DSSEEnvelope.PayloadType != "application/vnd.in-toto+json" {
-		t.Errorf("unexpected payload type: %s", result.Bundle.Content.DSSEEnvelope.PayloadType)
-	}
-	if len(result.Bundle.Content.DSSEEnvelope.Signatures) != 1 {
-		t.Errorf("expected 1 signature, got %d", len(result.Bundle.Content.DSSEEnvelope.Signatures))
-	}
-}
-
+// TestSigstoreSignerRequiresOIDCOffline verifies that with no OIDC token in the
+// environment the keyless signer returns ErrOIDCRequired for blob signing.
+// This is the canonical offline-observable behaviour; no network calls are made.
 func TestSigstoreSignerRequiresOIDCOffline(t *testing.T) {
-	// Ensure no GitHub Actions env is set
+	// Ensure no GitHub Actions env is set.
 	t.Setenv("ACTIONS_ID_TOKEN_REQUEST_URL", "")
 	t.Setenv("ACTIONS_ID_TOKEN_REQUEST_TOKEN", "")
 
@@ -71,6 +24,8 @@ func TestSigstoreSignerRequiresOIDCOffline(t *testing.T) {
 	}
 }
 
+// TestSigstoreSignerSignDSSERequiresOIDCOffline verifies that with no OIDC
+// token the keyless signer returns ErrOIDCRequired for DSSE signing.
 func TestSigstoreSignerSignDSSERequiresOIDCOffline(t *testing.T) {
 	t.Setenv("ACTIONS_ID_TOKEN_REQUEST_URL", "")
 	t.Setenv("ACTIONS_ID_TOKEN_REQUEST_TOKEN", "")
@@ -85,6 +40,7 @@ func TestSigstoreSignerSignDSSERequiresOIDCOffline(t *testing.T) {
 	}
 }
 
+// TestBundleWriteRead verifies round-trip serialisation of a Bundle.
 func TestBundleWriteRead(t *testing.T) {
 	bundle := &Bundle{
 		MediaType: BundleMediaType,

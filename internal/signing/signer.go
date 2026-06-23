@@ -2,9 +2,7 @@ package signing
 
 import (
 	"context"
-	"crypto"
 	"crypto/ecdsa"
-	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
@@ -15,6 +13,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/sigstore/sigstore-go/pkg/sign"
 )
 
 // ErrOIDCRequired is returned by the keyless signer when no OIDC identity
@@ -48,128 +48,106 @@ type SigstoreOptions struct {
 	IdentityToken string // explicit OIDC token
 }
 
-// SigstoreSigner implements signing using Sigstore (keyless).
+// SigstoreSigner implements signing using the Sigstore public-good keyless flow
+// (Fulcio CA + Rekor transparency log) via the sigstore-go library.
 //
-// The full Sigstore keyless flow is:
-//  1. Obtain OIDC identity token (GitHub Actions, browser, or explicit)
-//  2. Generate ephemeral ECDSA P-256 key pair
-//  3. Exchange public key + OIDC token for signing certificate from Fulcio
+// The full keyless flow (executed on each Sign call when an OIDC token is
+// available):
+//  1. Obtain OIDC identity token (GitHub Actions, explicit --identity-token)
+//  2. Generate ephemeral ECDSA P-256 key pair (discarded after signing)
+//  3. Exchange public key + OIDC token for a short-lived Fulcio certificate
 //  4. Sign the content with the ephemeral private key
-//  5. Record signature + certificate in Rekor transparency log
-//  6. Return a Sigstore bundle with all artifacts
-//
-// Currently, steps 3 and 5 (Fulcio and Rekor calls) require the sigstore-go
-// library. The signer produces valid ephemeral signatures and bundles that
-// can be upgraded to full Sigstore integration by adding the sigstore-go
-// dependency.
+//  5. Record signature + certificate in the Rekor transparency log
+//  6. Return a canonical Sigstore v0.3 bundle (.sigstore.json)
 //
 // OFFLINE BEHAVIOR: Returns ErrOIDCRequired when no OIDC token is available.
+// No network calls are made in the offline path.
+//
 // CI PATH (GitHub Actions): Ensure `permissions: id-token: write` in your
-// workflow. Set Fulcio/Rekor URLs or use defaults (public sigstore.dev).
-// The actual Fulcio cert exchange and Rekor log entry require sigstore-go
-// integration; see the TODO comment for the upgrade path.
+// workflow. The TUF client discovers Fulcio/Rekor endpoints automatically
+// unless explicit URLs are provided via SigstoreOptions.
 type SigstoreSigner struct {
 	opts SigstoreOptions
 }
 
 // NewSigstoreSigner creates a new SigstoreSigner.
+//
+// When FulcioURL or RekorURL are empty, signKeyless will use the production
+// TUF signing config to discover the appropriate service URLs automatically.
+// Explicit URLs override TUF discovery and are intended for testing/staging
+// environments.
 func NewSigstoreSigner(opts SigstoreOptions) *SigstoreSigner {
-	if opts.FulcioURL == "" {
-		opts.FulcioURL = "https://fulcio.sigstore.dev"
-	}
-	if opts.RekorURL == "" {
-		opts.RekorURL = "https://rekor.sigstore.dev"
-	}
 	return &SigstoreSigner{opts: opts}
 }
 
-// SignBlob signs raw content using Sigstore keyless signing.
+// SignBlob signs raw content using Sigstore keyless signing (Fulcio + Rekor).
+//
+// When an OIDC token is available (CI path), this performs the full Sigstore
+// keyless flow: ephemeral key pair generation, Fulcio certificate issuance,
+// Rekor transparency log entry, and returns a canonical Sigstore v0.3 bundle.
+//
+// When no token is available (offline), ErrOIDCRequired is returned immediately
+// without any network calls.
 func (s *SigstoreSigner) SignBlob(ctx context.Context, content []byte) (*SignResult, error) {
-	// Get OIDC token
+	// Get OIDC token; returns ErrOIDCRequired when none is available.
 	token, err := s.getIdentityToken(ctx)
 	if err != nil {
-		return nil, err // already wrapped with ErrOIDCRequired sentinel
+		return nil, err
 	}
 
-	// Generate ephemeral key pair
-	privKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	// Perform the real Sigstore keyless signing flow via sigstore-go.
+	bundleJSON, err := signKeyless(ctx, token, &sign.PlainData{Data: content}, s.opts.FulcioURL, s.opts.RekorURL)
 	if err != nil {
-		return nil, fmt.Errorf("generating ephemeral key: %w", err)
+		return nil, fmt.Errorf("keyless signing: %w", err)
 	}
 
-	// Hash the content
-	digest := sha256.Sum256(content)
-
-	// Sign the digest
-	sig, err := ecdsa.SignASN1(rand.Reader, privKey, digest[:])
-	if err != nil {
-		return nil, fmt.Errorf("signing content: %w", err)
-	}
-
-	// TODO(sigstore): Replace with sigstore-go integration:
-	//   fulcioClient.GetSigningCert(ctx, privKey.Public(), token)
-	//   rekorClient.CreateEntry(ctx, ...)
-	_ = token
-
-	bundle := &Bundle{
-		MediaType: BundleMediaType,
-		Content: BundleContent{
-			MessageSignature: &MessageSignature{
-				MessageDigest: DigestInfo{
-					Algorithm: "SHA2_256",
-					Digest:    base64.StdEncoding.EncodeToString(digest[:]),
-				},
-				Signature: base64.StdEncoding.EncodeToString(sig),
-			},
-		},
+	// Parse the canonical Sigstore bundle JSON into the forgeseal Bundle type
+	// so callers can use the existing WriteBundle helper.
+	var bundle Bundle
+	if err := json.Unmarshal(bundleJSON, &bundle); err != nil {
+		return nil, fmt.Errorf("parsing keyless bundle: %w", err)
 	}
 
 	return &SignResult{
-		Signature: sig,
-		Bundle:    bundle,
+		Bundle: &bundle,
 	}, nil
 }
 
 // SignDSSE signs an in-toto attestation using a DSSE envelope.
+//
+// When an OIDC token is available (CI path), this performs the full Sigstore
+// keyless flow: ephemeral key pair generation, Fulcio certificate issuance,
+// Rekor transparency log entry, and returns a canonical Sigstore v0.3 bundle
+// with a DSSE envelope containing the Fulcio cert chain and Rekor tlog entry
+// in verificationMaterial.
+//
+// When no token is available (offline), ErrOIDCRequired is returned immediately
+// without any network calls.
 func (s *SigstoreSigner) SignDSSE(ctx context.Context, payloadType string, payload []byte) (*SignResult, error) {
-	if _, err := s.getIdentityToken(ctx); err != nil {
+	// Get OIDC token; returns ErrOIDCRequired when none is available.
+	token, err := s.getIdentityToken(ctx)
+	if err != nil {
 		return nil, err
 	}
 
-	// Generate ephemeral key pair
-	privKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	// Perform the real Sigstore keyless signing flow via sigstore-go.
+	bundleJSON, err := signKeyless(ctx, token, &sign.DSSEData{
+		Data:        payload,
+		PayloadType: payloadType,
+	}, s.opts.FulcioURL, s.opts.RekorURL)
 	if err != nil {
-		return nil, fmt.Errorf("generating ephemeral key: %w", err)
+		return nil, fmt.Errorf("keyless signing: %w", err)
 	}
 
-	// Create PAE (Pre-Authentication Encoding) per DSSE spec
-	pae := createPAE(payloadType, payload)
-
-	// Hash and sign
-	digest := sha256.Sum256(pae)
-	sig, err := privKey.Sign(rand.Reader, digest[:], crypto.SHA256)
-	if err != nil {
-		return nil, fmt.Errorf("signing DSSE envelope: %w", err)
-	}
-
-	bundle := &Bundle{
-		MediaType: BundleMediaType,
-		Content: BundleContent{
-			DSSEEnvelope: &DSSEEnvelope{
-				PayloadType: payloadType,
-				Payload:     base64.StdEncoding.EncodeToString(payload),
-				Signatures: []DSSESignature{
-					{
-						Sig: base64.StdEncoding.EncodeToString(sig),
-					},
-				},
-			},
-		},
+	// Parse the canonical Sigstore bundle JSON into the forgeseal Bundle type
+	// so callers can use the existing WriteBundle helper.
+	var bundle Bundle
+	if err := json.Unmarshal(bundleJSON, &bundle); err != nil {
+		return nil, fmt.Errorf("parsing keyless bundle: %w", err)
 	}
 
 	return &SignResult{
-		Signature: sig,
-		Bundle:    bundle,
+		Bundle: &bundle,
 	}, nil
 }
 
