@@ -1,0 +1,73 @@
+name: Assayward Release Gate
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  assayward-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Build
+        run: make build
+
+      - name: Self-attest with forgeseal pipeline
+        run: |
+          ./forgeseal pipeline \
+            --dir . \
+            --output-dir ./forgeseal-output \
+            --sign \
+            --attest \
+            --keyed
+
+      - name: Compute artifact digest
+        id: digest
+        run: |
+          DIGEST=$(sha256sum ./forgeseal 2>/dev/null || sha256sum ./bin/forgeseal 2>/dev/null || echo "sha256:unknown")
+          echo "value=$DIGEST" >> "$GITHUB_OUTPUT"
+
+      - name: Obtain svidmint SVID
+        id: svid
+        if: vars.SVIDMINT_URL != ''
+        run: |
+          # Exchange GitHub OIDC token for a SPIFFE SVID from svidmint
+          OIDC_TOKEN=$(curl -sSfL \
+            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=svidmint" | jq -r .value)
+
+          RESPONSE=$(curl -sSfL \
+            -X POST "${{ vars.SVIDMINT_URL }}/v1/attest" \
+            -H "Content-Type: application/json" \
+            -d "{\"token\": \"${OIDC_TOKEN}\", \"audience\": \"${{ steps.digest.outputs.value }}\"}")
+
+          echo "svid=$(echo "$RESPONSE" | jq -r .svid)" >> "$GITHUB_OUTPUT"
+          echo "bundle=$(echo "$RESPONSE" | jq -r .spiffe_bundle)" >> "$GITHUB_OUTPUT"
+        env:
+          ACTIONS_ID_TOKEN_REQUEST_URL: ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL }}
+          ACTIONS_ID_TOKEN_REQUEST_TOKEN: ${{ env.ACTIONS_ID_TOKEN_REQUEST_TOKEN }}
+
+      - name: Note SVID skipped
+        if: vars.SVIDMINT_URL == ''
+        run: echo "SVIDMINT_URL not configured; SVID identity step skipped"
+
+      - name: Assayward gate
+        uses: sns45/assayward-action@v0.1
+        with:
+          forgeseal-output: ./forgeseal-output
+          image: forgeseal-artifact@${{ steps.digest.outputs.value }}
+          signature-ca: ./forgeseal-output/forgeseal-signing-ca.crt
+          svid: ${{ steps.svid.outputs.svid }}
+          spiffe-bundle: ${{ steps.svid.outputs.bundle }}
+          policy-file: ./assayward-dogfood-policy.yaml
