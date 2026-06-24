@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  packages: write  # push the container image to GHCR
   id-token: write  # Sigstore keyless signing
 
 jobs:
@@ -24,7 +25,14 @@ jobs:
       - name: Run tests
         run: make test
 
-      # GoReleaser builds cross-platform binaries and creates the GitHub release
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # GoReleaser builds cross-platform binaries, the container image, and the GitHub release
       - uses: goreleaser/goreleaser-action@v6
         with:
           version: '~> v2'

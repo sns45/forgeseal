@@ -1,0 +1,5 @@
+# Used by goreleaser: the binary is already built (CGO-disabled), so just package it.
+# The from-source Dockerfile remains for standalone `docker build`.
+FROM gcr.io/distroless/static:nonroot
+COPY forgeseal /forgeseal
+ENTRYPOINT ["/forgeseal"]
