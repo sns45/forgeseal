@@ -33,13 +33,20 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # GoReleaser builds cross-platform binaries, the container image, and the GitHub release
-      - uses: goreleaser/goreleaser-action@v6
+      - name: Install GoReleaser
+        uses: goreleaser/goreleaser-action@v6
         with:
           version: '~> v2'
-          args: release --clean
+          install-only: true
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+
+      - name: GoReleaser release (Homebrew tap token via Doppler)
+        run: doppler run -- goreleaser release --clean
         env:
+          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
 
       # Dogfood: full pipeline against reference project + sign the binary
       - name: Build forgeseal for dogfooding
