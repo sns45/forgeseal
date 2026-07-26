@@ -1,28 +1,47 @@
-# Forgeseal dogfood release gate policy
-# Applied by sns45/assayward-action@v0.1 on every published release.
+# Forgeseal dogfood release gate policy.
+# Applied by sns45/assayward-action@v0.1 after every successful release run.
+#
+# The envelope (apiVersion, kind, metadata, spec) is required: assayward parses
+# a TrustPolicy document, not a bare map of checks, and the keyless and rekor
+# blocks nest under signature rather than sitting at the top level. The earlier
+# flat form of this file never parsed; it was never caught because the gate
+# workflow itself never ran (its release trigger could not fire).
+apiVersion: assayward.dev/v1alpha1
+kind: TrustPolicy
+metadata:
+  name: forgeseal-dogfood
+  version: v0.5.1
+spec:
+  mode: enforce
 
-signature:
-  required: true
+  # forgeseal self-attests with `pipeline --sign --keyed`, so the artifact is
+  # signed by forgeseal's own offline CA (handed to the gate as signature-ca),
+  # not by Fulcio. The keyless block therefore only constrains a keyless bundle
+  # if one is ever presented, and Rekor inclusion is not required, because a
+  # keyed offline signature carries no transparency log entry.
+  signature:
+    required: true
+    keyless:
+      issuer: "https://token.actions.githubusercontent.com"
+      identityPattern: "https://github.com/sns45/forgeseal/*"
+    rekor:
+      required: false
 
-keyless:
-  identityPattern: "https://forgeseal.dev/*"
+  slsa:
+    minLevel: 3
+    allowedBuilders:
+      - "https://github.com/sns45/*"
 
-rekor:
-  required: false
+  vex:
+    maxUnmitigatedSeverity: high
 
-slsa:
-  minLevel: 3
-  allowedBuilders:
-    - "https://forgeseal.dev/*"
-    - "https://github.com/sns45/*"
+  sbom:
+    required: true
 
-vex:
-  maxUnmitigatedSeverity: high
-
-sbom:
-  required: true
-
-identity:
-  required: true
-  trustDomain: "spiffe://ci.svidmint.dev"
-  idPattern: "spiffe://ci.svidmint.dev/github-actions/*"
+  # Workload identity stays optional until a svidmint server is deployed. The
+  # gate's SVID step is itself conditional on the SVIDMINT_URL repository
+  # variable, so requiring an identity today would deny every release for a
+  # missing input rather than for a real trust failure. Flip this to true, with
+  # trustDomain and idPattern, once svidmint is deployed (sns45/svidmint#2).
+  identity:
+    required: false
