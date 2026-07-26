@@ -1,8 +1,15 @@
 name: Assayward Release Gate
 
+# Triggered on the RELEASE WORKFLOW COMPLETING, not on `release: published`.
+# GoReleaser creates the release using GITHUB_TOKEN, and GitHub deliberately
+# suppresses events raised by that token so a workflow cannot trigger itself in
+# a loop. The side effect is that a `release: published` trigger never fires on
+# the normal release path: this gate had zero runs across every tagged release
+# before this change. Keying off workflow_run makes the gate actually run.
 on:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: ["Release"]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -12,6 +19,8 @@ permissions:
 jobs:
   assayward-gate:
     runs-on: ubuntu-latest
+    # A failed release has nothing worth gating.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
 
     steps:
       - uses: actions/checkout@v4
