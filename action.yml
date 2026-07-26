@@ -22,6 +22,10 @@ inputs:
   lockfile:
     description: 'Explicit path to lockfile (auto-detected if omitted)'
     required: false
+  keyed:
+    description: 'Sign with forgeseal offline CA (true, the default) instead of keyless Sigstore. Set false for Fulcio/Rekor keyless signing, which is what a downstream assayward gate needs in order to discover the provenance bundle.'
+    required: false
+    default: 'true'
   sign:
     description: 'Sign artifacts with Sigstore keyless signing'
     required: false
@@ -130,6 +134,9 @@ runs:
           fi
           if [ "${{ inputs.attest }}" = "false" ]; then
             ARGS+=("--attest=false")
+          fi
+          if [ "${{ inputs.keyed }}" = "false" ]; then
+            ARGS+=("--keyed=false")
           fi
           if [ "${{ inputs.vex-triage }}" = "true" ]; then
             ARGS+=("--vex-triage")
