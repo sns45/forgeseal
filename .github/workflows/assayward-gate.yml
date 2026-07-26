@@ -41,10 +41,18 @@ jobs:
             --attest \
             --keyed
 
-      - name: Compute artifact digest
+      # The gated artifact must be the one the provenance actually attests.
+      # `forgeseal pipeline --attest` records the dependency SBOM as its
+      # subject, so hashing the binary here produced a digest that appears in
+      # no attestation: assayward answered SUBJECT_DIGEST_MISMATCH and every
+      # downstream check then reported its evidence missing. Hashing the
+      # attested subject binds the policy to real evidence. (Never caught
+      # before because this workflow's trigger meant it never ran.)
+      - name: Compute attested subject digest
         id: digest
         run: |
-          DIGEST="sha256:$(sha256sum ./bin/forgeseal 2>/dev/null | awk '{print $1}' || echo 'unknown')"
+          test -f ./forgeseal-output/sbom.cdx.json
+          DIGEST="sha256:$(sha256sum ./forgeseal-output/sbom.cdx.json | awk '{print $1}')"
           echo "value=$DIGEST" >> "$GITHUB_OUTPUT"
 
       - name: Obtain svidmint SVID
