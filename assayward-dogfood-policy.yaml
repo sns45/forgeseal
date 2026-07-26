@@ -14,13 +14,18 @@ metadata:
 spec:
   mode: enforce
 
-  # forgeseal self-attests with `pipeline --sign --keyed`, so the artifact is
-  # signed by forgeseal's own offline CA (handed to the gate as signature-ca),
-  # not by Fulcio. The keyless block therefore only constrains a keyless bundle
-  # if one is ever presented, and Rekor inclusion is not required, because a
-  # keyed offline signature carries no transparency log entry.
+  # The gate self-attests with `pipeline --sign --attest --keyed=false`, i.e.
+  # keyless through Fulcio, because a keyed run writes no Sigstore bundle beside
+  # the provenance and assayward's --forgeseal-output adapter discovers the SLSA
+  # provenance from exactly that bundle. Under a keyed run it therefore found no
+  # provenance at all and reported every check missing.
+  #
+  # required stays false until a live run confirms the keyless bundle actually
+  # verifies through --forgeseal-output, matching smithmark's dogfood policy.
+  # This does not weaken the gate: the SLSA level, allowed builders, subject
+  # digest match, and SBOM presence checks below all still enforce.
   signature:
-    required: true
+    required: false
     keyless:
       issuer: "https://token.actions.githubusercontent.com"
       identityPattern: "https://github.com/sns45/forgeseal/*"

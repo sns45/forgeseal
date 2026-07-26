@@ -39,7 +39,7 @@ jobs:
             --output-dir ./forgeseal-output \
             --sign \
             --attest \
-            --keyed
+            --keyed=false
 
       # The gated artifact must be the one the provenance actually attests.
       # `forgeseal pipeline --attest` records the dependency SBOM as its
@@ -84,7 +84,6 @@ jobs:
         with:
           forgeseal-output: ./forgeseal-output
           image: forgeseal-artifact@${{ steps.digest.outputs.value }}
-          signature-ca: ./forgeseal-output/forgeseal-signing-ca.crt
           svid: ${{ steps.svid.outputs.svid }}
           spiffe-bundle: ${{ steps.svid.outputs.bundle }}
           policy-file: ./assayward-dogfood-policy.yaml
